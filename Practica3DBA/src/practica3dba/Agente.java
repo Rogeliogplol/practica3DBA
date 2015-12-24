@@ -5,10 +5,17 @@
  */
 package practica3dba;
 
+import es.upv.dsic.gti_ia.core.ACLMessage;
+import es.upv.dsic.gti_ia.core.AgentID;
+import es.upv.dsic.gti_ia.core.SingleAgent;
 /**
  *
  * @author SRJota
  */
-public class Agente {
+public class Agente extends SingleAgent {
+
+    public Agente(AgentID aid) throws Exception {
+        super(aid);
+    }
     
 }
