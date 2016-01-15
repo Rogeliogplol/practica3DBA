@@ -1,4 +1,4 @@
-package practica2dba;
+package ia;
 
 /**
  * Clase que implementa el tipo Casilla que contiene un float con el scanner, 
