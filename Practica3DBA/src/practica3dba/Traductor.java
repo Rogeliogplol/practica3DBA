@@ -195,11 +195,11 @@ public class Traductor {
         return outbox;
     }
     
-    public ACLMessage Moverse(String _movimiento,AgentID _sender, String _receiver){
+    public ACLMessage Moverse(AgentID _sender, String _receiver,String _movimiento){
         ACLMessage outbox = new ACLMessage();
         String msg [][] = new String [2][2];
         msg[0][0]="command";
-        msg[0][1]=_movimiento;
+        msg[0][1]="move"+_movimiento;
         msg[1][0]="key";
         msg[1][1]=Key;
         outbox.setPerformative(ACLMessage.REQUEST);
@@ -245,6 +245,27 @@ public class Traductor {
         outbox.setContent(TransformarJSon(msg));
         outbox.addReceiver(new AgentID(_receiver));
         return outbox;
+    }
+    
+    public String getPosicionMsg (String msg){
+        if(!msg.contains("posicion"))
+            return "";
+        String Result;
+        try{
+            JSONParser parser= new JSONParser();
+            Object obj;
+            obj = parser.parse(msg);
+            JSONObject JObject = (JSONObject)obj;
+            Result = JObject.get("posicion").toString();
+            if(Key==""){
+                Key = Result;
+            }
+            return Result;
+        }
+        catch (Exception ex){
+            System.err.println("Fallo en getResult ("+msg+") : " + ex.toString());
+            return ("");
+        }
     }
     
     public String getResult (String msg){
@@ -327,10 +348,14 @@ public class Traductor {
         else if (msg.getPerformativeInt()==ACLMessage.INFORM){
             String Result = getResult(msg.getContent());
             int Rol = getRol(msg.getContent());
+            
             System.out.println("Inform: "+ Result + "," + Rol);
             if (Rol>=0)
                 return String.valueOf(Rol);
             else
+                if(msg.getContent().contains("posicion")&&Result=="-1"){
+                    return getPosicionMsg(msg.getContent());
+                }
                 return Result;
         }
         else if (msg.getPerformativeInt()==ACLMessage.REFUSE){

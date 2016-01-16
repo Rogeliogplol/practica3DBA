@@ -36,7 +36,7 @@ public class IAAgentes {
         float[][] scanner = new float[tamanho][tamanho];
         for(int i=0; i<tamanho; i++){
             for(int j=0; j<tamanho; j++){
-                scanner[i][j] = GetScanner(i, j);
+                scanner[j][i] = GetScanner(j, i);
                 if(minimo>scanner[i][j]||(i<=medio+1&&i>=medio-1&&j<=medio+1&&j>=medio-1)){
                     di=i;
                     dj=j;
