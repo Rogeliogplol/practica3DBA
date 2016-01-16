@@ -33,13 +33,24 @@ public class IAAgentes {
         int di = -1;
         int dj = -1;
         int medio = (sensores.length-1)/2;
-        float[][] scanner = new float[tamanho][tamanho];
+        Posicion [][] gpsrelativo = new Posicion[3][3];
+        Posicion postemporal = new Posicion(gps.getX()-1,gps.getY()-1);
+        for(int i=0; i<3; i++){
+            for(int j=0; j<3; j++){
+                gpsrelativo[j][i] = new Posicion();
+                gpsrelativo[j][i].setX(postemporal.getX()+i);
+                gpsrelativo[j][i].setY(postemporal.getY()+j);
+                System.out.print(gpsrelativo[j][i].getX()+";"+gpsrelativo[j][i].getY()+"\t");
+            }
+            System.out.println();
+        }
+        float[][] scanner = new float[3][3];
         System.out.println("--> Estoy en: "+ gps.getX() + "," + gps.getY());
         System.out.println("Voy a: "+ objetivo.getX() + "," + objetivo.getY());
-        System.out.println("Los valores del scanner son:");
+        System.out.println("Los valores del sensor son:");
         for (int i=0; i<tamanho; i++){
             for (int j=0; j<tamanho; j++){
-                System.out.print(GetScanner(i, j)+";"+sensores[i][j] + "\t");
+                System.out.print(sensores[i][j]+ "\t");
             }
             System.out.println();
             
@@ -60,8 +71,8 @@ public class IAAgentes {
         
         for(int i=0; i<3; i++){
             for(int j=0; j<3; j++){
-                //scanner[i][j] = GetScanner(i, j);
-                //System.out.print(scanner[i][j]+";"+sensores[i][j]+"\t");
+                scanner[i][j] = GetScanner(gpsrelativo[i][j].getX(), gpsrelativo[i][j].getY());
+                System.out.print(scanner[i][j]+";"+sensores[i][j]+"\t");
                 if(minimo>scanner[i][j]){
                     di=i;
                     dj=j;
