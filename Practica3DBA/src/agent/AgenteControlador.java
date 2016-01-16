@@ -8,9 +8,11 @@ package agent;
 import es.upv.dsic.gti_ia.core.ACLMessage;
 import es.upv.dsic.gti_ia.core.AgentID;
 import es.upv.dsic.gti_ia.core.SingleAgent;
+import ia.ConocimientoControlador;
 import ia.Posicion;
 import practica3dba.MessageQueue;
 import practica3dba.Traductor;
+import gui.DibujarMapaControlador;
 
 /**
  *
@@ -24,9 +26,11 @@ public class AgenteControlador extends SingleAgent{
     private Traductor miTraductor;
     private String nameMap;
     MessageQueue q1, q2, q3, q4, qservidor;
+    private ConocimientoControlador conocimiento;
 
     public AgenteControlador(AgentID aid, String _nameServer, String[] _nameAgentSend, String _nameMap) throws Exception {
         super(aid);
+        conocimiento = new ConocimientoControlador(100, 100);
         AgentesRoles = new String [_nameAgentSend.length][3];
         nameMap = _nameMap;
         nameServer = _nameServer;
@@ -172,34 +176,35 @@ public class AgenteControlador extends SingleAgent{
                 msg=miTraductor.autoSelectACLMessage(q1.Pop());
                 if(msg.contains("true"))
                     encontradoobjetivo=true;
+                conocimiento.refreshData(miTraductor.getGPS(msg), miTraductor.getSensor(Integer.valueOf(AgentesRoles[0][1]), msg), 0);
+                posicion[0] = miTraductor.getGPS(msg);
                 
-                else
-                    //guardar posicion p1
-                    posicion[0] = miTraductor.getGPS(msg);
+                
                 msg=miTraductor.autoSelectACLMessage(q2.Pop());
                 if(msg.contains("true"))
                     encontradoobjetivo=true;
-                else{
-                    posicion[1] = miTraductor.getGPS(msg);
-                    //guardar posicion p2
-                }
+                conocimiento.refreshData(miTraductor.getGPS(msg), miTraductor.getSensor(Integer.valueOf(AgentesRoles[1][1]), msg), 1);
+                posicion[1] = miTraductor.getGPS(msg);
+
+                
                 msg=miTraductor.autoSelectACLMessage(q3.Pop());
                 if(msg.contains("true"))
                     encontradoobjetivo=true;
-                else{
-                    posicion[2] = miTraductor.getGPS(msg);
-                    //guardar posicion p3
-                }
+                conocimiento.refreshData(miTraductor.getGPS(msg), miTraductor.getSensor(Integer.valueOf(AgentesRoles[2][1]), msg), 2);
+                posicion[2] = miTraductor.getGPS(msg);
+                
+                
                 msg=miTraductor.autoSelectACLMessage(q4.Pop());
                 if(msg.contains("true"))
                     encontradoobjetivo=true;
-                else{
-                    posicion[3] = miTraductor.getGPS(msg);
-                    //guardar posicion p4
-                }
+                conocimiento.refreshData(miTraductor.getGPS(msg), miTraductor.getSensor(Integer.valueOf(AgentesRoles[3][1]), msg), 3);
+                posicion[3] = miTraductor.getGPS(msg);
+                
             }catch (InterruptedException ex){
                 System.err.println("Error al sacar mensaje");
             }
+            DibujarMapaControlador prueba = new DibujarMapaControlador("Prueba", conocimiento.getMapa());
+            
             if (!encontradoobjetivo){
                 
                 //revisar que no va a ver choque

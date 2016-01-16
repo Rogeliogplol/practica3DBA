@@ -17,7 +17,7 @@ import javax.swing.border.EmptyBorder;
  * @author SRJota Daniel Roger
  */
 
-class DibujarMapa  extends JFrame{
+public class DibujarMapa  extends JFrame{
     private final Casilla[][] mapa;
     private final static int ancho=504;
     private final static int alto=504;

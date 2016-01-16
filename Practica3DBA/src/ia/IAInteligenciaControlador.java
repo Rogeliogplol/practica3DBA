@@ -11,7 +11,6 @@ import java.util.Hashtable;
 
 public class IAInteligenciaControlador {
     
-    Hashtable<, Object>
     
     
     public IAInteligenciaControlador(){};

@@ -15,8 +15,8 @@ public class ConocimientoControlador {
     private Posicion posicion;
 	
     public ConocimientoControlador(int ancho, int alto) {
-	this.ancho=ancho+6;
-	this.alto=alto+6;
+	this.ancho=ancho+10;
+	this.alto=alto+10;
         this.mapa=new CasillaControlador[this.ancho][this.alto];
 	for (int i=0; i<this.ancho; i++){
             for (int ii=0; ii<this.alto; ii++){
@@ -44,11 +44,12 @@ public class ConocimientoControlador {
         Posicion pos = new Posicion(_pos.getX()-medio,_pos.getY()-medio);
 	for (int i=0; i<radar.length; i++) {
             for (int ii=0; ii<radar.length; ii++) {
-                mapa[pos.getX()+i][pos.getY()+ii].setCasilla(radar[i][ii],id,false);
-                if(i==medio&&ii==medio){
-                    mapa[pos.getX()+i][pos.getY()+ii].setCasilla(radar[i][ii],id,true);
+                if(pos.getX()+i>=0&&pos.getX()<=ancho&&pos.getY()+ii>=0&&pos.getY()<=alto){
+                    mapa[pos.getX()+i][pos.getY()+ii].setCasilla(radar[i][ii],id,false);
+                    if(i==medio&&ii==medio){
+                        mapa[pos.getX()+i][pos.getY()+ii].setCasilla(radar[i][ii],id,true);
+                    }
                 }
-                
             }
 	}
     }
