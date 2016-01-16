@@ -19,8 +19,8 @@ import javax.swing.border.EmptyBorder;
 
 public class DibujarMapa  extends JFrame{
     private final Casilla[][] mapa;
-    private final static int ancho=504;
-    private final static int alto=504;
+    private int ancho;
+    private int alto;
     private final static int delay=200;
     private final String nombreventana;
     private final JPanel contentPane;
@@ -39,6 +39,8 @@ public class DibujarMapa  extends JFrame{
     public DibujarMapa (String _nombreventana, Casilla[][] mapa) {
         nombreventana=_nombreventana;
         this.mapa=mapa;
+        ancho = mapa.length;
+        alto = mapa[0].length;
         
         // Inicializa la ventana
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

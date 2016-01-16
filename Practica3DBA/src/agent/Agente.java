@@ -8,6 +8,8 @@ package agent;
 import es.upv.dsic.gti_ia.core.ACLMessage;
 import es.upv.dsic.gti_ia.core.AgentID;
 import es.upv.dsic.gti_ia.core.SingleAgent;
+import gui.DibujarMapa;
+import ia.Conocimiento;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import practica3dba.MessageQueue;
@@ -26,6 +28,7 @@ public class Agente extends SingleAgent {
     private Traductor miTraductor;
     MessageQueue q1;
     int fuel;
+    Conocimiento conocimiento;
     
 
     public Agente(AgentID aid, String _nameAgentSend, String _nameMap, String _nameAgentControlador) throws Exception {
@@ -37,6 +40,7 @@ public class Agente extends SingleAgent {
         q1 = new MessageQueue(100);
         miTraductor = new Traductor();
         fuel = 100;
+        conocimiento = new Conocimiento(100, 100);
     }
     
     public String getNameAgentSend(){
@@ -167,6 +171,8 @@ public class Agente extends SingleAgent {
         /*******************************************************************/
         
         sendMessege(miTraductor.ACDatos(getAid(), nameAgentControlador, msg));
+        conocimiento.refreshData(pos, sensor);
+        DibujarMapa dibujar = new DibujarMapa(this.getName(), conocimiento.getMapa());
         waitMess();
         
         

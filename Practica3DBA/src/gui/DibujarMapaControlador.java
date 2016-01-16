@@ -19,8 +19,8 @@ import javax.swing.border.EmptyBorder;
 
 public class DibujarMapaControlador  extends JFrame{
     private static CasillaControlador[][] mapa;
-    private final static int ancho=504;
-    private final static int alto=504;
+    private int ancho;
+    private int alto;
     private final static int delay=200;
     private final String nombreventana;
     private final JPanel contentPane;
@@ -37,6 +37,8 @@ public class DibujarMapaControlador  extends JFrame{
     */
     
     public DibujarMapaControlador (String _nombreventana, CasillaControlador[][] mapa) {
+        ancho = mapa.length;
+        alto = mapa[0].length;
         nombreventana=_nombreventana;
         DibujarMapaControlador.mapa=mapa;
         

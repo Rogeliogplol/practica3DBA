@@ -15,8 +15,8 @@ public class ConocimientoControlador {
     private Posicion posicion;
 	
     public ConocimientoControlador(int ancho, int alto) {
-	this.ancho=ancho+10;
-	this.alto=alto+10;
+	this.ancho=ancho;
+	this.alto=alto;
         this.mapa=new CasillaControlador[this.ancho][this.alto];
 	for (int i=0; i<this.ancho; i++){
             for (int ii=0; ii<this.alto; ii++){
@@ -31,24 +31,17 @@ public class ConocimientoControlador {
     
     // Actualiza el mapa y la situación actual
     public void refreshData(Posicion _pos, int [][]radar, int id) {
-        int medio=0;
-        if(radar.length==3){
-            medio=1;
-        }
-        else if(radar.length==5){
-            medio=2;
-        }
-        else if (radar.length==11){
-            medio=5;
-        }
-        Posicion pos = new Posicion(_pos.getX()-medio,_pos.getY()-medio);
+        
+        int medio = (radar.length-1)/2;
+        
+        Posicion pos = new Posicion(_pos.getX(),_pos.getY());
+        
+        
 	for (int i=0; i<radar.length; i++) {
             for (int ii=0; ii<radar.length; ii++) {
-                if(pos.getX()+i>=0&&pos.getX()<=ancho&&pos.getY()+ii>=0&&pos.getY()<=alto){
-                    mapa[pos.getX()+i][pos.getY()+ii].setCasilla(radar[i][ii],id,false);
-                    if(i==medio&&ii==medio){
-                        mapa[pos.getX()+i][pos.getY()+ii].setCasilla(radar[i][ii],id,true);
-                    }
+                Posicion posicionMapa = new Posicion((pos.getX()+ii-medio), (pos.getY()+i-medio));
+                if(posicionMapa.getX()>=0&&posicionMapa.getX()<ancho&&posicionMapa.getY()>=0&&posicionMapa.getY()<alto){
+                    mapa[posicionMapa.getX()][posicionMapa.getY()].setCasilla(radar[i][ii],id,(i==medio&&ii==medio));
                 }
             }
 	}
