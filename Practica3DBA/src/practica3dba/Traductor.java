@@ -353,7 +353,7 @@ public class Traductor {
             if (Rol>=0)
                 return String.valueOf(Rol);
             else
-                if(msg.getContent().contains("posicion")&&Result=="-1"){
+                if(msg.getContent().contains("posicion") && Result.contains("-1")){
                     return getPosicionMsg(msg.getContent());
                 }
                 return Result;

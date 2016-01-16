@@ -18,12 +18,13 @@ public class IAControlador {
     
     public  Posicion calculateGoalPos(Posicion original) {
         
-        Posicion posGoal = new Posicion(original.getX(), original.getY());
+        Posicion posGoal = new Posicion(50,50);
+        //Posicion posGoal = new Posicion(original.getX(), original.getY());
         
-        if (original.getY() <= 99 && original.getY() >= 50)
-            original.setY(0);
-        else
-            original.setY(99);
+        //if (original.getY() <= 99 && original.getY() >= 50)
+        //    original.setY(0);
+        //else
+        //    original.setY(99);
         
         return posGoal;
     }
