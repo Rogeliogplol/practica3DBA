@@ -123,14 +123,14 @@ public class AgenteControlador extends SingleAgent{
         sendMessege(miTraductor.Suscribirse(nameMap, getAid(), nameServer));
         waitMess();
         try {
-            System.out.println("--------------------------------------");
+            //System.out.println("--------------------------------------");
             msg=miTraductor.autoSelectACLMessage(qservidor.Pop());
             if(msg.contains("BAD")){
                 System.err.println("Error al suscribirse: "+ msg);
                 return;
             }
             else{
-                System.out.println("Key: "+ msg);
+                //System.out.println("Key: "+ msg);
                 miTraductor.SetKey(msg);
             }
         } catch (InterruptedException ex) {
@@ -148,7 +148,7 @@ public class AgenteControlador extends SingleAgent{
         /*******************************************************************/
         waitMess(NameAgentSend.length);
         try {
-            System.out.println("--------------------------------------");
+            //System.out.println("--------------------------------------");
             msg=miTraductor.autoSelectACLMessage(q1.Pop());
             AgentesRoles[0][1] = msg;
             AgentesRoles[0][2] = valorPaso(msg);

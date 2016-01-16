@@ -40,22 +40,9 @@ public class IAAgentes {
                 gpsrelativo[j][i] = new Posicion();
                 gpsrelativo[j][i].setX(postemporal.getX()+i);
                 gpsrelativo[j][i].setY(postemporal.getY()+j);
-                System.out.print(gpsrelativo[j][i].getX()+";"+gpsrelativo[j][i].getY()+"\t");
             }
-            System.out.println();
         }
         float[][] scanner = new float[3][3];
-        System.out.println("--> Estoy en: "+ gps.getX() + "," + gps.getY());
-        System.out.println("Voy a: "+ objetivo.getX() + "," + objetivo.getY());
-        System.out.println("Los valores del sensor son:");
-        for (int i=0; i<tamanho; i++){
-            for (int j=0; j<tamanho; j++){
-                System.out.print(sensores[i][j]+ "\t");
-            }
-            System.out.println();
-            
-        }
-        System.out.println("Valor medio: "+medio +" Ventana");
         int [][] acotado = new int[3][3];
         int ai=0, aj=0;
         for(int i=medio-1; i<medio+2; i++){
@@ -72,22 +59,14 @@ public class IAAgentes {
         for(int i=0; i<3; i++){
             for(int j=0; j<3; j++){
                 scanner[i][j] = GetScanner(gpsrelativo[i][j].getX(), gpsrelativo[i][j].getY());
-                System.out.print(scanner[i][j]+";"+sensores[i][j]+"\t");
                 if(minimo>scanner[i][j]){
                     di=i;
                     dj=j;
                     minimo=scanner[i][j];
                 }
             }
-            System.out.println();
         }
-        di = di;
-        dj = dj;
         String[][] directions = {{"NW","N","NE"},{"W","GOAL","E"},{"SW","S","SE"}}; 
-        System.out.println("di="+di+"; dj="+dj+"; --->"+ directions[di][dj]);
-        
-        
-        
         return directions[di][dj];
     }
 }

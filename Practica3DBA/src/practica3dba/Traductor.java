@@ -142,7 +142,7 @@ public class Traductor {
             for (int cont=0; cont < msg.length; cont++){
                 obj.put(msg[cont][0],msg[cont][1]);
             }
-            System.out.println(obj.toString());
+            //System.out.println(obj.toString());
             return obj.toString();
         }catch (Exception ex){
             return "";
@@ -349,7 +349,7 @@ public class Traductor {
             String Result = getResult(msg.getContent());
             int Rol = getRol(msg.getContent());
             
-            System.out.println("Inform: "+ Result + "," + Rol);
+            //System.out.println("Inform: "+ Result + "," + Rol);
             if (Rol>=0)
                 return String.valueOf(Rol);
             else

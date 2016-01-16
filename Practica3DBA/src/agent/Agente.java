@@ -84,13 +84,13 @@ public class Agente extends SingleAgent {
         int[][] sensor;
         int bateria;
         int bateriaTotal;
-        System.out.println();
+        //System.out.println();
         
         /*******************************************************************/
         /*                   Conseguir clave desde el contorlador          */
         /*******************************************************************/
         waitMess();
-        System.out.println("--------------------------------------");
+        //System.out.println("--------------------------------------");
         try{
             msg=miTraductor.CAautoSelectACLMessage(q1.Pop());
             //System.out.println("Key dada desde el controlador: "+ msg);
@@ -104,7 +104,7 @@ public class Agente extends SingleAgent {
         sendMessege(miTraductor.PreguntarRol(getAid(), nameAgentSend));
         waitMess();
         try {
-            System.out.println("--------------------------------------");
+            //System.out.println("--------------------------------------");
             msg = miTraductor.autoSelectACLMessage(q1.Pop());
         } catch (InterruptedException ex) {
             System.err.println("\n["+this.getName()+"]Error al sacar mensaje");
@@ -126,7 +126,7 @@ public class Agente extends SingleAgent {
         sendMessege(miTraductor.ACSendRol(getAid(), nameAgentControlador, msg));
         waitMess();
         try {
-            System.out.println("--------------------------------------");
+            //System.out.println("--------------------------------------");
             msg = miTraductor.CAautoSelectACLMessage(q1.Pop());
         } catch (InterruptedException ex) {
             System.err.println("\n["+this.getName()+"]Error al sacar mensaje");
@@ -140,7 +140,7 @@ public class Agente extends SingleAgent {
         sendMessege(miTraductor.Refuel(getAid(), nameAgentSend));
         waitMess();
         try {
-            System.out.println("--------------------------------------");
+            //System.out.println("--------------------------------------");
             msg = miTraductor.autoSelectACLMessage(q1.Pop());
         } catch (InterruptedException ex) {
             System.err.println("Error al sacar mensaje");
@@ -152,7 +152,7 @@ public class Agente extends SingleAgent {
         sendMessege(miTraductor.PedirInformacion(getAid(), nameAgentSend));
         waitMess();
         try {
-            System.out.println("--------------------------------------");
+            //System.out.println("--------------------------------------");
             msg=miTraductor.autoSelectACLMessage(q1.Pop());
         } catch (InterruptedException ex) {
             System.err.println("Error al sacar mensaje");
@@ -185,7 +185,7 @@ public class Agente extends SingleAgent {
         while(moverse){
             waitMess();
             try {
-            System.out.println("--------------------------------------");
+            //System.out.println("--------------------------------------");
                 msg=miTraductor.autoSelectACLMessage(q1.Pop());
                 if(msg.contains("x")){
                     miIA.SetObjetivo(miTraductor.getGPS(msg));
@@ -200,7 +200,7 @@ public class Agente extends SingleAgent {
                 sendMessege(miTraductor.Refuel(getAid(), nameAgentSend));
                 waitMess();
                 try {
-                    System.out.println("--------------------------------------");
+                    //System.out.println("--------------------------------------");
                     msg = miTraductor.autoSelectACLMessage(q1.Pop());
                 } catch (InterruptedException ex) {
                     System.err.println("Error al sacar mensaje");
@@ -211,7 +211,7 @@ public class Agente extends SingleAgent {
             sendMessege(miTraductor.Moverse(getAid(), nameAgentSend, movimiento));
             waitMess();
             try {
-                System.out.println("--------------------------------------");
+                //System.out.println("--------------------------------------");
                 msg=miTraductor.autoSelectACLMessage(q1.Pop());
             } catch (InterruptedException ex) {
                 System.err.println("Error al sacar mensaje");
@@ -224,7 +224,7 @@ public class Agente extends SingleAgent {
             sendMessege(miTraductor.PedirInformacion(getAid(), nameAgentSend));
             waitMess();
             try {
-                System.out.println("--------------------------------------");
+                //System.out.println("--------------------------------------");
                 msg=miTraductor.autoSelectACLMessage(q1.Pop());
             } catch (InterruptedException ex) {
                 System.err.println("Error al sacar mensaje");
