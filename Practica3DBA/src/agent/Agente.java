@@ -176,13 +176,20 @@ public class Agente extends SingleAgent {
         DibujarMapa dibujar = new DibujarMapa(this.getName(), conocimiento.getMapa());
         
         /*******************************************************************/
-        /*                   Movmiento, guardar informacion y informar     */
+        /*Capturar posicion, movmiento, guardar informacion y informar     */
         /*******************************************************************/
+        boolean moverse = true;
+        while(moverse){
+            waitMess();
+            try {
+            System.out.println("--------------------------------------");
+                msg=miTraductor.autoSelectACLMessage(q1.Pop());
+            } catch (InterruptedException ex) {
+                System.err.println("Error al sacar mensaje");
+            }
+            System.out.println("\n["+this.getName()+msg);
         
-        waitMess();
-        
-        
-        
+        }
         
         
         

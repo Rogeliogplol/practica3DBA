@@ -84,6 +84,12 @@ public class AgenteControlador extends SingleAgent{
         this.send(msg);
     }
     
+    private void sendMessege(ACLMessage[] msg){
+        for(int cont=0; cont < msg.length; cont++)
+            this.send(msg[cont]);
+    }
+    
+    
     private void waitMess(){
         while (qservidor.isEmpty()){
             try {

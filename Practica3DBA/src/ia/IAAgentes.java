@@ -46,6 +46,6 @@ public class IAAgentes {
         }
         String[][] directions = {{"NW","N","NE"},{"W","GOAL","E"},{"SW","S","SE"}}; 
         
-        return 
+        return directions[di][dj];
     }
 }

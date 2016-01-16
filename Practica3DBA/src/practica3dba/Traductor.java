@@ -439,15 +439,14 @@ public class Traductor {
         return outbox;             
     }
     
-    public ACLMessage CAsendPosicion(AgentID _sender, String[] _receiver, int pasos, Posicion[] p){
-        ACLMessage outbox = new ACLMessage();
+    public ACLMessage[] CAsendPosicion(AgentID _sender, String[] _receiver, int pasos, Posicion[] p){
+        ACLMessage[] outbox = new ACLMessage[p.length];
         String msg [][] = new String [2][2];
-        
-        outbox.setPerformative(ACLMessage.INFORM);
-        outbox.setSender(_sender);
-        outbox.setContent(TransformarJSon(msg));
         for (int cont=0; cont < _receiver.length; cont++) {
-            outbox.addReceiver(new AgentID(_receiver[cont]));
+            outbox[cont] = new ACLMessage();
+            outbox[cont].setPerformative(ACLMessage.INFORM);
+            outbox[cont].setSender(_sender);
+            outbox[cont].addReceiver(new AgentID(_receiver[cont]));
             msg[0][0]="result";
             msg[0][1]=String.valueOf(pasos);
             msg[1][0]="posicion";
@@ -457,6 +456,7 @@ public class Traductor {
             posicion[1][0] = "y";
             posicion[1][1] = String.valueOf(p[cont].getY());
             msg[1][1]=TransformarJSon(posicion);
+            outbox[cont].setContent(TransformarJSon(msg));
         }
         return outbox;             
     }
