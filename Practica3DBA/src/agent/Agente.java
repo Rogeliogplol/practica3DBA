@@ -182,8 +182,6 @@ public class Agente extends SingleAgent {
         waitMess();
         
         
-        System.out.println("\n------>["+this.getName()+"]:"+msg);
-        
         
         
         
