@@ -13,6 +13,7 @@ import ia.Posicion;
 import practica3dba.MessageQueue;
 import practica3dba.Traductor;
 import gui.DibujarMapaControlador;
+import ia.IAControlador;
 
 /**
  *
@@ -27,6 +28,7 @@ public class AgenteControlador extends SingleAgent{
     private String nameMap;
     MessageQueue q1, q2, q3, q4, qservidor;
     private ConocimientoControlador conocimiento;
+    private IAControlador miInteligencia;
 
     public AgenteControlador(AgentID aid, String _nameServer, String[] _nameAgentSend, String _nameMap) throws Exception {
         super(aid);
@@ -46,6 +48,7 @@ public class AgenteControlador extends SingleAgent{
         q4 = new MessageQueue(100);
         qservidor = new MessageQueue(100);
         miTraductor = new Traductor();
+        miInteligencia = new IAControlador();
         
     }
     
@@ -162,9 +165,11 @@ public class AgenteControlador extends SingleAgent{
         /*                   Primera parte busqueda del objetivo           */
         /*******************************************************************/
         boolean encontradoobjetivo=false;
+        boolean enobjetivo = false;
         Posicion[] posicion= new Posicion[4];
         Posicion[] posgoaltemporal = new Posicion[4];
         Posicion goal;
+        int iteraciones =0;
         int [] pasos = new int[4];
         for (int cont=0; cont < 4; cont++)
             pasos[cont] = 20;
@@ -174,42 +179,59 @@ public class AgenteControlador extends SingleAgent{
             //Conseguir la posicion por si se van a chocar
             try{
                 msg=miTraductor.autoSelectACLMessage(q1.Pop());
-                if(msg.contains("true"))
+                if(msg.contains("true")){
                     encontradoobjetivo=true;
+                    enobjetivo=true;
+                }
                 conocimiento.refreshData(miTraductor.getGPS(msg), miTraductor.getSensor(Integer.valueOf(AgentesRoles[0][1]), msg), 0);
                 posicion[0] = miTraductor.getGPS(msg);
                 
                 
                 msg=miTraductor.autoSelectACLMessage(q2.Pop());
-                if(msg.contains("true"))
+                if(msg.contains("true")){
                     encontradoobjetivo=true;
+                    enobjetivo=true;
+                }
                 conocimiento.refreshData(miTraductor.getGPS(msg), miTraductor.getSensor(Integer.valueOf(AgentesRoles[1][1]), msg), 1);
                 posicion[1] = miTraductor.getGPS(msg);
 
                 
                 msg=miTraductor.autoSelectACLMessage(q3.Pop());
-                if(msg.contains("true"))
+                if(msg.contains("true")){
                     encontradoobjetivo=true;
+                    enobjetivo=true;
+                }
                 conocimiento.refreshData(miTraductor.getGPS(msg), miTraductor.getSensor(Integer.valueOf(AgentesRoles[2][1]), msg), 2);
                 posicion[2] = miTraductor.getGPS(msg);
                 
                 
                 msg=miTraductor.autoSelectACLMessage(q4.Pop());
-                if(msg.contains("true"))
+                if(msg.contains("true")){
                     encontradoobjetivo=true;
+                    enobjetivo=true;
+                }
                 conocimiento.refreshData(miTraductor.getGPS(msg), miTraductor.getSensor(Integer.valueOf(AgentesRoles[3][1]), msg), 3);
                 posicion[3] = miTraductor.getGPS(msg);
                 
             }catch (InterruptedException ex){
                 System.err.println("Error al sacar mensaje");
             }
-            DibujarMapaControlador prueba = new DibujarMapaControlador("Prueba", conocimiento.getMapa());
+            DibujarMapaControlador dibujar = new DibujarMapaControlador("Vista controlador", conocimiento.getMapa());
             
+            encontradoobjetivo = miInteligencia.vistoelobjetivo (conocimiento.getMapa());
             if (!encontradoobjetivo){
-                
-                //revisar que no va a ver choque
-                
+                if(iteraciones==0){
+                    posgoaltemporal[0] = miInteligencia.calculateGoalPos(posicion[0]);
+                    posgoaltemporal[1] = miInteligencia.calculateGoalPos(posicion[1]);
+                    posgoaltemporal[2] = miInteligencia.calculateGoalPos(posicion[2]);
+                    posgoaltemporal[3] = miInteligencia.calculateGoalPos(posicion[3]);
+                }
+                sendMessege(miTraductor.CAsendPosicion(getAid(), NameAgentSend, -1, posgoaltemporal));
             }
+            else{
+                goal = miInteligencia.getPosicionGoal();
+            }
+            iteraciones++;
         }
         //Buscar quien ha visto el objetivo y guardarlo en goal
         /*******************************************************************/

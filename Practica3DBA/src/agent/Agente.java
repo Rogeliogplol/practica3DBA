@@ -166,6 +166,7 @@ public class Agente extends SingleAgent {
         sensor = miTraductor.getSensor(tipo, msg);
         bateria = miTraductor.GetBateria(msg);
         
+        
         /*******************************************************************/
         /*                   Enviar informacion al controlador             */
         /*******************************************************************/
@@ -173,6 +174,11 @@ public class Agente extends SingleAgent {
         sendMessege(miTraductor.ACDatos(getAid(), nameAgentControlador, msg));
         conocimiento.refreshData(pos, sensor);
         DibujarMapa dibujar = new DibujarMapa(this.getName(), conocimiento.getMapa());
+        
+        /*******************************************************************/
+        /*                   Movmiento, guardar informacion y informar     */
+        /*******************************************************************/
+        
         waitMess();
         
         

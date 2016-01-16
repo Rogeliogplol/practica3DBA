@@ -418,7 +418,7 @@ public class Traductor {
         return outbox;             
     }
     
-    public ACLMessage CAsendPosicion(AgentID _sender, String[] _receiver, int pasos, Posicion p){
+    public ACLMessage CAsendPosicionGoal(AgentID _sender, String[] _receiver, int pasos, Posicion p){
         ACLMessage outbox = new ACLMessage();
         String msg [][] = new String [2][2];
         msg[0][0]="result";
@@ -435,6 +435,28 @@ public class Traductor {
         outbox.setContent(TransformarJSon(msg));
         for (String _receiver1 : _receiver) {
             outbox.addReceiver(new AgentID(_receiver1));
+        }
+        return outbox;             
+    }
+    
+    public ACLMessage CAsendPosicion(AgentID _sender, String[] _receiver, int pasos, Posicion[] p){
+        ACLMessage outbox = new ACLMessage();
+        String msg [][] = new String [2][2];
+        
+        outbox.setPerformative(ACLMessage.INFORM);
+        outbox.setSender(_sender);
+        outbox.setContent(TransformarJSon(msg));
+        for (int cont=0; cont < _receiver.length; cont++) {
+            outbox.addReceiver(new AgentID(_receiver[cont]));
+            msg[0][0]="result";
+            msg[0][1]=String.valueOf(pasos);
+            msg[1][0]="posicion";
+            String posicion [][] = new String [2][2];
+            posicion[0][0] = "x";
+            posicion[0][1] = String.valueOf(p[cont].getX());
+            posicion[1][0] = "y";
+            posicion[1][1] = String.valueOf(p[cont].getY());
+            msg[1][1]=TransformarJSon(posicion);
         }
         return outbox;             
     }

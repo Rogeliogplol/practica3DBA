@@ -9,8 +9,12 @@ package ia;
 
 public class IAControlador {
     
+    Posicion goal;
     
-    public IAControlador(){};
+    public IAControlador(){
+        goal = new Posicion(-1,-1);
+        
+    };
     
     public  Posicion calculateGoalPos(Posicion original) {
         
@@ -24,6 +28,20 @@ public class IAControlador {
         return posGoal;
     }
     
+    public boolean vistoelobjetivo (CasillaControlador [][] mapa){
+        for(int i=0; i<mapa.length; i++){
+            for(int j=0; j<mapa.length; j++){
+                if(mapa[i][j].getRadar()==3){
+                    goal = new Posicion(j,i);
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
     
+    public Posicion getPosicionGoal(){
+        return goal;
+    }
     
 }
