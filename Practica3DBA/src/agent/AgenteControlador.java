@@ -172,6 +172,7 @@ public class AgenteControlador extends SingleAgent{
                 msg=miTraductor.autoSelectACLMessage(q1.Pop());
                 if(msg.contains("true"))
                     encontradoobjetivo=true;
+                
                 else
                     //guardar posicion p1
                     posicion[0] = miTraductor.getGPS(msg);

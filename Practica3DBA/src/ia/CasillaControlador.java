@@ -10,7 +10,7 @@ package ia;
  */
 public class CasillaControlador {
     private int radar;
-    private final int dronVisitado[];
+    private int dronVisitado[];
     
     //#######################################################
     //----------------- CONSTRUCTOR -------------------------
@@ -74,11 +74,14 @@ public class CasillaControlador {
     //#######################################################
 	/**
 	* @param ra información de radar a guardar
+        * @param id id del drone
 	*
 	* @author Roger
         * @author Daniel
 	*/
-    public void setCasilla (int ra){
+    public void setCasilla (int ra, int id, boolean casilla){
         this.setRadar(ra);
+        if(casilla)
+            this.setDronVisitado(id);
     }
 }

@@ -32,7 +32,25 @@ public class Conocimiento {
     
     // Actualiza el mapa y la situación actual
     public void refreshData(Posicion _pos, int [][]radar) {
-        
+        int medio=0;
+        if(radar.length==3){
+            medio=1;
+        }
+        else if(radar.length==5){
+            medio=2;
+        }
+        else if (radar.length==11){
+            medio=5;
+        }
+        Posicion pos = new Posicion(_pos.getX()-medio,_pos.getY()-medio);
+	for (int i=0; i<radar.length; i++) {
+            for (int ii=0; ii<radar.length; ii++) {
+                mapa[pos.getX()+i][pos.getY()+ii].setCasilla(radar[i][ii],false);
+                if(i==medio&&ii==medio)
+                    mapa[pos.getX()+i][pos.getY()+ii].setCasilla(radar[i][ii],true);
+                
+            }
+	}
     }
     
     public Casilla[][] getMapa() {
