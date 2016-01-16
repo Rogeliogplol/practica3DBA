@@ -23,9 +23,29 @@ public class IAAgentes {
         return objetivo;
     }
     
-    public float GetRadar(int X, int Y){
+    public float GetScanner(int X, int Y){
         return (float) Math.sqrt((X*X)+(Y*Y));
     }
     
-    
+    public String NextSteep (int [][] sensores, Posicion gps){
+        int tamanho = sensores.length;
+        float minimo = Float.MAX_VALUE;
+        int di = -1;
+        int dj = -1;
+        int medio = (sensores.length-1)/2;
+        float[][] scanner = new float[tamanho][tamanho];
+        for(int i=0; i<tamanho; i++){
+            for(int j=0; j<tamanho; j++){
+                scanner[i][j] = GetScanner(i, j);
+                if(minimo>scanner[i][j]||(i<=medio+1&&i>=medio-1&&j<=medio+1&&j>=medio-1)){
+                    di=i;
+                    dj=j;
+                    minimo=scanner[i][j];
+                }
+            }
+        }
+        String[][] directions = {{"NW","N","NE"},{"W","GOAL","E"},{"SW","S","SE"}}; 
+        
+        return 
+    }
 }
