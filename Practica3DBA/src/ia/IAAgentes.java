@@ -36,7 +36,7 @@ public class IAAgentes {
         float[][] scanner = new float[tamanho][tamanho];
         for(int i=0; i<tamanho; i++){
             for(int j=0; j<tamanho; j++){
-                scanner[j][i] = GetScanner(j, i);
+                scanner[i][j] = GetScanner(i, j);
                 if(minimo>scanner[i][j]||(i<=medio+1&&i>=medio-1&&j<=medio+1&&j>=medio-1)){
                     di=i;
                     dj=j;
@@ -44,6 +44,8 @@ public class IAAgentes {
                 }
             }
         }
+        di = di%3;
+        dj = dj%3;
         String[][] directions = {{"NW","N","NE"},{"W","GOAL","E"},{"SW","S","SE"}}; 
         
         return directions[di][dj];

@@ -193,6 +193,19 @@ public class Agente extends SingleAgent {
             } catch (InterruptedException ex) {
                 System.err.println("Error al sacar mensaje");
             }
+            if(bateria<=10){
+                /*******************************************************************/
+                /*                   Refuel                                        */
+                /*******************************************************************/
+                sendMessege(miTraductor.Refuel(getAid(), nameAgentSend));
+                waitMess();
+                try {
+                    System.out.println("--------------------------------------");
+                    msg = miTraductor.autoSelectACLMessage(q1.Pop());
+                } catch (InterruptedException ex) {
+                    System.err.println("Error al sacar mensaje");
+        }
+            }
             
             movimiento = miIA.NextSteep(sensor, pos);
             sendMessege(miTraductor.Moverse(getAid(), nameAgentSend, movimiento));
@@ -233,7 +246,7 @@ public class Agente extends SingleAgent {
 
             sendMessege(miTraductor.ACDatos(getAid(), nameAgentControlador, msg));
             conocimiento.refreshData(pos, sensor);
-            dibujar.repaint();
+            //dibujar.repaint();
         
         }
         

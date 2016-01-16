@@ -179,6 +179,7 @@ public class AgenteControlador extends SingleAgent{
         int [] pasos = new int[4];
         for (int cont=0; cont < 4; cont++)
             pasos[cont] = 20;
+        DibujarMapaControlador dibujar = new DibujarMapaControlador("Vista controlador", conocimiento.getMapa());
         while(!encontradoobjetivo){
             waitMess(NameAgentSend.length);
             
@@ -222,7 +223,7 @@ public class AgenteControlador extends SingleAgent{
             }catch (InterruptedException ex){
                 System.err.println("Error al sacar mensaje");
             }
-            DibujarMapaControlador dibujar = new DibujarMapaControlador("Vista controlador", conocimiento.getMapa());
+            
             
             encontradoobjetivo = miInteligencia.vistoelobjetivo (conocimiento.getMapa());
             if (!encontradoobjetivo){
