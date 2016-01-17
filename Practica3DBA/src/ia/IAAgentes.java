@@ -24,14 +24,15 @@ public class IAAgentes {
     public void SetDemas(Posicion [] listaposiciones, Posicion miposicion){
         int i=0;
         for(int cont=0; cont < listaposiciones.length; cont++){
-            if((miposicion.getX()!=listaposiciones[cont].getX())&& (miposicion.getY()!=listaposiciones[cont].getY())){
+            if((miposicion.getX()!=listaposiciones[cont].getX())||(miposicion.getY()!=listaposiciones[cont].getY())){
                 demas[i].setX(listaposiciones[cont].getX());
                 demas[i].setY(listaposiciones[cont].getY());
                 if(demas[i].getX()==-1 || demas[i].getY()==-1 ){
                     System.err.println("------------------------------------------");
                 }
+                i++;
             }
-            i++;
+            
         }
     }
     
@@ -61,7 +62,7 @@ public class IAAgentes {
                         for(int ii=0; ii<3; ii++){
                             for(int jj=0; jj<3; jj++){
                                 if(otroagente.getX()==agentepropio[ii][jj].getX()&&otroagente.getY()==agentepropio[ii][jj].getY()){
-                                    sensor[ii][jj]=4;
+                                    sensor[jj][ii]=4;
                                 }
                             }
                         }
