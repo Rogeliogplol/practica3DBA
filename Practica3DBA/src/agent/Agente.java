@@ -11,8 +11,6 @@ import es.upv.dsic.gti_ia.core.SingleAgent;
 import gui.DibujarMapa;
 import ia.Conocimiento;
 import ia.IAAgentes;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import practica3dba.MessageQueue;
 import ia.Posicion;
 import practica3dba.Traductor;
@@ -60,13 +58,14 @@ public class Agente extends SingleAgent {
     public void onMessage(ACLMessage msg)  {
         try {
             q1.Push(msg); // Cada mensaje nuevo que llega se encola en el orden de llegada
-            System.out.println("\n["+this.getName()+"] Encolando: "+msg.getContent());
+            System.out.println("\n["+this.getName()+"]-->["+msg.getSender().name+"] Encolando: "+msg.getContent());
         } catch (InterruptedException ex) {
             ex.printStackTrace();
         }
     }
     
     private void sendMessege(ACLMessage msg){
+        System.out.println("------>"+msg.getSender().name+"-->"+msg.getReceiver().name+": "+msg.getContent());
         this.send(msg);
     }
     
@@ -216,7 +215,7 @@ public class Agente extends SingleAgent {
             }
             if(!parado){
                 movimiento = miIA.NextSteep(sensor, pos);
-                if(!movimiento.contains("GOAL")||!movimiento.contains("IMPOSIBLE")){
+                if(!(movimiento.contains("GOAL")||movimiento.contains("IMPOSIBLE"))){
                     sendMessege(miTraductor.Moverse(getAid(), nameAgentSend, movimiento));
                     waitMess();
                     try {
