@@ -11,6 +11,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 import javax.swing.border.EmptyBorder;
+import java.awt.Dimension;
 
 /**
  *
@@ -21,11 +22,13 @@ public class DibujarMapa  extends JFrame{
     private final Casilla[][] mapa;
     private int ancho;
     private int alto;
-    private final static int delay=200;
+    private final static int delay=500;
     private final String nombreventana;
     private final JPanel contentPane;
-    private final int margenSuperior=35, margenLateral=10;
+    private final int margenSuperior=20, margenLateral=20;
     private BufferedImage image;
+    private final String nombreDron;
+    private int bateria;
     
     /**
     * Constructor de la clase DibujarMapa
@@ -36,7 +39,9 @@ public class DibujarMapa  extends JFrame{
     * 
     */
     
-    public DibujarMapa (String _nombreventana, Casilla[][] mapa) {
+    public DibujarMapa (String _nombreventana, Casilla[][] mapa, String nombreDron, int bateria) {
+        this.nombreDron=nombreDron;
+        this.bateria=bateria;
         nombreventana=_nombreventana;
         this.mapa=mapa;
         ancho = mapa.length;
@@ -44,13 +49,12 @@ public class DibujarMapa  extends JFrame{
         
         // Inicializa la ventana
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 450, 300);
         contentPane = new JPanel();
         setTitle(nombreventana);
-        contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-        contentPane.setLayout(new BorderLayout(0, 0));
-        setContentPane(contentPane);
-        setBounds(0,0,520,600);
+        contentPane.setLayout(null);
+        contentPane.setPreferredSize(new Dimension(540, 580));
+        add(contentPane);
+        pack();
         setVisible(true);
 
         // Cada "delay" milisegundos se repintará el mapa
@@ -63,6 +67,10 @@ public class DibujarMapa  extends JFrame{
         };
 
         new Timer(delay, taskPerformer).start();
+    }
+    
+    public void setBateria (int bateria) {
+        this.bateria=bateria;
     }
     
     /**
@@ -118,12 +126,16 @@ public class DibujarMapa  extends JFrame{
     /**
     * Pinta el mapa cargado
     * 
+    * @param g
     * @author Daniel SRJota Roger
     * 
     */
     @Override
     public void paint (Graphics g){
         super.paint(g);
-        g.drawImage(image, margenLateral, margenSuperior, 500, 500, null);
+        g.drawRect(19, 39, 301, 301);
+        g.drawRect(19, 344, 301, 21);
+        g.drawImage(image, 20, 40, 300, 300, null);
+        g.drawString("Dron: "+nombreDron, 23, 360);
     }
 }
