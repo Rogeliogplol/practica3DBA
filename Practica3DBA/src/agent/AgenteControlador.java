@@ -14,6 +14,7 @@ import practica3dba.MessageQueue;
 import practica3dba.Traductor;
 import gui.DibujarMapaControlador;
 import ia.IAControlador;
+import java.util.ArrayList;
 
 /**
  *
@@ -178,6 +179,10 @@ public class AgenteControlador extends SingleAgent{
         Posicion goal;
         int iteraciones =0;
         int [] pasos = new int[4];
+        ArrayList <ArrayList <Integer> > baterias = new ArrayList < ArrayList <Integer> > ();
+        for (int cont=0; cont < 4; cont++){
+            baterias.add(new ArrayList <Integer>());
+        }
         for (int cont=0; cont < 4; cont++)
             pasos[cont] = 20;
         DibujarMapaControlador dibujar = new DibujarMapaControlador("Vista controlador", conocimiento.getMapa());
@@ -193,6 +198,7 @@ public class AgenteControlador extends SingleAgent{
                 }
                 conocimiento.refreshData(miTraductor.getGPS(msg), miTraductor.getSensor(Integer.valueOf(AgentesRoles[0][1]), msg), 0);
                 posicion[0] = miTraductor.getGPS(msg);
+                baterias.get(0).add(miTraductor.GetBateria(msg));
                 
                 
                 msg=miTraductor.autoSelectACLMessage(q2.Pop());
@@ -202,7 +208,7 @@ public class AgenteControlador extends SingleAgent{
                 }
                 conocimiento.refreshData(miTraductor.getGPS(msg), miTraductor.getSensor(Integer.valueOf(AgentesRoles[1][1]), msg), 1);
                 posicion[1] = miTraductor.getGPS(msg);
-
+                baterias.get(1).add(miTraductor.GetBateria(msg));
                 
                 msg=miTraductor.autoSelectACLMessage(q3.Pop());
                 if(msg.contains("true")){
@@ -211,7 +217,7 @@ public class AgenteControlador extends SingleAgent{
                 }
                 conocimiento.refreshData(miTraductor.getGPS(msg), miTraductor.getSensor(Integer.valueOf(AgentesRoles[2][1]), msg), 2);
                 posicion[2] = miTraductor.getGPS(msg);
-                
+                baterias.get(2).add(miTraductor.GetBateria(msg));
                 
                 msg=miTraductor.autoSelectACLMessage(q4.Pop());
                 if(msg.contains("true")){
@@ -220,6 +226,8 @@ public class AgenteControlador extends SingleAgent{
                 }
                 conocimiento.refreshData(miTraductor.getGPS(msg), miTraductor.getSensor(Integer.valueOf(AgentesRoles[3][1]), msg), 3);
                 posicion[3] = miTraductor.getGPS(msg);
+                baterias.get(3).add(miTraductor.GetBateria(msg));
+                
                 
             }catch (InterruptedException ex){
                 System.err.println("Error al sacar mensaje");
