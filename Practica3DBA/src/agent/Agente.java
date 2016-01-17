@@ -174,7 +174,7 @@ public class Agente extends SingleAgent {
         
         sendMessege(miTraductor.ACDatos(getAid(), nameAgentControlador, msg));
         conocimiento.refreshData(pos, sensor);
-        DibujarMapa dibujar = new DibujarMapa(this.getName(), conocimiento.getMapa());
+        // DibujarMapa dibujar = new DibujarMapa(this.getName(), conocimiento.getMapa());
         
         /*******************************************************************/
         /*Capturar posicion, movmiento, guardar informacion y informar     */
