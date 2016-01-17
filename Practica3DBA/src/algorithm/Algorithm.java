@@ -14,7 +14,6 @@ public abstract class Algorithm {
     Posicion objetivo;
     
     
-    public abstract process(int [][] ,  )
     
     
     
