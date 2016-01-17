@@ -9,7 +9,7 @@
      * - Improve memory usage deleting unnecessary vars. 
      */
 
-package practica2dba;
+package algorithm;
 
 import java.util.ArrayList;
 

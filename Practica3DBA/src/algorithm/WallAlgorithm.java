@@ -1,4 +1,4 @@
-package practica2dba;
+package algorithm;
 
 /**
  *
