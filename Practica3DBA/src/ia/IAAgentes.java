@@ -46,8 +46,8 @@ public class IAAgentes {
         for (int i=0; i<3; i++){
             for(int j=0; j<3; j++){
                 agentepropio[i][j]= new Posicion();
-                agentepropio[i][j].setX(Posicionrelativa.getX());
-                agentepropio[i][j].setY(Posicionrelativa.getY());
+                agentepropio[i][j].setX(Posicionrelativa.getX()+i);
+                agentepropio[i][j].setY(Posicionrelativa.getY()+j);
             }
         }
                 
@@ -58,7 +58,7 @@ public class IAAgentes {
                 for(int i=0; i< 3; i++){
                     for (int j=0; j<3; j++){
                         otroagente.setX((demas[cont].getX()-1)+i);
-                        otroagente.setY((demas[cont].getY()-1)+i);
+                        otroagente.setY((demas[cont].getY()-1)+j);
                         for(int ii=0; ii<3; ii++){
                             for(int jj=0; jj<3; jj++){
                                 if(otroagente.getX()==agentepropio[ii][jj].getX()&&otroagente.getY()==agentepropio[ii][jj].getY()){
