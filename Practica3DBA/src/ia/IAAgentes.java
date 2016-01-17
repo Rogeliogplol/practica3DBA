@@ -55,7 +55,8 @@ public class IAAgentes {
             aj=0;
             ai++;
         }
-        
+        if(sensores[1][1]==3)
+            return "GOAL";
         for(int i=0; i<3; i++){
             for(int j=0; j<3; j++){
                 scanner[i][j] = GetScanner(gpsrelativo[i][j].getX(), gpsrelativo[i][j].getY());
@@ -64,6 +65,10 @@ public class IAAgentes {
                     dj=j;
                     minimo=scanner[i][j];
                 }
+                if(sensores[i][j]==3 && i==1 && j==1){
+                    return "GOAL";
+                }
+                
             }
         }
         String[][] directions = {{"NW","N","NE"},{"W","GOAL","E"},{"SW","S","SE"}}; 

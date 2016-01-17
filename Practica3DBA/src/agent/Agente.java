@@ -16,24 +16,27 @@ import java.util.logging.Logger;
 import practica3dba.MessageQueue;
 import ia.Posicion;
 import practica3dba.Traductor;
+import gui.VentanaSuper;
 /**
  *
  * @author SRJota
  */
 public class Agente extends SingleAgent {
     
+    private VentanaSuper ventanaSuper;
     private String nameAgent;
     private String nameAgentSend;
     private String nameAgentControlador;
     private String map;
     private Traductor miTraductor;
-    MessageQueue q1;
-    Integer fuel;
-    Conocimiento conocimiento;
-    
+    private MessageQueue q1;
+    private Integer fuel;
+    private Conocimiento conocimiento;
+    private boolean parado;
 
     public Agente(AgentID aid, String _nameAgentSend, String _nameMap, String _nameAgentControlador) throws Exception {
         super(aid);
+        ventanaSuper = VentanaSuper.getInstance();
         nameAgent = aid.name;
         nameAgentSend = _nameAgentSend;
         nameAgentControlador = _nameAgentControlador;
@@ -42,6 +45,7 @@ public class Agente extends SingleAgent {
         miTraductor = new Traductor();
         fuel = 100;
         conocimiento = new Conocimiento(100, 100);
+        parado = false;
     }
     
     public String getNameAgentSend(){
@@ -79,6 +83,7 @@ public class Agente extends SingleAgent {
     @Override
     public void execute(){
         String msg="";
+        String state="";
         Posicion pos = new Posicion(-1,-1);
         int tipo = -1;
         int[][] sensor;
@@ -153,28 +158,29 @@ public class Agente extends SingleAgent {
         waitMess();
         try {
             //System.out.println("--------------------------------------");
-            msg=miTraductor.autoSelectACLMessage(q1.Pop());
+            state=miTraductor.autoSelectACLMessage(q1.Pop());
         } catch (InterruptedException ex) {
             System.err.println("Error al sacar mensaje");
         }
         
-        if (msg.contains("CRASHED")||msg.contains("NOT_UNDERTOOD")||msg.contains("BAD_KEY")){
+        if (state.contains("CRASHED")||state.contains("NOT_UNDERTOOD")||state.contains("BAD_KEY")){
            System.err.println("Error en el agente:"+nameAgent);
            sendMessege(miTraductor.Finalizar(getAid(), nameAgent));
            return;
         }
-        pos = miTraductor.getGPS(msg);
-        sensor = miTraductor.getSensor(tipo, msg);
-        bateria = miTraductor.GetBateria(msg);
+        pos = miTraductor.getGPS(state);
+        sensor = miTraductor.getSensor(tipo, state);
+        bateria = miTraductor.GetBateria(state);
         
         
         /*******************************************************************/
         /*                   Enviar informacion al controlador             */
         /*******************************************************************/
         
-        sendMessege(miTraductor.ACDatos(getAid(), nameAgentControlador, msg));
+        sendMessege(miTraductor.ACDatos(getAid(), nameAgentControlador, state));
         conocimiento.refreshData(pos, sensor);
         DibujarMapa dibujar = new DibujarMapa(this.getName(), conocimiento.getMapa(), nameAgent, bateria);
+        ventanaSuper.addPanel(dibujar);
         
         /*******************************************************************/
         /*Capturar posicion, movmiento, guardar informacion y informar     */
@@ -193,7 +199,7 @@ public class Agente extends SingleAgent {
             } catch (InterruptedException ex) {
                 System.err.println("Error al sacar mensaje");
             }
-            if(bateria<=10){
+            if(bateria<=10&&!parado){
                 /*******************************************************************/
                 /*                   Refuel                                        */
                 /*******************************************************************/
@@ -206,46 +212,49 @@ public class Agente extends SingleAgent {
                     System.err.println("Error al sacar mensaje");
                 }
             }
-            if(((pos.getX()) != (miIA.GetObjetivo().getX()))||((pos.getY())!=(miIA.GetObjetivo().getY()))){
+            if((((pos.getX()) != (miIA.GetObjetivo().getX()))||((pos.getY())!=(miIA.GetObjetivo().getY())))&&!parado){
                 movimiento = miIA.NextSteep(sensor, pos);
-                sendMessege(miTraductor.Moverse(getAid(), nameAgentSend, movimiento));
+                if(!movimiento.contains("GOAL")||!movimiento.contains("IMPOSIBLE")){
+                    sendMessege(miTraductor.Moverse(getAid(), nameAgentSend, movimiento));
+                    waitMess();
+                    try {
+                        //System.out.println("--------------------------------------");
+                        msg=miTraductor.autoSelectACLMessage(q1.Pop());
+                    } catch (InterruptedException ex) {
+                        System.err.println("Error al sacar mensaje");
+                    }
+                    if (msg.contains("CRASHED")||msg.contains("NOT")||msg.contains("BAD")){
+                        System.err.println("Error en el agente:"+nameAgent);
+                        //sendMessege(miTraductor.Finalizar(getAid(), nameAgent));
+                        //return;
+                    }
+                }
+            }
+            if(!parado){
+                sendMessege(miTraductor.PedirInformacion(getAid(), nameAgentSend));
                 waitMess();
                 try {
                     //System.out.println("--------------------------------------");
-                    msg=miTraductor.autoSelectACLMessage(q1.Pop());
+                    state=miTraductor.autoSelectACLMessage(q1.Pop());
                 } catch (InterruptedException ex) {
                     System.err.println("Error al sacar mensaje");
                 }
-                if (msg.contains("CRASHED")||msg.contains("NOT")||msg.contains("BAD")){
+
+                if (state.contains("CRASHED")||state.contains("NOT_UNDERTOOD")||state.contains("BAD_KEY")){
                     System.err.println("Error en el agente:"+nameAgent);
                     sendMessege(miTraductor.Finalizar(getAid(), nameAgent));
                     return;
                 }
+                pos = miTraductor.getGPS(state);
+                sensor = miTraductor.getSensor(tipo, state);
+                bateria = miTraductor.GetBateria(state);
             }
-            sendMessege(miTraductor.PedirInformacion(getAid(), nameAgentSend));
-            waitMess();
-            try {
-                //System.out.println("--------------------------------------");
-                msg=miTraductor.autoSelectACLMessage(q1.Pop());
-            } catch (InterruptedException ex) {
-                System.err.println("Error al sacar mensaje");
-            }
-
-            if (msg.contains("CRASHED")||msg.contains("NOT_UNDERTOOD")||msg.contains("BAD_KEY")){
-               System.err.println("Error en el agente:"+nameAgent);
-               sendMessege(miTraductor.Finalizar(getAid(), nameAgent));
-               return;
-            }
-            pos = miTraductor.getGPS(msg);
-            sensor = miTraductor.getSensor(tipo, msg);
-            bateria = miTraductor.GetBateria(msg);
-
 
             /*******************************************************************/
             /*                   Enviar informacion al controlador             */
             /*******************************************************************/
 
-            sendMessege(miTraductor.ACDatos(getAid(), nameAgentControlador, msg));
+            sendMessege(miTraductor.ACDatos(getAid(), nameAgentControlador, state));
             conocimiento.refreshData(pos, sensor);
             dibujar.setBateria(bateria);
 

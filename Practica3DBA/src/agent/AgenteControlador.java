@@ -15,12 +15,14 @@ import practica3dba.Traductor;
 import gui.DibujarMapaControlador;
 import ia.IAControlador;
 import java.util.ArrayList;
+import gui.VentanaSuper;
 
 /**
  *
  * @author SRJota
  */
 public class AgenteControlador extends SingleAgent{
+    private VentanaSuper ventanaSuper;
     String [][] AgentesRoles;
     String [] NameAgentSend;
     private String nameAgent;
@@ -33,6 +35,7 @@ public class AgenteControlador extends SingleAgent{
 
     public AgenteControlador(AgentID aid, String _nameServer, String[] _nameAgentSend, String _nameMap) throws Exception {
         super(aid);
+        ventanaSuper=VentanaSuper.getInstance();
         conocimiento = new ConocimientoControlador(100, 100);
         AgentesRoles = new String [_nameAgentSend.length][3];
         nameMap = _nameMap;
@@ -186,7 +189,8 @@ public class AgenteControlador extends SingleAgent{
         for (int cont=0; cont < 4; cont++)
             pasos[cont] = 20;
         DibujarMapaControlador dibujar = new DibujarMapaControlador("Vista controlador", conocimiento.getMapa());
-        while(!encontradoobjetivo){
+        ventanaSuper.addPanel(dibujar);
+        while(/*!encontradoobjetivo*/true){
             waitMess(NameAgentSend.length);
             
             //Conseguir la posicion por si se van a chocar
@@ -235,7 +239,8 @@ public class AgenteControlador extends SingleAgent{
             
             
             encontradoobjetivo = miInteligencia.vistoelobjetivo (conocimiento.getMapa());
-            if (!encontradoobjetivo){
+            //if (!encontradoobjetivo){
+            if(true){    
                 if(iteraciones==0){
                     posgoals[0]= miInteligencia.calculateGoalPos(posicion[0]);
                     posgoaltemporal[0] = miInteligencia.calculateGoalPos(posicion[0]);
@@ -246,7 +251,7 @@ public class AgenteControlador extends SingleAgent{
                     posgoals[3]= miInteligencia.calculateGoalPos(posicion[3]);
                     posgoaltemporal[3] = miInteligencia.calculateGoalPos(posicion[3]);
                 }
-                boolean[] Para = miInteligencia.quienPara (posicion, posgoaltemporal, 20, AgentesRoles);
+                boolean[] Para = miInteligencia.quienPara (posicion, posgoaltemporal, 10, AgentesRoles);
                 for(int cont=0;cont<Para.length; cont++){
                     if(Para[cont]){
                         posgoaltemporal[cont].setX(posicion[cont].getX());

@@ -39,7 +39,25 @@ public class IAControlador {
         Posicion[] pos = new Posicion[posiciones.length];
         Posicion[][] posicionesgoals = new Posicion[5][5];
         boolean [][] ocupado = new boolean [5][5];
+        
         Posicion base = new Posicion (goal.getX()-2, goal.getY()-2);
+        for(int i=0; i<5; i++){
+            for(int j=0; j<5; j++){
+                posicionesgoals[i][j] = new Posicion(base.getX()+i,base.getY()+j);
+                ocupado[i][j] = false;
+            }
+        }
+        float mejorscanner;
+        for(int cont=0; cont<pos.length; cont++){
+            mejorscanner = Float.MAX_VALUE;
+            for(int i=0; i<5; i++){
+                for (int j=0; j<5; j++){
+                    if (mapa[posicionesgoals[i][j].getX()][posicionesgoals[i][j].getY()].getRadar()==2){
+                        
+                    }
+                }
+            }
+        }
         return pos;
         
     }
