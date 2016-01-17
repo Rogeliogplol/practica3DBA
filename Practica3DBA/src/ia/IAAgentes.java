@@ -42,9 +42,11 @@ public class IAAgentes {
                 gpsrelativo[j][i].setY(postemporal.getY()+j);
             }
         }
+        
         float[][] scanner = new float[3][3];
         int [][] acotado = new int[3][3];
         int ai=0, aj=0;
+        
         for(int i=medio-1; i<medio+2; i++){
             for (int j=medio-1; j<medio+2; j++){
                 acotado[ai][aj] = sensores[i][j];
