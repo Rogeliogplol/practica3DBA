@@ -1,30 +1,28 @@
 package gui;
 
 import ia.CasillaControlador;
-import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.Timer;
-import javax.swing.border.EmptyBorder;
 
 /**
  *
  * @author SRJota Daniel Roger
  */
 
-public class DibujarMapaControlador  extends JFrame{
-    private static CasillaControlador[][] mapa;
-    private int ancho;
-    private int alto;
-    private final static int delay=200;
-    private final String nombreventana;
-    private final JPanel contentPane;
-    private final int margenSuperior=35, margenLateral=10;
+public class DibujarMapaControlador  extends JPanel{
+    private CasillaControlador[][] mapa;
+    private final int ancho;
+    private final int alto;
+    private final static int delay=500;
+    private final String nombreVentana;
+    private final int margenSuperior=5, margenLateral=5;
     private BufferedImage image;
     
     /**
@@ -36,22 +34,16 @@ public class DibujarMapaControlador  extends JFrame{
     * 
     */
     
-    public DibujarMapaControlador (String _nombreventana, CasillaControlador[][] mapa) {
+    public DibujarMapaControlador (String nombreVentana, CasillaControlador[][] mapa) {
         ancho = mapa.length;
         alto = mapa[0].length;
-        nombreventana=_nombreventana;
-        DibujarMapaControlador.mapa=mapa;
+        this.nombreVentana=nombreVentana;
+        this.mapa=mapa;
         
-        // Inicializa la ventana
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 450, 300);
-        contentPane = new JPanel();
-        setTitle(nombreventana);
-        contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-        contentPane.setLayout(new BorderLayout(0, 0));
-        setContentPane(contentPane);
-        setBounds(0,0,520,600);
+        setLayout(null);
+        setPreferredSize(new Dimension(612, 662));
         setVisible(true);
+
 
         // Cada "delay" milisegundos se repintará el mapa
         ActionListener taskPerformer = new ActionListener() {
@@ -133,12 +125,17 @@ public class DibujarMapaControlador  extends JFrame{
     /**
     * Pinta el mapa cargado
     * 
+    * @param g
     * @author Daniel SRJota Roger
     * 
     */
     @Override
     public void paint (Graphics g){
         super.paint(g);
-        g.drawImage(image, margenLateral, margenSuperior, 500, 500, null);
+        g.setFont(new Font("TimesRoman", Font.PLAIN, 24)); 
+        g.drawRect(margenLateral, margenSuperior, 601, 601);
+        g.drawRect(margenLateral, margenSuperior+610, 601, 41);
+        g.drawString(nombreVentana, margenLateral+8, margenSuperior+640);
+        g.drawImage(image, margenLateral+1, margenSuperior+1, 600, 600, null);
     }
 }

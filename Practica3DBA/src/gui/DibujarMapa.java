@@ -1,16 +1,13 @@
 package gui;
 
 import ia.Casilla;
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.Timer;
-import javax.swing.border.EmptyBorder;
 import java.awt.Dimension;
 
 /**
@@ -18,14 +15,12 @@ import java.awt.Dimension;
  * @author SRJota Daniel Roger
  */
 
-public class DibujarMapa  extends JFrame{
+public class DibujarMapa  extends JPanel{
     private final Casilla[][] mapa;
-    private int ancho;
-    private int alto;
+    private final int ancho;
+    private final int alto;
     private final static int delay=500;
-    private final String nombreventana;
-    private final JPanel contentPane;
-    private final int margenSuperior=20, margenLateral=20;
+    private final int margenSuperior=5, margenLateral=5;
     private BufferedImage image;
     private final String nombreDron;
     private int bateria;
@@ -42,19 +37,11 @@ public class DibujarMapa  extends JFrame{
     public DibujarMapa (String _nombreventana, Casilla[][] mapa, String nombreDron, int bateria) {
         this.nombreDron=nombreDron;
         this.bateria=bateria;
-        nombreventana=_nombreventana;
         this.mapa=mapa;
         ancho = mapa.length;
         alto = mapa[0].length;
-        
-        // Inicializa la ventana
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        contentPane = new JPanel();
-        setTitle(nombreventana);
-        contentPane.setLayout(null);
-        contentPane.setPreferredSize(new Dimension(540, 580));
-        add(contentPane);
-        pack();
+        setLayout(null);
+        setPreferredSize(new Dimension(312, 347));
         setVisible(true);
 
         // Cada "delay" milisegundos se repintará el mapa
@@ -86,7 +73,7 @@ public class DibujarMapa  extends JFrame{
         Color ret;
         
         if (valormapa.getRadar()==-1) {         // No se ha visto
-            ret = new Color(180,180,180);
+            ret = new Color(170,170,180);
         } else if (valormapa.getRadar()==0) {   // No hay muro
             if (valormapa.getPasos()==0)        // No visitado => Azul
                 ret = new Color(255,255,255);
@@ -133,9 +120,10 @@ public class DibujarMapa  extends JFrame{
     @Override
     public void paint (Graphics g){
         super.paint(g);
-        g.drawRect(19, 39, 301, 301);
-        g.drawRect(19, 344, 301, 21);
-        g.drawImage(image, 20, 40, 300, 300, null);
-        g.drawString("Dron: "+nombreDron, 23, 360);
+        g.drawRect(margenLateral, margenSuperior, 301, 301);
+        g.drawRect(margenLateral, margenSuperior+310, 301, 21);
+        g.drawString("Dron: "+nombreDron, margenLateral+4, margenSuperior+326);
+        g.drawString("Batería: "+bateria, margenLateral+231, margenSuperior+326);
+        g.drawImage(image, margenLateral+1, margenSuperior+1, 300, 300, null);
     }
 }
