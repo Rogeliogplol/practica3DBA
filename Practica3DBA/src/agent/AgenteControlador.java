@@ -251,9 +251,9 @@ public class AgenteControlador extends SingleAgent{
                     posgoals[3]= miInteligencia.calculateGoalPos(posicion[3]);
                     posgoaltemporal[3] = miInteligencia.calculateGoalPos(posicion[3]);
                 }
-                boolean[] Para = miInteligencia.quienPara (posicion, posgoaltemporal, 10, AgentesRoles);
+                boolean[] Para = miInteligencia.quienPara (posicion, posgoaltemporal, 5, AgentesRoles);
                 for(int cont=0;cont<Para.length; cont++){
-                    if(Para[cont]){
+                    if(Para[cont]&&!enobjetivo){
                         posgoaltemporal[cont].setX(posicion[cont].getX());
                         posgoaltemporal[cont].setY(posicion[cont].getY());
                     }else{
@@ -261,7 +261,7 @@ public class AgenteControlador extends SingleAgent{
                         posgoaltemporal[cont].setY(posgoals[cont].getY());
                     }
                 }
-                sendMessege(miTraductor.CAsendPosicion(getAid(), NameAgentSend, -1, posgoaltemporal));
+                sendMessege(miTraductor.CAsendPosicion(getAid(), NameAgentSend, -1, posgoaltemporal, posicion));
             }
             else{
                 goal = miInteligencia.getPosicionGoal();

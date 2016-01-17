@@ -86,6 +86,17 @@ public class Traductor {
         }
     } 
     
+    public Posicion[] getGPSdemas(ACLMessage msg){
+        Posicion [] posdemas = new Posicion[4];
+        String a ="";
+        for(int cont=0; cont<4; cont++){
+            a="a"+cont;
+            posdemas[cont] = new Posicion();
+            posdemas[cont] = getGPS(getPosicionMsg(msg.getContent(), a));
+        }
+        return posdemas;
+    }
+    
     public boolean GetGoal (String msg){
         try{
             JSONParser parser = new JSONParser();
@@ -257,6 +268,27 @@ public class Traductor {
             obj = parser.parse(msg);
             JSONObject JObject = (JSONObject)obj;
             Result = JObject.get("posicion").toString();
+            if(Key==""){
+                Key = Result;
+            }
+            return Result;
+        }
+        catch (Exception ex){
+            System.err.println("Fallo en getResult ("+msg+") : " + ex.toString());
+            return ("");
+        }
+    }
+    
+    public String getPosicionMsg (String msg, String buscar){
+        if(!msg.contains(buscar))
+            return "";
+        String Result;
+        try{
+            JSONParser parser= new JSONParser();
+            Object obj;
+            obj = parser.parse(msg);
+            JSONObject JObject = (JSONObject)obj;
+            Result = JObject.get(buscar).toString();
             if(Key==""){
                 Key = Result;
             }
@@ -464,9 +496,9 @@ public class Traductor {
         return outbox;             
     }
     
-    public ACLMessage[] CAsendPosicion(AgentID _sender, String[] _receiver, int pasos, Posicion[] p){
+    public ACLMessage[] CAsendPosicion(AgentID _sender, String[] _receiver, int pasos, Posicion[] p, Posicion[] posdemas){
         ACLMessage[] outbox = new ACLMessage[p.length];
-        String msg [][] = new String [2][2];
+        String msg [][] = new String [2+posdemas.length][2];
         for (int cont=0; cont < _receiver.length; cont++) {
             outbox[cont] = new ACLMessage();
             outbox[cont].setPerformative(ACLMessage.INFORM);
@@ -481,6 +513,15 @@ public class Traductor {
             posicion[1][0] = "y";
             posicion[1][1] = String.valueOf(p[cont].getY());
             msg[1][1]=TransformarJSon(posicion);
+            for(int i=0; i < posdemas.length; i++){
+                msg[2+i][0]="a"+i;
+                String d [][] = new String [2][2];
+                d[0][0] = "x";
+                d[0][1] = String.valueOf(posdemas[i].getX());
+                d[1][0] = "y";
+                d[1][1] = String.valueOf(posdemas[i].getY());
+                msg[2+i][1]=TransformarJSon(d);
+            }
             outbox[cont].setContent(TransformarJSon(msg));
         }
         return outbox;             
