@@ -69,28 +69,24 @@ public class DibujarMapa  extends JPanel{
     * @author SRJota Daniel Roger
     * 
     */
-    private Color ColorCelda (Casilla valormapa){
+    private Color ColorCelda (Casilla valorMapa){
         Color ret;
         
-        if (valormapa.getRadar()==-1) {         // No se ha visto
-            ret = new Color(170,170,180);
-        } else if (valormapa.getRadar()==0) {   // No hay muro
-            if (valormapa.getPasos()==0)        // No visitado => Azul
-                ret = new Color(255,255,255);
-            else {                              // Visitado => Verde
-                ret = new Color (0,200,0);
-            }
-        } else if (valormapa.getRadar()==1) {   // Obstáculo
-            if (valormapa.getPasos()>0)         // Choque => Amarillo
+        if (valorMapa.getPasos()!=0) {          // El dron lo ha visitado
+            if (valorMapa.getRadar()==1)        // Choque -> Amarillo
                 ret = new Color (235,255,50);
-            else                                // Obstaculo => Negro
-                ret = new Color (0,0,0);
-        } else {
-            if (valormapa.getPasos()==0)        // Objetivo => Rojo
-                ret = new Color (255,0,0);
-            else {                              // Visitado => Verde
+            else {                              // Visitado -> Verde
                 ret = new Color (0,200,0);
             }
+        } else {
+            if (valorMapa.getRadar()==-1)       // No Visitado -> Gris
+                ret = new Color(170,170,180);
+            else if (valorMapa.getRadar()==0)   // Visitado -> Blanco
+                ret = new Color(255,255,255);
+            else if (valorMapa.getRadar()==1)   // Muro -> Negro
+                ret = new Color (0,0,0);
+            else                                // Objetivo -> Rojo
+                ret = new Color (255,0,0);
         }
         
         return ret;

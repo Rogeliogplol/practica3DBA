@@ -10,7 +10,8 @@ package ia;
  */
 public class CasillaControlador {
     private int radar;
-    private int dronVisitado[];
+    private final int dronVisitado[];
+    private int idUltimoDron;
     
     //#######################################################
     //----------------- CONSTRUCTOR -------------------------
@@ -22,6 +23,7 @@ public class CasillaControlador {
         * @author Daniel
 	*/
     public CasillaControlador (){
+        idUltimoDron=-1;
         radar = -1;
         dronVisitado = new int[4];
         for (int i=0; i<4; i++) {
@@ -47,6 +49,7 @@ public class CasillaControlador {
 	*/
     public void setDronVisitado(int idDron) {
         dronVisitado[idDron]++;
+        idUltimoDron=idDron;
     }
 
 	/**
@@ -67,6 +70,17 @@ public class CasillaControlador {
 	*/
     public int getRadar (){
         return radar;
+    }
+    
+        /**
+	* @return radar devuelve la información guardada en radar.
+	* 
+	* @author Roger
+        * @author Daniel
+	*/
+    
+    public int getLastDrone () {
+        return idUltimoDron;
     }
 
     //#######################################################

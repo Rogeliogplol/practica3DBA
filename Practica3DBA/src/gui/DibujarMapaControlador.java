@@ -84,32 +84,24 @@ public class DibujarMapaControlador  extends JPanel{
     * 
     */
     
-    private Color ColorCelda (CasillaControlador valormapa){
-        Color ret = new Color(0, 0, 0);
-        int pasosDrones[]=valormapa.getDronVisitado();
+    private Color ColorCelda (CasillaControlador valorMapa){
+        Color ret;
         
-        for (int i=0; i<4; i++) {
-            int pasosDron=pasosDrones[i];
-            if (valormapa.getRadar()==-1) {         // No hay muro
-                ret = new Color(180,180,180);
-            } else if (valormapa.getRadar()==0) {   // No hay muro
-                if (pasosDron==0)                   // No visitado => Azul
-                    ret = new Color(255,255,255);
-                else {                              // Visitado => Verde
-                    ret = getDronColor (i);
-                }   
-            } else if (valormapa.getRadar()==1) {   // Obstáculo
-                if (pasosDron>0)                    // Choque => Amarillo
-                    ret = new Color (235,255,50);
-                else                                // Obstaculo => Negro
-                    ret = new Color (0,0,0);
-            } else {
-                if (pasosDron==0)                   // Objetivo => Rojo
-                    ret = new Color (255,0,0);
-                else {                              // Visitado => Verde
-                    ret = getDronColor (i);
-                }
+        if (valorMapa.getLastDrone()!=-1) {     // Algún dron lo ha visitado
+            if (valorMapa.getRadar()==1)        // Choque -> Amarillo
+                ret = new Color (235,255,50);
+            else {                              // Visitado -> Color último dron
+                ret = getDronColor (valorMapa.getLastDrone());
             }
+        } else {
+            if (valorMapa.getRadar()==-1)       // No Visitado -> Gris
+                ret = new Color(170,170,180);
+            else if (valorMapa.getRadar()==0)   // Visitado -> Blanco
+                ret = new Color(255,255,255);
+            else if (valorMapa.getRadar()==1)   // Muro -> Negro
+                ret = new Color (0,0,0);
+            else                                // Objetivo -> Rojo
+                ret = new Color (255,0,0);
         }
         
         return ret;
