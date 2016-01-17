@@ -57,6 +57,23 @@ public class DibujarMapaControlador  extends JPanel{
         new Timer(delay, taskPerformer).start();
     }
     
+    private Color getDronColor (int dron) {
+        Color ret;
+        
+        switch (dron) {
+            case 0:     ret = new Color (0,200,0);
+                        break;
+            case 1:     ret = new Color (0, 0,200);
+                        break;
+            case 2:     ret = new Color (200,0,200);
+                        break;
+            default:    ret = new Color (0,200,200);
+                        break;
+        }
+        
+        return ret;
+    }
+    
     /**
     * Determina el color del cuadrado a pintar según los valores de la casilla
     * correspondiente en el mapa
@@ -66,6 +83,7 @@ public class DibujarMapaControlador  extends JPanel{
     * @author SRJota Daniel Roger
     * 
     */
+    
     private Color ColorCelda (CasillaControlador valormapa){
         Color ret = new Color(0, 0, 0);
         int pasosDrones[]=valormapa.getDronVisitado();
@@ -78,26 +96,20 @@ public class DibujarMapaControlador  extends JPanel{
                 if (pasosDron==0)                   // No visitado => Azul
                     ret = new Color(255,255,255);
                 else {                              // Visitado => Verde
-                    switch (i) {
-                        case 0:     ret = new Color (0,200,0);
-                                    break;
-                        case 1:     ret = new Color (0, 0,200);
-                                    break;
-                        case 2:     ret = new Color (200,0,200);
-                                    break;
-                        default:    ret = new Color (0,200,200);
-                                    break;
-                    }
-                    
-                    return ret;
+                    ret = getDronColor (i);
                 }   
             } else if (valormapa.getRadar()==1) {   // Obstáculo
                 if (pasosDron>0)                    // Choque => Amarillo
                     ret = new Color (235,255,50);
                 else                                // Obstaculo => Negro
                     ret = new Color (0,0,0);
-            } else
-                ret = new Color (255,0,0);          // Objetivo => Rojo
+            } else {
+                if (pasosDron==0)                   // Objetivo => Rojo
+                    ret = new Color (255,0,0);
+                else {                              // Visitado => Verde
+                    ret = getDronColor (i);
+                }
+            }
         }
         
         return ret;

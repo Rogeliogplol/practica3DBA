@@ -79,14 +79,19 @@ public class DibujarMapa  extends JPanel{
                 ret = new Color(255,255,255);
             else {                              // Visitado => Verde
                 ret = new Color (0,200,0);
-            }   
+            }
         } else if (valormapa.getRadar()==1) {   // Obstáculo
             if (valormapa.getPasos()>0)         // Choque => Amarillo
                 ret = new Color (235,255,50);
             else                                // Obstaculo => Negro
                 ret = new Color (0,0,0);
-        } else
-            ret = new Color (255,0,0);         // Objetivo => Rojo
+        } else {
+            if (valormapa.getPasos()==0)        // Objetivo => Rojo
+                ret = new Color (255,0,0);
+            else {                              // Visitado => Verde
+                ret = new Color (0,200,0);
+            }
+        }
         
         return ret;
     }
