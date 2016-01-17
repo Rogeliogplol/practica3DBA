@@ -173,6 +173,7 @@ public class AgenteControlador extends SingleAgent{
         boolean encontradoobjetivo=false;
         boolean enobjetivo = false;
         Posicion[] posicion= new Posicion[4];
+        Posicion[] posgoals = new Posicion[4];
         Posicion[] posgoaltemporal = new Posicion[4];
         Posicion goal;
         int iteraciones =0;
@@ -228,10 +229,24 @@ public class AgenteControlador extends SingleAgent{
             encontradoobjetivo = miInteligencia.vistoelobjetivo (conocimiento.getMapa());
             if (!encontradoobjetivo){
                 if(iteraciones==0){
+                    posgoals[0]= miInteligencia.calculateGoalPos(posicion[0]);
                     posgoaltemporal[0] = miInteligencia.calculateGoalPos(posicion[0]);
+                    posgoals[1]= miInteligencia.calculateGoalPos(posicion[1]);
                     posgoaltemporal[1] = miInteligencia.calculateGoalPos(posicion[1]);
+                    posgoals[2]=  miInteligencia.calculateGoalPos(posicion[2]);
                     posgoaltemporal[2] = miInteligencia.calculateGoalPos(posicion[2]);
+                    posgoals[3]= miInteligencia.calculateGoalPos(posicion[3]);
                     posgoaltemporal[3] = miInteligencia.calculateGoalPos(posicion[3]);
+                }
+                boolean[] Para = miInteligencia.quienPara (posicion, posgoaltemporal, 20, AgentesRoles);
+                for(int cont=0;cont<Para.length; cont++){
+                    if(Para[cont]){
+                        posgoaltemporal[cont].setX(posicion[cont].getX());
+                        posgoaltemporal[cont].setY(posicion[cont].getY());
+                    }else{
+                        posgoaltemporal[cont].setX(posgoals[cont].getX());
+                        posgoaltemporal[cont].setY(posgoals[cont].getY());
+                    }
                 }
                 sendMessege(miTraductor.CAsendPosicion(getAid(), NameAgentSend, -1, posgoaltemporal));
             }

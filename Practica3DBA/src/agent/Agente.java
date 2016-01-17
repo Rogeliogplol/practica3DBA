@@ -204,22 +204,23 @@ public class Agente extends SingleAgent {
                     msg = miTraductor.autoSelectACLMessage(q1.Pop());
                 } catch (InterruptedException ex) {
                     System.err.println("Error al sacar mensaje");
-        }
+                }
             }
-            
-            movimiento = miIA.NextSteep(sensor, pos);
-            sendMessege(miTraductor.Moverse(getAid(), nameAgentSend, movimiento));
-            waitMess();
-            try {
-                //System.out.println("--------------------------------------");
-                msg=miTraductor.autoSelectACLMessage(q1.Pop());
-            } catch (InterruptedException ex) {
-                System.err.println("Error al sacar mensaje");
-            }
-            if (msg.contains("CRASHED")||msg.contains("NOT")||msg.contains("BAD")){
-                System.err.println("Error en el agente:"+nameAgent);
-                sendMessege(miTraductor.Finalizar(getAid(), nameAgent));
-                return;
+            if(((pos.getX()) != (miIA.GetObjetivo().getX()))||((pos.getY())!=(miIA.GetObjetivo().getY()))){
+                movimiento = miIA.NextSteep(sensor, pos);
+                sendMessege(miTraductor.Moverse(getAid(), nameAgentSend, movimiento));
+                waitMess();
+                try {
+                    //System.out.println("--------------------------------------");
+                    msg=miTraductor.autoSelectACLMessage(q1.Pop());
+                } catch (InterruptedException ex) {
+                    System.err.println("Error al sacar mensaje");
+                }
+                if (msg.contains("CRASHED")||msg.contains("NOT")||msg.contains("BAD")){
+                    System.err.println("Error en el agente:"+nameAgent);
+                    sendMessege(miTraductor.Finalizar(getAid(), nameAgent));
+                    return;
+                }
             }
             sendMessege(miTraductor.PedirInformacion(getAid(), nameAgentSend));
             waitMess();
@@ -250,116 +251,5 @@ public class Agente extends SingleAgent {
         
         }
         
-        
-        
-        
-        /*
-        sendMessege(miTraductor.Suscribirse(map,getAid(), nameAgentSend));
-        waitMess();
-        try {
-            System.out.println("--------------------------------------");
-            System.out.println(miTraductor.autoSelectACLMessage(q1.Pop()));
-        } catch (InterruptedException ex) {
-            System.err.println("Error al sacar mensaje");
-        }
-        sendMessege(miTraductor.PreguntarRol(getAid(), nameAgentSend));
-        waitMess();
-        try {
-            System.out.println("--------------------------------------");
-            msg = miTraductor.autoSelectACLMessage(q1.Pop());
-        } catch (InterruptedException ex) {
-            System.err.println("Error al sacar mensaje");
-        }
-        if (msg!="-1"){
-            tipo = Integer.valueOf(msg);
-        }
-        else{
-            System.err.println("\n["+this.getName()+"] Error al consguir el rol");
-            sendMessege(miTraductor.Finalizar(getAid(), nameAgent));
-            return;
-        }
-        sendMessege(miTraductor.Refuel(getAid(), nameAgentSend));
-        waitMess();
-        try {
-            System.out.println("--------------------------------------");
-            msg = miTraductor.autoSelectACLMessage(q1.Pop());
-        } catch (InterruptedException ex) {
-            System.err.println("Error al sacar mensaje");
-        }
-        if(msg!=miTraductor.GetKey()){
-            System.err.println("\n["+this.getName()+"] Error al repostar");
-            sendMessege(miTraductor.Finalizar(getAid(), nameAgent));
-            return;
-        }
-        sendMessege(miTraductor.PedirInformacion(getAid(), nameAgentSend));
-        waitMess();
-        try {
-            System.out.println("--------------------------------------");
-            msg=miTraductor.autoSelectACLMessage(q1.Pop());
-        } catch (InterruptedException ex) {
-            System.err.println("Error al sacar mensaje");
-        }
-        
-        if (msg.contains("CRASHED")||msg.contains("NOT_UNDERTOOD")||msg.contains("BAD_KEY")){
-           System.err.println("Error en el agente:"+nameAgent);
-           sendMessege(miTraductor.Finalizar(getAid(), nameAgent));
-           return;
-        }
-        pos = miTraductor.getGPS(msg);
-        sensor = miTraductor.getSensor(tipo, msg);
-        bateria = miTraductor.GetBateria(msg);
-        bateriaTotal = miTraductor.GetBateriaTotal(msg);
-        
-        
-        
-        /*--------Avisar al servidor que todo esta preparado------------------*/
-        
-        /*
-        String mov;
-        boolean abajo = false;
-        if(pos.getY()==0){
-            mov = "S";
-        }
-        else{
-            mov ="N";
-        }
-        
-        for (int cont=0; cont < 100; cont++){
-            sendMessege(miTraductor.Moverse(mov, getAid(), nameAgentSend));
-            waitMess();
-            try {
-                System.out.println("--------------------------------------");
-                msg=miTraductor.autoSelectACLMessage(q1.Pop());
-            } catch (InterruptedException ex) {
-                System.err.println("Error al sacar mensaje");
-            }
-            if (msg.contains("CRASHED")||msg.contains("NOT_UNDERTOOD")||msg.contains("BAD_KEY")){
-                System.err.println("Error en el agente:"+nameAgent);
-                sendMessege(miTraductor.Finalizar(getAid(), nameAgent));
-                return;
-            }
-            sendMessege(miTraductor.PedirInformacion(getAid(), nameAgentSend));
-            waitMess();
-            try {
-                System.out.println("--------------------------------------");
-                msg=miTraductor.autoSelectACLMessage(q1.Pop());
-            } catch (InterruptedException ex) {
-                System.err.println("Error al sacar mensaje");
-            }
-            
-            if (msg.contains("CRASHED")||msg.contains("NOT_UNDERTOOD")||msg.contains("BAD_KEY")){
-                System.err.println("Error en el agente:"+nameAgent);
-                sendMessege(miTraductor.Finalizar(getAid(), nameAgent));
-                return;
-             }
-             pos = miTraductor.getGPS(msg);
-             sensor = miTraductor.getSensor(tipo, msg);
-             bateria = miTraductor.GetBateria(msg);
-             bateriaTotal = miTraductor.GetBateriaTotal(msg);
-        }
-        System.out.println("Finalizado:"+nameAgent);
-        sendMessege(miTraductor.Finalizar(getAid(), nameAgent));
-                
-                */
     }
 }

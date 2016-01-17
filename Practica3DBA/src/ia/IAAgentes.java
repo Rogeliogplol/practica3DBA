@@ -28,7 +28,7 @@ public class IAAgentes {
     }
     
     public String NextSteep (int [][] sensores, Posicion gps){
-        int tamanho = sensores.length;
+        //int tamanho = sensores.length;
         float minimo = Float.MAX_VALUE;
         int di = -1;
         int dj = -1;
@@ -48,10 +48,8 @@ public class IAAgentes {
         for(int i=medio-1; i<medio+2; i++){
             for (int j=medio-1; j<medio+2; j++){
                 acotado[ai][aj] = sensores[i][j];
-                System.out.println("["+i+";"+j+"]\t");
                 aj++;
             }
-            System.out.println();
             aj=0;
             ai++;
         }
