@@ -19,7 +19,7 @@ import java.util.ArrayList;
  * @author Francisco Sueza Rodriguez
  */
 
-public class Algorithm {
+public class StandardAlgorithm{
     
     private final int xStartNode = 2;      // Coordenada X de la casilla de inicio
     private final int yStartNode = 2;      // Coordenada Y de la casilla de inicio
@@ -40,7 +40,7 @@ public class Algorithm {
     
     
     
-    public Algorithm(){
+    public StandardAlgorithm(){
         this.startNode = new Casilla();
         this.detectedNodes = new Casilla[MatrixDetected][MatrixDetected];
         this.neighborsNodes = new Casilla[MatrixNeighbors][MatrixNeighbors];
