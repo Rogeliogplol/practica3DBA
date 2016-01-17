@@ -28,7 +28,7 @@ public class Agente extends SingleAgent {
     private String map;
     private Traductor miTraductor;
     MessageQueue q1;
-    int fuel;
+    Integer fuel;
     Conocimiento conocimiento;
     
 
@@ -174,7 +174,7 @@ public class Agente extends SingleAgent {
         
         sendMessege(miTraductor.ACDatos(getAid(), nameAgentControlador, msg));
         conocimiento.refreshData(pos, sensor);
-        // DibujarMapa dibujar = new DibujarMapa(this.getName(), conocimiento.getMapa());
+        DibujarMapa dibujar = new DibujarMapa(this.getName(), conocimiento.getMapa(), nameAgent, bateria);
         
         /*******************************************************************/
         /*Capturar posicion, movmiento, guardar informacion y informar     */
@@ -247,7 +247,8 @@ public class Agente extends SingleAgent {
 
             sendMessege(miTraductor.ACDatos(getAid(), nameAgentControlador, msg));
             conocimiento.refreshData(pos, sensor);
-            //dibujar.repaint();
+            dibujar.setBateria(bateria);
+
         
         }
         

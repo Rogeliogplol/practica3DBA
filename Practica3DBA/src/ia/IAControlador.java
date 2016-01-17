@@ -10,9 +10,13 @@ package ia;
 public class IAControlador {
     
     Posicion goal;
+    boolean goalencontrado;
+    boolean asignadostodos;
     
     public IAControlador(){
         goal = new Posicion(-1,-1);
+        goalencontrado=false;
+        asignadostodos=false;
         
     };
     
@@ -31,6 +35,15 @@ public class IAControlador {
         return posGoal;
     }
     
+    public Posicion[] calcularSitioParaGoal(Posicion posiciones[], CasillaControlador [][] mapa){
+        Posicion[] pos = new Posicion[posiciones.length];
+        Posicion[][] posicionesgoals = new Posicion[5][5];
+        boolean [][] ocupado = new boolean [5][5];
+        Posicion base = new Posicion (goal.getX()-2, goal.getY()-2);
+        return pos;
+        
+    }
+    
     public float Distancia (Posicion pos1, Posicion pos2){
         return (float) Math.sqrt(Math.pow(pos1.getX()-pos2.getX(),2)+Math.pow(pos1.getY()-pos2.getY(),2));
     }
@@ -46,7 +59,7 @@ public class IAControlador {
                     String rol1=especificacionesRoles[i][1];
                     String rol2=especificacionesRoles[j][1];
                     if(rol1.equals(rol2)){
-                        if(Distancia(posiciones[i],goals[i])<=Distancia(posiciones[j],goals[j])){
+                        if(Distancia(posiciones[i],goals[i])<Distancia(posiciones[j],goals[j])){
                             stop[i]=false;
                             stop[j]=true;
                         }
@@ -75,6 +88,7 @@ public class IAControlador {
             for(int j=0; j<mapa.length; j++){
                 if(mapa[i][j].getRadar()==3){
                     goal = new Posicion(j,i);
+                    goalencontrado =true;
                     return true;
                 }
             }
