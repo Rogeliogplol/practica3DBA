@@ -141,10 +141,11 @@ public class DibujarMapaControlador  extends JPanel{
     @Override
     public void paint (Graphics g){
         super.paint(g);
-        g.setFont(new Font("TimesRoman", Font.PLAIN, 24)); 
+        g.drawImage(image, margenLateral+1, margenSuperior+1, 600, 600, null);
+        g.setFont(new Font("TimesRoman", Font.PLAIN, 24));
         g.drawRect(margenLateral, margenSuperior, 601, 601);
         g.drawRect(margenLateral, margenSuperior+610, 601, 41);
         g.drawString(nombreVentana, margenLateral+8, margenSuperior+640);
-        g.drawImage(image, margenLateral+1, margenSuperior+1, 600, 600, null);
+        g.drawString("Batería global: "+bateria, margenLateral+370, margenSuperior+640);
     }
 }

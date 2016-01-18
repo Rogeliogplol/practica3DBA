@@ -27,6 +27,7 @@ public class DibujarMapa  extends JPanel{
     private final String nombreDron;
     private int bateria;
     private Posicion pos, objetivo=null;
+    private final String tipoDron;
     
     /**
     * Constructor de la clase DibujarMapa
@@ -37,8 +38,9 @@ public class DibujarMapa  extends JPanel{
     * 
     */
     
-    public DibujarMapa (String _nombreventana, Casilla[][] mapa, String nombreDron, int bateria,
-            Posicion pos) {
+    public DibujarMapa (String _nombreventana, Casilla[][] mapa, 
+            String nombreDron, int bateria, Posicion pos, String tipoDron) {
+        this.tipoDron=tipoDron;
         this.pos=pos;
         this.nombreDron=nombreDron;
         this.bateria=bateria;
@@ -134,7 +136,7 @@ public class DibujarMapa  extends JPanel{
         g.drawRect(margenLateral, margenSuperior, 301, 301);
         g.drawRect(margenLateral, margenSuperior+302, 301, 34);
         g.setFont(new Font("TimesRoman", Font.BOLD, 16));
-        g.drawString("Dron: "+nombreDron, margenLateral+6, margenSuperior+318);
+        g.drawString(tipoDron+": "+nombreDron, margenLateral+6, margenSuperior+318);
         g.setFont(new Font("TimesRoman", Font.PLAIN, 12));
         g.drawString("Batería: "+bateria, margenLateral+6, margenSuperior+332);
         g.drawString("Posición: ("+pos.getX()+", "+pos.getY()+")", margenLateral+190, margenSuperior+316);
