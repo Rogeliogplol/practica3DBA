@@ -59,15 +59,17 @@ public class StandardAlgorithm extends Algorithm {
         
         for (int i=0; i<scanner.length; i++)
             for (int j=0; j<scanner[0].length; j++)
-                if (scanner[i][j] < minimo && radar[i][j] != 1 && radar[i][j] != 4 ) {
+                if (scanner[i][j] < minimo && radar[i][j] != 1 && radar[i][j] != 4 && (j!=1 || i!=1) ) {
                     indexi = i;
                     indexj = j;
                     minimo = scanner[i][j];
                 }
+                else if (radar[i][j]==3 && j==1 && i==1)
+                    return "GOAL";
         
-        if (scanner[indexi][indexj] < 2)
-            move = "GOAL"; 
-        else 
+        //if (scanner[indexi][indexj] < 1)
+            //move = "GOAL"; 
+        //else 
             move = directions[indexi][indexj];
         
         this.minimacota = minimo;
