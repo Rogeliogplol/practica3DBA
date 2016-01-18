@@ -106,6 +106,11 @@ public class IAControlador {
         }
         return pos;
                 */
+        asignadostodos = true;
+        for(int i=0;i<respuesta.length;i++)
+            if(respuesta[i].getX()==-1)
+                asignadostodos = false;
+        
         return respuesta;
     }
     
