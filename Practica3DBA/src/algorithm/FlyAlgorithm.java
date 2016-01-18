@@ -34,7 +34,10 @@ public class FlyAlgorithm extends Algorithm {
                     indexj=j;
                     minim = scanner[i][j];
                 }
-                
-        return directions[indexi][indexj];
+        
+        if (scanner[indexi][indexj] < 2)
+            return "GOAL";
+        else
+            return directions[indexi][indexj];
     }
 }
