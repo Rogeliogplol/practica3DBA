@@ -131,9 +131,9 @@ public class IAAgentes {
             ai++;
         }
         acotado = InsertarMovmientosDemas(acotado, gps);
-        /*if(acotado[1][1]==3)
-            return "GOAL";
-        for(int i=0; i<3; i++){
+        //if(acotado[1][1]==3)
+            //return "GOAL";
+        /*for(int i=0; i<3; i++){
             for(int j=0; j<3; j++){
                 scanner[i][j] = GetScanner(gpsrelativo[i][j].getX(), gpsrelativo[i][j].getY());
                 if(acotado[i][j]==3 && i==1 && j==1){//Estoy encima de un goal
@@ -150,10 +150,15 @@ public class IAAgentes {
                 }
             }
         }
-        if (di==-1 && dj==-1) //no he selecionado nada
-            return "GOAL";
-        String[][] directions = {{"NW","N","NE"},{"W","GOAL","E"},{"SW","S","SE"}}; 
-        return directions[di][dj];*/
+        //if (di==-1 && dj==-1) //no he selecionado nada
+            //return "GOAL";
+        //String[][] directions = {{"NW","N","NE"},{"W","GOAL","E"},{"SW","S","SE"}}; 
+        //return directions[di][dj];*/
+        for(int i=0; i<3; i++){
+            for(int j=0; j<3; j++){
+                scanner[i][j] = GetScanner(gpsrelativo[i][j].getX(), gpsrelativo[i][j].getY());
+            }
+        }
         return alg.process(scanner, acotado);
     }
 }

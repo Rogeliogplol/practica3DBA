@@ -12,6 +12,7 @@ public abstract class Algorithm {
     
     protected String lastMove;
     protected final String[][] directions = {{"NW","N","NE"},{"W","GOAL","E"},{"SW","S","SE"}};
+    //protected final String[][] directions = {{"SW,"},{"E","GOAL","W"},{"NE","N","NW"}};
     
    
     /*

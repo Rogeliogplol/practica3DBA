@@ -12,12 +12,19 @@ public class IAControlador {
     Posicion goal;
     boolean goalencontrado;
     boolean asignadostodos;
+    int esquinas;
+    boolean[] esquinasasignadas;
     
     public IAControlador(){
         goal = new Posicion(-1,-1);
         goalencontrado=false;
         asignadostodos=false;
-        
+        esquinas=0;
+        esquinasasignadas = new boolean [4]; 
+        esquinasasignadas[0]= false;
+        esquinasasignadas[1]= false;
+        esquinasasignadas[2]= false;
+        esquinasasignadas[3]= false;
     };
     
     public  Posicion calculateGoalPos(Posicion original) {
@@ -29,8 +36,8 @@ public class IAControlador {
             posGoal.setY(0);
         else
             posGoal.setY(99);
-        System.out.println("Desde --> "+original.getX() + ";" + original.getY() 
-                           +"\nHacia-->"+posGoal.getX() + ";" + posGoal.getY());
+        //System.out.println("Desde --> "+original.getX() + ";" + original.getY() 
+                           //+"\nHacia-->"+posGoal.getX() + ";" + posGoal.getY());
         
         return posGoal;
     }
@@ -39,7 +46,7 @@ public class IAControlador {
     public  Posicion[] calculateGoalPos(Posicion[] original) {
         Posicion ret [] = new Posicion[original.length];
         
-        //ret[0]=new Posicion(50 ,50);
+        ret[0]=new Posicion(99 ,99);
         /*
         ret[0]=new Posicion(25 ,25);
         ret[1]=new Posicion(25 ,75);
@@ -47,7 +54,8 @@ public class IAControlador {
         ret[3]=new Posicion(75 ,75);
         */
         
-        ret[0]=new Posicion((int) (Math.random()*100),(int) (Math.random()*100));
+        
+        //ret[0]=new Posicion((int) (Math.random()*100),(int) (Math.random()*100));
         
         ret[1]=new Posicion((int) (Math.random()*100),(int) (Math.random()*100));
         ret[2]=new Posicion((int) (Math.random()*100),(int) (Math.random()*100));
@@ -74,7 +82,11 @@ public class IAControlador {
         int posResp = 0;
         for(int i=0; i<casillasGoal.length;i++){
             for(int j=0;j<casillasGoal.length;j++){
-                int valor = mapa[goal.getX() -6 + i][goal.getY() -6 + j].getRadar();
+                int valor; //= mapa[goal.getX() -5 + i][goal.getY() -5 + j].getRadar();
+                if(goal.getX()-5+i>=100 || goal.getY()-5+j>=100 || goal.getX()-5+i<0 || goal.getY()-5+j<0)
+                    valor=2;
+                else
+                    valor = mapa[goal.getX() -5 + i][goal.getY() -5 + j].getRadar();
                 if(valor==3){
                     casillasGoal[i][j].Set(goal.getX() - 5 + i, goal.getY() - 5 + j);
                     if(posResp<4){

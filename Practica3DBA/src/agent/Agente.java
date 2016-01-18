@@ -221,7 +221,7 @@ public class Agente extends SingleAgent {
             }
             if(!parado){
                 movimiento = miIA.NextSteep(sensor, pos);
-                if(!(movimiento.contains("GOAL")||movimiento.contains("IMPOSIBLE"))){
+                if(!(movimiento.contains("GOAL")||movimiento.contains("ERROR"))){
                     sendMessege(miTraductor.Moverse(getAid(), nameAgentSend, movimiento));
                     waitMess();
                     try {
