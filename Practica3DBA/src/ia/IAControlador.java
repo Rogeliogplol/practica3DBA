@@ -48,7 +48,29 @@ public class IAControlador {
         return ret;
     }
     
+    public boolean inAsignadoATodos(){
+        return asignadostodos;
+    }
     public Posicion[] calcularSitioParaGoal(Posicion posiciones[], CasillaControlador [][] mapa){
+        
+        Posicion casillasGoal[][] = new Posicion[5][5];
+        
+        //inicializamos 
+        for(int i=0; i<casillasGoal.length;i++){
+            for(int j=0;j<casillasGoal.length;j++){
+                casillasGoal[i][j] = new Posicion();
+            }
+        }
+        
+        for(int i=0; i<casillasGoal.length;i++){
+            for(int j=0;j<casillasGoal.length;j++){
+                if(mapa[goal.getX() - 5 + i][goal.getY() - 5 + j].getRadar()==3)
+                    casillasGoal[i][j].Set(goal.getX() - 5 + i, goal.getY() - 5 + j);
+            }
+        }
+            
+        
+        /*
         Posicion[] pos = new Posicion[posiciones.length];
         Posicion[][] posicionesgoals = new Posicion[5][5];
         boolean [][] ocupado = new boolean [5][5];
@@ -72,7 +94,8 @@ public class IAControlador {
             }
         }
         return pos;
-        
+                */
+        return null;
     }
     
     public float Distancia (Posicion pos1, Posicion pos2){
