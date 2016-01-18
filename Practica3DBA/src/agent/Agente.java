@@ -22,6 +22,7 @@ import gui.VentanaSuper;
 public class Agente extends SingleAgent {
     
     private VentanaSuper ventanaSuper;
+    private DibujarMapa dibujarMapa;
     private String nameAgent;
     private String nameAgentSend;
     private String nameAgentControlador;
@@ -31,6 +32,7 @@ public class Agente extends SingleAgent {
     private Integer fuel;
     private Conocimiento conocimiento;
     private boolean parado;
+    
 
     public Agente(AgentID aid, String _nameAgentSend, String _nameMap, String _nameAgentControlador) throws Exception {
         super(aid);
@@ -178,8 +180,8 @@ public class Agente extends SingleAgent {
         
         sendMessege(miTraductor.ACDatos(getAid(), nameAgentControlador, state));
         conocimiento.refreshData(pos, sensor);
-        DibujarMapa dibujar = new DibujarMapa(this.getName(), conocimiento.getMapa(), nameAgent, bateria);
-        ventanaSuper.addPanel(dibujar);
+        dibujarMapa = new DibujarMapa(this.getName(), conocimiento.getMapa(), nameAgent, bateria, conocimiento.getPosicion());
+        ventanaSuper.addPanel(dibujarMapa);
         
         /*******************************************************************/
         /*Capturar posicion, movmiento, guardar informacion y informar     */
@@ -196,6 +198,7 @@ public class Agente extends SingleAgent {
                 if(msg.contains("x")){
                     miIA.SetObjetivo(miTraductor.getGPS(msg));
                     miIA.SetDemas(miTraductor.getGPSdemas(temporal),pos);
+                    dibujarMapa.setObjetivo(miIA.GetObjetivo());
                 }
             } catch (InterruptedException ex) {
                 System.err.println("Error al sacar mensaje");
@@ -257,7 +260,7 @@ public class Agente extends SingleAgent {
 
             sendMessege(miTraductor.ACDatos(getAid(), nameAgentControlador, state));
             conocimiento.refreshData(pos, sensor);
-            dibujar.setBateria(bateria);
+            dibujarMapa.setBateria(bateria);
         }
         
     }

@@ -296,6 +296,7 @@ public class AgenteControlador extends SingleAgent{
                     for(int cont=0; cont < 4; cont++){
                         posgoals[cont].Set(arraypos[cont]);
                         posgoaltemporal[cont].Set(arraypos[cont]);
+                        enobjetivo[cont] = false;
                     }
                 }
                 //Pelea de valores
@@ -305,6 +306,7 @@ public class AgenteControlador extends SingleAgent{
                     if(Para[cont]/*&&!enobjetivo*/){
                         posgoaltemporal[cont].setX(posicion[cont].getX());
                         posgoaltemporal[cont].setY(posicion[cont].getY());
+                        
                     }else{
                         posgoaltemporal[cont].setX(posgoals[cont].getX());
                         posgoaltemporal[cont].setY(posgoals[cont].getY());
@@ -340,11 +342,7 @@ public class AgenteControlador extends SingleAgent{
             }
             iteraciones++;
         }
-            
-        //Buscar quien ha visto el objetivo y guardarlo en goal
-        /*******************************************************************/
-        /*                   Segunda parte bolsa                           */
-        /*******************************************************************/
+        
     }
     
 }

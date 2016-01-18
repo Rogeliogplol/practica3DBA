@@ -1,6 +1,7 @@
 package gui;
 
 import ia.Casilla;
+import ia.Posicion;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
@@ -9,6 +10,7 @@ import java.awt.image.BufferedImage;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 import java.awt.Dimension;
+import java.awt.Font;
 
 /**
  *
@@ -24,6 +26,7 @@ public class DibujarMapa  extends JPanel{
     private BufferedImage image;
     private final String nombreDron;
     private int bateria;
+    private Posicion pos, objetivo=null;
     
     /**
     * Constructor de la clase DibujarMapa
@@ -34,14 +37,16 @@ public class DibujarMapa  extends JPanel{
     * 
     */
     
-    public DibujarMapa (String _nombreventana, Casilla[][] mapa, String nombreDron, int bateria) {
+    public DibujarMapa (String _nombreventana, Casilla[][] mapa, String nombreDron, int bateria,
+            Posicion pos) {
+        this.pos=pos;
         this.nombreDron=nombreDron;
         this.bateria=bateria;
         this.mapa=mapa;
         ancho = mapa.length;
         alto = mapa[0].length;
         setLayout(null);
-        setPreferredSize(new Dimension(312, 347));
+        setPreferredSize(new Dimension(312, 344));
         setVisible(true);
 
         // Cada "delay" milisegundos se repintará el mapa
@@ -54,6 +59,10 @@ public class DibujarMapa  extends JPanel{
         };
 
         new Timer(delay, taskPerformer).start();
+    }
+    
+    public void setObjetivo (Posicion objetivo) {
+        this.objetivo=objetivo;
     }
     
     public void setBateria (int bateria) {
@@ -121,10 +130,17 @@ public class DibujarMapa  extends JPanel{
     @Override
     public void paint (Graphics g){
         super.paint(g);
-        g.drawRect(margenLateral, margenSuperior, 301, 301);
-        g.drawRect(margenLateral, margenSuperior+310, 301, 21);
-        g.drawString("Dron: "+nombreDron, margenLateral+4, margenSuperior+326);
-        g.drawString("Batería: "+bateria, margenLateral+231, margenSuperior+326);
         g.drawImage(image, margenLateral+1, margenSuperior+1, 300, 300, null);
+        g.drawRect(margenLateral, margenSuperior, 301, 301);
+        g.drawRect(margenLateral, margenSuperior+302, 301, 34);
+        g.setFont(new Font("TimesRoman", Font.BOLD, 16));
+        g.drawString("Dron: "+nombreDron, margenLateral+6, margenSuperior+318);
+        g.setFont(new Font("TimesRoman", Font.PLAIN, 12));
+        g.drawString("Batería: "+bateria, margenLateral+6, margenSuperior+332);
+        g.drawString("Posición: ("+pos.getX()+", "+pos.getY()+")", margenLateral+190, margenSuperior+316);
+        if (objetivo!=null)
+            g.drawString("Objetivo:  ("+objetivo.getX()+", "+objetivo.getY()+")", margenLateral+190, margenSuperior+332);
+        else
+            g.drawString("Objetivo:  -------", margenLateral+190, margenSuperior+332);
     }
 }

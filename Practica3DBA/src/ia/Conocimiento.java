@@ -13,7 +13,7 @@ package ia;
 public class Conocimiento {
     private final int ancho, alto;
     private Casilla mapa[][];
-    private Posicion posicion;
+    private Posicion pos;
 	
     public Conocimiento(int ancho, int alto) {
 	this.ancho=ancho;
@@ -24,9 +24,9 @@ public class Conocimiento {
                 this.mapa[i][ii]=new Casilla();
             }
         }
-        this.posicion= new Posicion();
-        posicion.setX(Integer.MAX_VALUE);
-        posicion.setY(Integer.MAX_VALUE);
+        pos= new Posicion(Integer.MAX_VALUE, Integer.MAX_VALUE);
+        //posicion.setX(Integer.MAX_VALUE);
+        //posicion.setY(Integer.MAX_VALUE);
 	
     }
     
@@ -34,7 +34,8 @@ public class Conocimiento {
     public void refreshData(Posicion _pos, int [][]radar) {
         int medio = (radar.length-1)/2;
         
-        Posicion pos = new Posicion(_pos.getX(),_pos.getY());
+        pos.Set(_pos.getX(),_pos.getY());
+        //Posicion pos = new Posicion();
         
         
 	for (int i=0; i<radar.length; i++) {
@@ -45,6 +46,10 @@ public class Conocimiento {
                 }
             }
 	}
+    }
+    
+    public Posicion getPosicion () {
+        return pos;
     }
     
     public Casilla[][] getMapa() {
