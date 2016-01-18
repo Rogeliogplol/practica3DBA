@@ -65,6 +65,7 @@ public class AgenteControlador extends SingleAgent{
         nameMap = _nameMap;
         nameServer = _nameServer;
         nameAgent = aid.name;
+        enobjetivo = new boolean [_nameAgentSend.length];
         NameAgentSend = new String [_nameAgentSend.length];
         for (int cont=0; cont < _nameAgentSend.length; cont++){
             enobjetivo[cont] = false;
