@@ -38,7 +38,7 @@ public class StandardAlgorithm extends Algorithm {
         float aux = minimacota;
         
         move = this.selectMove(scanner, radar);
-        if (aux < minimacota)
+        if (aux > minimacota)
             move = pared.process(scanner, radar);
         
        return move;
