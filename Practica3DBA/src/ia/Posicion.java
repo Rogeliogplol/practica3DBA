@@ -79,6 +79,19 @@ public class Posicion {
         return Y;
     }
     
+    //#######################################################
+    //--------------------- GET -----------------------------
+    //#######################################################
+	/**
+     * @param _pos Posicion
+	* @return boolean. Devuelve el resultado de la comparación.
+	* 
+	* @author Rubén
+	*/
+    public boolean isEqual (Posicion _pos){
+        return getX() == _pos.getX() && getY() == _pos.getY();
+    }
+    
 }
     
     
