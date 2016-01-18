@@ -38,11 +38,7 @@ public class IAControlador {
     
     public  Posicion[] calculateGoalPos(Posicion[] original) {
         Posicion ret [] = new Posicion[original.length];
-        /*for(int cont=0; cont < original.length; cont++){
-            ret[cont]=new Posicion();
-            ret[cont].setX((2*cont)+50);
-            ret[cont].setY((2*cont)+50)
-        }*/
+        
         
         ret[0]=new Posicion((int) (Math.random()*100),(int) (Math.random()*100));
         ret[1]=new Posicion((int) (Math.random()*100),(int) (Math.random()*100));
