@@ -91,6 +91,9 @@ public class IAAgentes {
         int di = -1;
         int dj = -1;
         int medio = (sensores.length-1)/2;
+        if(gps.isEqual(objetivo)){
+            return "GOAL";
+        }
         
         Posicion [][] gpsrelativo = new Posicion[3][3];
         Posicion postemporal = new Posicion(gps.getX()-1,gps.getY()-1);

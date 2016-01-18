@@ -35,6 +35,23 @@ public class IAControlador {
         return posGoal;
     }
     
+    
+    public  Posicion[] calculateGoalPos(Posicion[] original) {
+        Posicion ret [] = new Posicion[original.length];
+        /*for(int cont=0; cont < original.length; cont++){
+            ret[cont]=new Posicion();
+            ret[cont].setX((2*cont)+50);
+            ret[cont].setY((2*cont)+50)
+        }*/
+        
+        ret[0]=new Posicion((int) (Math.random()*100),(int) (Math.random()*100));
+        ret[1]=new Posicion((int) (Math.random()*100),(int) (Math.random()*100));
+        ret[2]=new Posicion((int) (Math.random()*100),(int) (Math.random()*100));
+        ret[3]=new Posicion((int) (Math.random()*100),(int) (Math.random()*100));
+        
+        return ret;
+    }
+    
     public Posicion[] calcularSitioParaGoal(Posicion posiciones[], CasillaControlador [][] mapa){
         Posicion[] pos = new Posicion[posiciones.length];
         Posicion[][] posicionesgoals = new Posicion[5][5];

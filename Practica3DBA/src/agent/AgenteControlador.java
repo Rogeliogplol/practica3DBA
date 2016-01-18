@@ -180,6 +180,12 @@ public class AgenteControlador extends SingleAgent{
         Posicion[] posgoals = new Posicion[4];
         Posicion[] posgoaltemporal = new Posicion[4];
         Posicion goal;
+        Posicion[] arraypos = new Posicion[4];
+        for(int cont=0; cont<4; cont++){
+            arraypos[cont] = new Posicion();
+            posgoals[cont] = new Posicion();
+            posgoaltemporal[cont] = new Posicion();
+        }
         int iteraciones =0;
         int [] pasos = new int[4];
         ArrayList <ArrayList <Integer> > baterias = new ArrayList < ArrayList <Integer> > ();
@@ -242,14 +248,21 @@ public class AgenteControlador extends SingleAgent{
             //if (!encontradoobjetivo){
             if(true){    
                 if(iteraciones==0){
-                    posgoals[0]= miInteligencia.calculateGoalPos(posicion[0]);
+                    /*posgoals[0]= miInteligencia.calculateGoalPos(posicion[0]);
                     posgoaltemporal[0] = miInteligencia.calculateGoalPos(posicion[0]);
                     posgoals[1]= miInteligencia.calculateGoalPos(posicion[1]);
                     posgoaltemporal[1] = miInteligencia.calculateGoalPos(posicion[1]);
                     posgoals[2]=  miInteligencia.calculateGoalPos(posicion[2]);
                     posgoaltemporal[2] = miInteligencia.calculateGoalPos(posicion[2]);
                     posgoals[3]= miInteligencia.calculateGoalPos(posicion[3]);
-                    posgoaltemporal[3] = miInteligencia.calculateGoalPos(posicion[3]);
+                    posgoaltemporal[3] = miInteligencia.calculateGoalPos(posicion[3]);*/
+                    
+                    //for(int cont=0; cont<)
+                    arraypos = miInteligencia.calculateGoalPos(posicion);
+                    for(int cont=0; cont < 4; cont++){
+                        posgoals[cont].Set(arraypos[cont]);
+                        posgoaltemporal[cont].Set(arraypos[cont]);
+                    }
                 }
                 boolean[] Para = miInteligencia.quienPara (posicion, posgoaltemporal, 5, AgentesRoles);
                 for(int cont=0;cont<Para.length; cont++){

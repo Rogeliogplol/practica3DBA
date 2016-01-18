@@ -42,6 +42,17 @@ public class Posicion {
     //#######################################################
     //--------------------- SET -----------------------------
     //#######################################################
+    
+    public void Set(int x, int y){
+        X=x;
+        Y=y;
+    }
+    
+    
+    public void Set(Posicion pos){
+        X=pos.getX();
+        Y=pos.getY();
+    }
 	/**
 	* @param x la información de la coordenada x a guardar.
 	* 
