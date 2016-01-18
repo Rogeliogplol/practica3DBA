@@ -20,6 +20,7 @@ public class FlyAlgorithm extends Algorithm {
      * @param radar Matriz con el radar indicando los obstaculos
      * 
      * @return String con la dirección de movimiento 
+     * @author Francisco Sueza Rodríguez
      */
     
     @Override
@@ -30,11 +31,13 @@ public class FlyAlgorithm extends Algorithm {
         
         for (int i=0; i<scanner.length;i++)
             for (int j=0; j<scanner[0].length;j++)
-                if (scanner[i][j] < minim) {
+                if (scanner[i][j] < minim && radar[i][j] != 4) {
                     indexi=i;
                     indexj=j;
                     minim = scanner[i][j];
                 }
+        
+        // Si el scanner es menor de 2 esque estamos al lado del objetivo
         
         if (scanner[indexi][indexj] < 2)
             move = "GOAL"; 
