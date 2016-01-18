@@ -33,6 +33,15 @@ public class AgenteControlador extends SingleAgent{
     private ConocimientoControlador conocimiento;
     private IAControlador miInteligencia;
     boolean [] enobjetivo;
+    boolean [] engoal;
+    
+    public boolean TodosEnGoal(){
+        for(int cont=0;cont<4; cont++){
+            if(!engoal[cont])
+                return false;
+        }
+        return true;
+    }
     
     public boolean AlgunoEnObjetivo(){
         boolean algunoobjetivo = false;
@@ -72,8 +81,10 @@ public class AgenteControlador extends SingleAgent{
         nameAgent = aid.name;
         enobjetivo = new boolean [_nameAgentSend.length];
         NameAgentSend = new String [_nameAgentSend.length];
+        engoal = new boolean [_nameAgentSend.length];
         for (int cont=0; cont < _nameAgentSend.length; cont++){
             enobjetivo[cont] = false;
+            engoal[cont] = false;
             AgentesRoles[cont][0] = _nameAgentSend[cont];
             NameAgentSend[cont] = _nameAgentSend[cont];
         }
@@ -89,7 +100,7 @@ public class AgenteControlador extends SingleAgent{
     
     String valorPaso(String tipo){
         int valor;
-        float valores[] = {2/9,1/25,4/121};
+        float valores[] = {2/9*100,1/25*100,4/121*100};
         valor = Integer.parseUnsignedInt(tipo);
         return String.valueOf(valores[valor]);
         
@@ -228,14 +239,13 @@ public class AgenteControlador extends SingleAgent{
             pasos[cont] = 20;
         DibujarMapaControlador dibujar = new DibujarMapaControlador("Vista controlador", conocimiento.getMapa());
         ventanaSuper.addPanel(dibujar);
-        while(/*!encontradoobjetivo*/true){
+        while(!TodosEnGoal()){
             waitMess(NameAgentSend.length);
             //Conseguir la posicion de los agentes
             try{
                 msg=miTraductor.autoSelectACLMessage(q1.Pop());
                 if(msg.contains("true")){
-                    encontradoobjetivo=true;
-                    enobjetivo=true;
+                    engoal[0] =true;
                 }
                 conocimiento.refreshData(miTraductor.getGPS(msg), miTraductor.getSensor(Integer.valueOf(AgentesRoles[0][1]), msg), 0);
                 posicion[0] = miTraductor.getGPS(msg);
@@ -244,8 +254,7 @@ public class AgenteControlador extends SingleAgent{
                 
                 msg=miTraductor.autoSelectACLMessage(q2.Pop());
                 if(msg.contains("true")){
-                    encontradoobjetivo=true;
-                    enobjetivo=true;
+                    engoal[1] =true;
                 }
                 conocimiento.refreshData(miTraductor.getGPS(msg), miTraductor.getSensor(Integer.valueOf(AgentesRoles[1][1]), msg), 1);
                 posicion[1] = miTraductor.getGPS(msg);
@@ -253,8 +262,7 @@ public class AgenteControlador extends SingleAgent{
                 
                 msg=miTraductor.autoSelectACLMessage(q3.Pop());
                 if(msg.contains("true")){
-                    encontradoobjetivo=true;
-                    enobjetivo=true;
+                    engoal[2] =true;
                 }
                 conocimiento.refreshData(miTraductor.getGPS(msg), miTraductor.getSensor(Integer.valueOf(AgentesRoles[2][1]), msg), 2);
                 posicion[2] = miTraductor.getGPS(msg);
@@ -262,8 +270,7 @@ public class AgenteControlador extends SingleAgent{
                 
                 msg=miTraductor.autoSelectACLMessage(q4.Pop());
                 if(msg.contains("true")){
-                    encontradoobjetivo=true;
-                    enobjetivo=true;
+                    engoal[3] =true;
                 }
                 conocimiento.refreshData(miTraductor.getGPS(msg), miTraductor.getSensor(Integer.valueOf(AgentesRoles[3][1]), msg), 3);
                 posicion[3] = miTraductor.getGPS(msg);
