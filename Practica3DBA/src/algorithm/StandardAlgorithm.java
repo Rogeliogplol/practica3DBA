@@ -11,13 +11,13 @@ import java.util.ArrayList;
 
 public class StandardAlgorithm extends Algorithm {
     
-    private boolean obstacle;
     private WallAlgorithm pared;
+    private float minimacota;
     
     public StandardAlgorithm (){
         super();
         pared = new WallAlgorithm();
-        obstacle = false;
+        minimacota = Float.MAX_VALUE;
     }
     
     /**
@@ -35,17 +35,12 @@ public class StandardAlgorithm extends Algorithm {
     @Override
     public String process(float [][] scanner, int [][] radar){
         String move;
+        float aux = minimacota;
         
-        if (radar[0][0] == 1 && radar[0][1] == 1 && radar[0][2] == 1)
-            this.setObstacle(true);
+        move = this.selectMove(scanner, radar);
+        if (aux < minimacota)
+            move = pared.process(scanner, radar);
         
-        if (this.getObstacle())
-           move =  pared.process(scanner, radar);
-        else
-           move = this.selectMove(scanner, radar);
-        
-        
-            
        return move;
     }
     
@@ -64,7 +59,7 @@ public class StandardAlgorithm extends Algorithm {
         
         for (int i=0; i<scanner.length; i++)
             for (int j=0; j<scanner[0].length; j++)
-                if (scanner[i][j] < minimo && radar[i][j] != 1 && radar[i][j] != 4) {
+                if (scanner[i][j] < minimo && radar[i][j] != 1 && radar[i][j] != 4 ) {
                     indexi = i;
                     indexj = j;
                     minimo = scanner[i][j];
@@ -75,7 +70,7 @@ public class StandardAlgorithm extends Algorithm {
         else 
             move = directions[indexi][indexj];
         
-        
+        this.minimacota = minimo;
         return move;
         
     }
@@ -83,14 +78,7 @@ public class StandardAlgorithm extends Algorithm {
     /*
      * Getter/Setter
      */
-    
-    public boolean getObstacle(){
-        return this.obstacle;
-    }
-    
-    public void setObstacle(boolean obstacle){
-        this.obstacle = obstacle;
-    }
+
     
 }
    
