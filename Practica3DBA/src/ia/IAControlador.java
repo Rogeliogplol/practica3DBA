@@ -14,6 +14,8 @@ public class IAControlador {
     boolean asignadostodos;
     int esquinas;
     boolean[] esquinasasignadas;
+    boolean primerGoal, esquinaIzGoal1, esquinaIzGoal2, esquinaDerGoal1, esquinaDerGoal2;
+    int maxIndex=-1, minIndex=-1;
     
     public IAControlador(){
         goal = new Posicion(-1,-1);
@@ -25,9 +27,15 @@ public class IAControlador {
         esquinasasignadas[1]= false;
         esquinasasignadas[2]= false;
         esquinasasignadas[3]= false;
+        
+        primerGoal=true;
+        esquinaIzGoal1=false;
+        esquinaIzGoal2=false;
+        esquinaDerGoal1=false;
+        esquinaIzGoal2=false;
     };
     
-    public  Posicion calculateGoalPos(Posicion original) {
+    public Posicion calculateGoalPos(Posicion original) {
         
        // Posicion posGoal = new Posicion(50,50);
         Posicion posGoal = new Posicion(original.getX(), original.getY());
@@ -46,20 +54,63 @@ public class IAControlador {
     public  Posicion[] calculateGoalPos(Posicion[] original) {
         Posicion ret [] = new Posicion[original.length];
         
-        ret[0]=new Posicion(99 ,99);
-        /*
-        ret[0]=new Posicion(25 ,25);
-        ret[1]=new Posicion(25 ,75);
-        ret[2]=new Posicion(75 ,25);
-        ret[3]=new Posicion(75 ,75);
-        */
-        
-        
-        //ret[0]=new Posicion((int) (Math.random()*100),(int) (Math.random()*100));
-        
-        ret[1]=new Posicion((int) (Math.random()*100),(int) (Math.random()*100));
-        ret[2]=new Posicion((int) (Math.random()*100),(int) (Math.random()*100));
-        ret[3]=new Posicion((int) (Math.random()*100),(int) (Math.random()*100));
+        if (primerGoal) {
+            primerGoal=false;
+            int max=-1, min=10000;
+            maxIndex=-1;
+            minIndex=-1;
+            
+            for (int i=0; i<4; i++) {
+                if (original[i].getX() < min) {
+                    min=original[i].getX();
+                    minIndex=i;
+                }
+                
+                if (original[i].getX() > max) {
+                    max=original[i].getX();
+                    maxIndex=i;
+                }
+            }
+        } else {
+            for (int i=0; i<4; i++) {
+                if (i==minIndex) {
+                    if (!esquinaIzGoal1) {
+                        if (original[i].equals(new Posicion(0, original[i].getY()))) {
+                            esquinaIzGoal1=true;
+                            ret[i]=new Posicion(0, 99-original[i].getY());
+                        } else {
+                            ret[i]=new Posicion(0, original[i].getY());
+                        }
+                    } else if (!esquinaIzGoal2) {
+                        if (original[i].equals(new Posicion(0, 99-original[i].getY()))) {
+                            esquinaIzGoal1=true;
+                            ret[1]=new Posicion((int) (Math.random()*100),(int) (Math.random()*100));
+                        } else {
+                            ret[i]=new Posicion(0, 99-original[i].getY());
+                        }
+                    } else
+                        ret[1]=new Posicion((int) (Math.random()*100),(int) (Math.random()*100));
+                } else if (i==maxIndex) {
+                    if (!esquinaDerGoal1) {
+                        if (original[i].equals(new Posicion(99, original[i].getY()))) {
+                            esquinaDerGoal1=true;
+                            ret[i]=new Posicion(99, 99-original[i].getY());
+                        } else {
+                            ret[i]=new Posicion(99, original[i].getY());
+                        }
+                    } else if (!esquinaDerGoal2) {
+                        if (original[i].equals(new Posicion(99, 99-original[i].getY()))) {
+                            esquinaDerGoal1=true;
+                            ret[1]=new Posicion((int) (Math.random()*100),(int) (Math.random()*100));
+                        } else {
+                            ret[i]=new Posicion(99, 99-original[i].getY());
+                        }
+                    } else
+                        ret[1]=new Posicion((int) (Math.random()*100),(int) (Math.random()*100));
+                } else
+                    ret[1]=new Posicion((int) (Math.random()*100),(int) (Math.random()*100));
+            }
+        }
         
         return ret;
     }
