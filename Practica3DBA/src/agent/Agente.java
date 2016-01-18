@@ -61,14 +61,14 @@ public class Agente extends SingleAgent {
     public void onMessage(ACLMessage msg)  {
         try {
             q1.Push(msg); // Cada mensaje nuevo que llega se encola en el orden de llegada
-            System.out.println("\n["+this.getName()+"]-->["+msg.getSender().name+"] Encolando: "+msg.getContent());
+            //System.out.println("\n["+this.getName()+"]-->["+msg.getSender().name+"] Encolando: "+msg.getContent());
         } catch (InterruptedException ex) {
             ex.printStackTrace();
         }
     }
     
     private void sendMessege(ACLMessage msg){
-        System.out.println("------>"+msg.getSender().name+"-->"+msg.getReceiver().name+": "+msg.getContent());
+        //System.out.println("------>"+msg.getSender().name+"-->"+msg.getReceiver().name+": "+msg.getContent());
         this.send(msg);
     }
     
@@ -190,7 +190,7 @@ public class Agente extends SingleAgent {
         /*Capturar posicion, movmiento, guardar informacion y informar     */
         /*******************************************************************/
         boolean moverse = true;
-        IAAgentes miIA = new IAAgentes();
+        IAAgentes miIA = new IAAgentes(Rol);
         String movimiento = "";
         while(moverse){
             waitMess();

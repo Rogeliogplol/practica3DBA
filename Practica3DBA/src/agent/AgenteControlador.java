@@ -124,7 +124,7 @@ public class AgenteControlador extends SingleAgent{
                 q4.Push(msg);
             else
                 qservidor.Push(msg);
-            System.out.println("\n["+this.getName()+"] Encolando: "+msg.getContent());
+            //System.out.println("\n["+this.getName()+"] Encolando: "+msg.getContent());
         } catch (InterruptedException ex) {
             ex.printStackTrace();
         }

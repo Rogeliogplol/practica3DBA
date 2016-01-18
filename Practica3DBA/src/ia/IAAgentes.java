@@ -5,6 +5,9 @@
  */
 package ia;
 
+import algorithm.Algorithm;
+import algorithm.FlyAlgorithm;
+import algorithm.StandardAlgorithm;
 import static java.lang.Math.pow;
 
 /**
@@ -14,9 +17,18 @@ import static java.lang.Math.pow;
 public class IAAgentes {
     Posicion objetivo;
     Posicion[] demas;
-    public IAAgentes(){
+    Algorithm alg;
+    int Rol;
+    
+    public IAAgentes(int rol){
         objetivo=new Posicion(-1,-1);
         demas = new Posicion[3];
+        Rol = rol;
+        if(rol==0){
+            alg = new FlyAlgorithm();
+        }else{
+            alg = new StandardAlgorithm();
+        }
         for(int cont=0; cont < 3; cont++){
             demas[cont] = new Posicion();
         }
@@ -119,7 +131,7 @@ public class IAAgentes {
             ai++;
         }
         acotado = InsertarMovmientosDemas(acotado, gps);
-        if(acotado[1][1]==3)
+        /*if(acotado[1][1]==3)
             return "GOAL";
         for(int i=0; i<3; i++){
             for(int j=0; j<3; j++){
@@ -141,6 +153,7 @@ public class IAAgentes {
         if (di==-1 && dj==-1) //no he selecionado nada
             return "GOAL";
         String[][] directions = {{"NW","N","NE"},{"W","GOAL","E"},{"SW","S","SE"}}; 
-        return directions[di][dj];
+        return directions[di][dj];*/
+        return alg.process(scanner, acotado);
     }
 }
