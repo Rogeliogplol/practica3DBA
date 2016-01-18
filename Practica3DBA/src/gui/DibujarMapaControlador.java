@@ -20,6 +20,7 @@ public class DibujarMapaControlador  extends JPanel{
     private CasillaControlador[][] mapa;
     private final int ancho;
     private final int alto;
+    private int bateria;
     private final static int delay=500;
     private final String nombreVentana;
     private final int margenSuperior=5, margenLateral=5;
@@ -43,7 +44,7 @@ public class DibujarMapaControlador  extends JPanel{
         setLayout(null);
         setPreferredSize(new Dimension(612, 662));
         setVisible(true);
-
+        setBateria(0);
 
         // Cada "delay" milisegundos se repintará el mapa
         ActionListener taskPerformer = new ActionListener() {
@@ -72,6 +73,10 @@ public class DibujarMapaControlador  extends JPanel{
         }
         
         return ret;
+    }
+    
+    public void setBateria (int bateria) {
+        this.bateria=bateria;
     }
     
     /**

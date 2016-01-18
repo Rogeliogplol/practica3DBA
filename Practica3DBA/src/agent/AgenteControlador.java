@@ -23,6 +23,7 @@ import gui.VentanaSuper;
  */
 public class AgenteControlador extends SingleAgent{
     private VentanaSuper ventanaSuper;
+    private DibujarMapaControlador dibujarMapa;
     String [][] AgentesRoles;
     String [] NameAgentSend;
     private String nameAgent;
@@ -34,6 +35,8 @@ public class AgenteControlador extends SingleAgent{
     private IAControlador miInteligencia;
     boolean [] enobjetivo;
     boolean [] engoal;
+    private int energy;
+    
     
     public boolean TodosEnGoal(){
         for(int cont=0;cont<4; cont++){
@@ -95,7 +98,7 @@ public class AgenteControlador extends SingleAgent{
         qservidor = new MessageQueue(100);
         miTraductor = new Traductor();
         miInteligencia = new IAControlador();
-        
+        energy = Integer.MAX_VALUE;
     }
     
     String valorPaso(String tipo){
@@ -237,12 +240,13 @@ public class AgenteControlador extends SingleAgent{
         }
         for (int cont=0; cont < 4; cont++)
             pasos[cont] = 20;
-        DibujarMapaControlador dibujar = new DibujarMapaControlador("Vista controlador", conocimiento.getMapa());
-        ventanaSuper.addPanel(dibujar);
+        dibujarMapa = new DibujarMapaControlador("Vista controlador", conocimiento.getMapa());
+        ventanaSuper.addPanel(dibujarMapa);
         while(!TodosEnGoal()){
             waitMess(NameAgentSend.length);
             //Conseguir la posicion de los agentes
             try{
+                int bateriatemporal;
                 msg=miTraductor.autoSelectACLMessage(q1.Pop());
                 if(msg.contains("true")){
                     engoal[0] =true;
@@ -252,6 +256,11 @@ public class AgenteControlador extends SingleAgent{
                 baterias.get(0).add(miTraductor.GetBateria(msg));
                 if(posicion[0].isEqual(posgoals[0]))
                     enobjetivo[0]=true;
+                bateriatemporal = miTraductor.GetBateriaTotal(msg);
+                if (energy > bateriatemporal){
+                    energy = bateriatemporal;
+                }
+                
                 
                 msg=miTraductor.autoSelectACLMessage(q2.Pop());
                 if(msg.contains("true")){
@@ -262,6 +271,12 @@ public class AgenteControlador extends SingleAgent{
                 baterias.get(1).add(miTraductor.GetBateria(msg));
                 if(posicion[1].isEqual(posgoals[1]))
                     enobjetivo[1]=true;
+                bateriatemporal = miTraductor.GetBateriaTotal(msg);
+                if (energy > bateriatemporal){
+                    energy = bateriatemporal;
+                }
+                
+                
                 
                 msg=miTraductor.autoSelectACLMessage(q3.Pop());
                 if(msg.contains("true")){
@@ -272,6 +287,12 @@ public class AgenteControlador extends SingleAgent{
                 baterias.get(2).add(miTraductor.GetBateria(msg));
                 if(posicion[2].isEqual(posgoals[2]))
                     enobjetivo[2]=true;
+                bateriatemporal = miTraductor.GetBateriaTotal(msg);
+                if (energy > bateriatemporal){
+                    energy = bateriatemporal;
+                }
+                
+                
                 
                 msg=miTraductor.autoSelectACLMessage(q4.Pop());
                 if(msg.contains("true")){
@@ -282,6 +303,13 @@ public class AgenteControlador extends SingleAgent{
                 baterias.get(3).add(miTraductor.GetBateria(msg));
                 if(posicion[3].isEqual(posgoals[3]))
                     enobjetivo[3]=true;
+                bateriatemporal = miTraductor.GetBateriaTotal(msg);
+                if (energy > bateriatemporal){
+                    energy = bateriatemporal;
+                }
+                
+                dibujarMapa.setBateria(energy);
+                
                 
             }catch (InterruptedException ex){
                 System.err.println("Error al sacar mensaje");
