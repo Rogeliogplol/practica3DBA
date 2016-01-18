@@ -35,25 +35,30 @@ public class AgenteControlador extends SingleAgent{
     boolean [] enobjetivo;
     
     public boolean AlgunoEnObjetivo(){
+        boolean algunoobjetivo = false;
         for(int cont=0; cont<4; cont++){
             if(enobjetivo[cont]){
-                return true;
+                AumentarValor(cont);
+                algunoobjetivo = true;
+            }
+            else{
+                DisminuirValor(cont);
             }
         }
-        return false;
+        return algunoobjetivo;
     }
     
     public void AumentarValor(int id){
-        float valor = Float.valueOf(AgentesRoles[id][3]);
+        float valor = Float.valueOf(AgentesRoles[id][2]);
         valor = (float) (valor * 1.25);
-        AgentesRoles[id][3] = String.valueOf(valor);
+        AgentesRoles[id][2] = String.valueOf(valor);
         
     }
     
     public void DisminuirValor(int id){
-        float valor = Float.valueOf(AgentesRoles[id][3]);
-        valor = (float) (valor * 0.75);
-        AgentesRoles[id][3] = String.valueOf(valor);
+        float valor = Float.valueOf(AgentesRoles[id][2]);
+        valor = (float) (valor * 0.01);
+        AgentesRoles[id][2] = String.valueOf(valor);
         
     }
     
@@ -273,7 +278,7 @@ public class AgenteControlador extends SingleAgent{
             encontradoobjetivo = miInteligencia.vistoelobjetivo (conocimiento.getMapa());
             if (!encontradoobjetivo){
             //if(true){    
-                if(iteraciones==0){
+                if(iteraciones==0 || AlgunoEnObjetivo()){
                     arraypos = miInteligencia.calculateGoalPos(posicion);
                     for(int cont=0; cont < 4; cont++){
                         posgoals[cont].Set(arraypos[cont]);
