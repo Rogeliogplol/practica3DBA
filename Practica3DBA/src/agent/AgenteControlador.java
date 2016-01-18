@@ -217,8 +217,8 @@ public class AgenteControlador extends SingleAgent{
         /*******************************************************************/
         /*                   Primera parte busqueda del objetivo           */
         /*******************************************************************/
-        boolean encontradoobjetivo=false;
-        boolean enobjetivo = false;
+        boolean encontradogoal=false;
+        //boolean enobjetivo = false;
         Posicion[] posicion= new Posicion[4];
         Posicion[] posgoals = new Posicion[4];
         Posicion[] posgoaltemporal = new Posicion[4];
@@ -250,7 +250,8 @@ public class AgenteControlador extends SingleAgent{
                 conocimiento.refreshData(miTraductor.getGPS(msg), miTraductor.getSensor(Integer.valueOf(AgentesRoles[0][1]), msg), 0);
                 posicion[0] = miTraductor.getGPS(msg);
                 baterias.get(0).add(miTraductor.GetBateria(msg));
-                
+                if(posicion[0].isEqual(posgoals[0]))
+                    enobjetivo[0]=true;
                 
                 msg=miTraductor.autoSelectACLMessage(q2.Pop());
                 if(msg.contains("true")){
@@ -259,6 +260,8 @@ public class AgenteControlador extends SingleAgent{
                 conocimiento.refreshData(miTraductor.getGPS(msg), miTraductor.getSensor(Integer.valueOf(AgentesRoles[1][1]), msg), 1);
                 posicion[1] = miTraductor.getGPS(msg);
                 baterias.get(1).add(miTraductor.GetBateria(msg));
+                if(posicion[1].isEqual(posgoals[1]))
+                    enobjetivo[1]=true;
                 
                 msg=miTraductor.autoSelectACLMessage(q3.Pop());
                 if(msg.contains("true")){
@@ -267,6 +270,8 @@ public class AgenteControlador extends SingleAgent{
                 conocimiento.refreshData(miTraductor.getGPS(msg), miTraductor.getSensor(Integer.valueOf(AgentesRoles[2][1]), msg), 2);
                 posicion[2] = miTraductor.getGPS(msg);
                 baterias.get(2).add(miTraductor.GetBateria(msg));
+                if(posicion[2].isEqual(posgoals[2]))
+                    enobjetivo[2]=true;
                 
                 msg=miTraductor.autoSelectACLMessage(q4.Pop());
                 if(msg.contains("true")){
@@ -275,27 +280,29 @@ public class AgenteControlador extends SingleAgent{
                 conocimiento.refreshData(miTraductor.getGPS(msg), miTraductor.getSensor(Integer.valueOf(AgentesRoles[3][1]), msg), 3);
                 posicion[3] = miTraductor.getGPS(msg);
                 baterias.get(3).add(miTraductor.GetBateria(msg));
-                
+                if(posicion[3].isEqual(posgoals[3]))
+                    enobjetivo[3]=true;
                 
             }catch (InterruptedException ex){
                 System.err.println("Error al sacar mensaje");
             }
             
             
-            encontradoobjetivo = miInteligencia.vistoelobjetivo (conocimiento.getMapa());
-            if (!encontradoobjetivo){
-            //if(true){    
+            encontradogoal = miInteligencia.vistoelobjetivo (conocimiento.getMapa());
+            if (!encontradogoal){    
                 if(iteraciones==0 || AlgunoEnObjetivo()){
+                    //Se calcula una posicion a donde ir
                     arraypos = miInteligencia.calculateGoalPos(posicion);
                     for(int cont=0; cont < 4; cont++){
                         posgoals[cont].Set(arraypos[cont]);
                         posgoaltemporal[cont].Set(arraypos[cont]);
                     }
                 }
-                //Preferencia a los de mejor valor economico
+                //Pelea de valores
                 boolean[] Para = miInteligencia.quienPara (posicion, posgoaltemporal, 5, AgentesRoles);
+                //Se da la direccion a donde ir, si se paran tienen el sitio donde estan
                 for(int cont=0;cont<Para.length; cont++){
-                    if(Para[cont]&&!enobjetivo){
+                    if(Para[cont]/*&&!enobjetivo*/){
                         posgoaltemporal[cont].setX(posicion[cont].getX());
                         posgoaltemporal[cont].setY(posicion[cont].getY());
                     }else{
@@ -303,6 +310,7 @@ public class AgenteControlador extends SingleAgent{
                         posgoaltemporal[cont].setY(posgoals[cont].getY());
                     }
                 }
+                //Envio a donde ir
                 sendMessege(miTraductor.CAsendPosicion(getAid(), NameAgentSend, -1, posgoaltemporal, posicion));
             }
             else{
@@ -310,19 +318,22 @@ public class AgenteControlador extends SingleAgent{
                     //goal = miInteligencia.getPosicionGoal();
                     arraypos = miInteligencia.calcularSitioParaGoal(posicion, conocimiento.getMapa());
                     for(int cont=0; cont < 4; cont++){
-                        posgoals[cont].Set(arraypos[cont]);
-                        posgoaltemporal[cont].Set(arraypos[cont]);
+                        if(!arraypos[cont].isEqual(new Posicion(-1,-1))){
+                            posgoals[cont].Set(arraypos[cont]);
+                            posgoaltemporal[cont].Set(arraypos[cont]);
+                        }
                     }
                 }
-                boolean[] Para = miInteligencia.quienPara (posicion, posgoaltemporal, 5, AgentesRoles);
-                for(int cont=0;cont<Para.length; cont++){
-                    if(Para[cont]&&!enobjetivo){
+                //boolean[] Para = miInteligencia.quienPara (posicion, posgoaltemporal, 5, AgentesRoles);
+                for(int cont=0;cont<posgoaltemporal.length; cont++){
+                    /*if(Para[cont]&&!enobjetivo){
                         posgoaltemporal[cont].setX(posicion[cont].getX());
                         posgoaltemporal[cont].setY(posicion[cont].getY());
                     }else{
                         posgoaltemporal[cont].setX(posgoals[cont].getX());
                         posgoaltemporal[cont].setY(posgoals[cont].getY());
-                    }
+                    }*/
+                    posgoaltemporal[cont].Set(posgoals[cont]);
                 }
                 sendMessege(miTraductor.CAsendPosicion(getAid(), NameAgentSend, -1, posgoaltemporal, posicion));
                 
