@@ -84,12 +84,12 @@ public class IAControlador {
                     } else if (!esquinaIzGoal2) {
                         if (original[i].equals(new Posicion(0, 99-original[i].getY()))) {
                             esquinaIzGoal1=true;
-                            ret[1]=new Posicion((int) (Math.random()*100),(int) (Math.random()*100));
+                            ret[i]=new Posicion((int) (Math.random()*100),(int) (Math.random()*100));
                         } else {
                             ret[i]=new Posicion(0, 99-original[i].getY());
                         }
                     } else
-                        ret[1]=new Posicion((int) (Math.random()*100),(int) (Math.random()*100));
+                        ret[i]=new Posicion((int) (Math.random()*100),(int) (Math.random()*100));
                 } else if (i==maxIndex) {
                     if (!esquinaDerGoal1) {
                         if (original[i].equals(new Posicion(99, original[i].getY()))) {
@@ -101,14 +101,14 @@ public class IAControlador {
                     } else if (!esquinaDerGoal2) {
                         if (original[i].equals(new Posicion(99, 99-original[i].getY()))) {
                             esquinaDerGoal1=true;
-                            ret[1]=new Posicion((int) (Math.random()*100),(int) (Math.random()*100));
+                            ret[i]=new Posicion((int) (Math.random()*100),(int) (Math.random()*100));
                         } else {
                             ret[i]=new Posicion(99, 99-original[i].getY());
                         }
                     } else
-                        ret[1]=new Posicion((int) (Math.random()*100),(int) (Math.random()*100));
+                        ret[i]=new Posicion((int) (Math.random()*100),(int) (Math.random()*100));
                 } else
-                    ret[1]=new Posicion((int) (Math.random()*100),(int) (Math.random()*100));
+                    ret[i]=new Posicion((int) (Math.random()*100),(int) (Math.random()*100));
             }
         }
         
