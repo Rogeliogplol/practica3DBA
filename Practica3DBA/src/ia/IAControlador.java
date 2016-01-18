@@ -22,8 +22,8 @@ public class IAControlador {
     
     public  Posicion calculateGoalPos(Posicion original) {
         
-        Posicion posGoal = new Posicion(50,50);
-        /*Posicion posGoal = new Posicion(original.getX(), original.getY());
+       // Posicion posGoal = new Posicion(50,50);
+        Posicion posGoal = new Posicion(original.getX(), original.getY());
         
         if (original.getY() > 0)
             posGoal.setY(0);
@@ -31,7 +31,7 @@ public class IAControlador {
             posGoal.setY(99);
         System.out.println("Desde --> "+original.getX() + ";" + original.getY() 
                            +"\nHacia-->"+posGoal.getX() + ";" + posGoal.getY());
-        */
+        
         return posGoal;
     }
     
