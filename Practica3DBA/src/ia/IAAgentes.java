@@ -54,7 +54,7 @@ public class IAAgentes {
         Posicion otroagente = new Posicion();
         
         for(int cont=0; cont < 3; cont++){
-            if(DistanciaEuclidea(miposicion,demas[cont])<2){
+            if(DistanciaEuclidea(miposicion,demas[cont])<3){
                 for(int i=0; i< 3; i++){
                     for (int j=0; j<3; j++){
                         otroagente.setX((demas[cont].getX()-1)+i);
@@ -121,19 +121,21 @@ public class IAAgentes {
         for(int i=0; i<3; i++){
             for(int j=0; j<3; j++){
                 scanner[i][j] = GetScanner(gpsrelativo[i][j].getX(), gpsrelativo[i][j].getY());
-                if(minimo>scanner[i][j] && acotado[i][j]!=4){
+                if(acotado[i][j]==3 && i==1 && j==1){//Estoy encima de un goal
+                    return "GOAL";
+                } else if (acotado[i][j]==3){ //Es solucion pero puede que alguien lo pise
+                    di=i;
+                    dj=j;
+                    minimo = -1;
+                }
+                else if(minimo>scanner[i][j] && acotado[i][j]!=4){ //Es el valor mas bajo y no puede que nadie lo pise
                     di=i;
                     dj=j;
                     minimo=scanner[i][j];
                 }
-                if(acotado[i][j]==3 && i==1 && j==1){
-                    return "GOAL";
-                }
-                if(acotado[i][j]==4)
-                    System.out.println("jkañsdkjfjkasjdkñjfkñas");
             }
         }
-        if (di==-1 && dj==-1)
+        if (di==-1 && dj==-1) //no he selecionado nada
             return "GOAL";
         String[][] directions = {{"NW","N","NE"},{"W","GOAL","E"},{"SW","S","SE"}}; 
         return directions[di][dj];
