@@ -51,7 +51,7 @@ public class IAControlador {
         return ret;
     }
     
-    public boolean inAsignadoATodos(){
+    public boolean isAsignadoATodos(){
         return asignadostodos;
     }
     public Posicion[] calcularSitioParaGoal(Posicion posiciones[], CasillaControlador [][] mapa){

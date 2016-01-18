@@ -293,7 +293,7 @@ public class AgenteControlador extends SingleAgent{
                 sendMessege(miTraductor.CAsendPosicion(getAid(), NameAgentSend, -1, posgoaltemporal, posicion));
             }
             else{
-                if(!miInteligencia.isAsignadoATodos){
+                if(!miInteligencia.isAsignadoATodos()){
                     //goal = miInteligencia.getPosicionGoal();
                     arraypos = miInteligencia.calcularSitioParaGoal(posicion, conocimiento.getMapa());
                     for(int cont=0; cont < 4; cont++){
