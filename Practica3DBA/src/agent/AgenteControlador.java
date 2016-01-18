@@ -290,7 +290,7 @@ public class AgenteControlador extends SingleAgent{
             
             encontradogoal = miInteligencia.vistoelobjetivo (conocimiento.getMapa());
             if (!encontradogoal){    
-                if(iteraciones==0 || AlgunoEnObjetivo()){
+                if((iteraciones%30==0) || AlgunoEnObjetivo()){
                     //Se calcula una posicion a donde ir
                     arraypos = miInteligencia.calculateGoalPos(posicion);
                     for(int cont=0; cont < 4; cont++){

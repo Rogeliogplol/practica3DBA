@@ -40,14 +40,19 @@ public class IAControlador {
         Posicion ret [] = new Posicion[original.length];
         
         //ret[0]=new Posicion(50 ,50);
-
-        
+        /*
+        ret[0]=new Posicion(25 ,25);
+        ret[1]=new Posicion(25 ,75);
+        ret[2]=new Posicion(75 ,25);
+        ret[3]=new Posicion(75 ,75);
+        */
         
         ret[0]=new Posicion((int) (Math.random()*100),(int) (Math.random()*100));
         
         ret[1]=new Posicion((int) (Math.random()*100),(int) (Math.random()*100));
         ret[2]=new Posicion((int) (Math.random()*100),(int) (Math.random()*100));
         ret[3]=new Posicion((int) (Math.random()*100),(int) (Math.random()*100));
+        
         return ret;
     }
     
