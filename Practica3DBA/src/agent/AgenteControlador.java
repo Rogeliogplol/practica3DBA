@@ -32,7 +32,31 @@ public class AgenteControlador extends SingleAgent{
     MessageQueue q1, q2, q3, q4, qservidor;
     private ConocimientoControlador conocimiento;
     private IAControlador miInteligencia;
-
+    boolean [] enobjetivo;
+    
+    public boolean AlgunoEnObjetivo(){
+        for(int cont=0; cont<4; cont++){
+            if(enobjetivo[cont]){
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    public void AumentarValor(int id){
+        float valor = Float.valueOf(AgentesRoles[id][3]);
+        valor = (float) (valor * 1.25);
+        AgentesRoles[id][3] = String.valueOf(valor);
+        
+    }
+    
+    public void DisminuirValor(int id){
+        float valor = Float.valueOf(AgentesRoles[id][3]);
+        valor = (float) (valor * 0.75);
+        AgentesRoles[id][3] = String.valueOf(valor);
+        
+    }
+    
     public AgenteControlador(AgentID aid, String _nameServer, String[] _nameAgentSend, String _nameMap) throws Exception {
         super(aid);
         ventanaSuper=VentanaSuper.getInstance();
@@ -43,6 +67,7 @@ public class AgenteControlador extends SingleAgent{
         nameAgent = aid.name;
         NameAgentSend = new String [_nameAgentSend.length];
         for (int cont=0; cont < _nameAgentSend.length; cont++){
+            enobjetivo[cont] = false;
             AgentesRoles[cont][0] = _nameAgentSend[cont];
             NameAgentSend[cont] = _nameAgentSend[cont];
         }
@@ -61,6 +86,7 @@ public class AgenteControlador extends SingleAgent{
         float valores[] = {2/9,1/25,4/121};
         valor = Integer.parseUnsignedInt(tipo);
         return String.valueOf(valores[valor]);
+        
     }
     
     @Override
@@ -198,8 +224,7 @@ public class AgenteControlador extends SingleAgent{
         ventanaSuper.addPanel(dibujar);
         while(/*!encontradoobjetivo*/true){
             waitMess(NameAgentSend.length);
-            
-            //Conseguir la posicion por si se van a chocar
+            //Conseguir la posicion de los agentes
             try{
                 msg=miTraductor.autoSelectACLMessage(q1.Pop());
                 if(msg.contains("true")){
@@ -245,20 +270,32 @@ public class AgenteControlador extends SingleAgent{
             
             
             encontradoobjetivo = miInteligencia.vistoelobjetivo (conocimiento.getMapa());
-            //if (!encontradoobjetivo){
-            if(true){    
+            if (!encontradoobjetivo){
+            //if(true){    
                 if(iteraciones==0){
-                    /*posgoals[0]= miInteligencia.calculateGoalPos(posicion[0]);
-                    posgoaltemporal[0] = miInteligencia.calculateGoalPos(posicion[0]);
-                    posgoals[1]= miInteligencia.calculateGoalPos(posicion[1]);
-                    posgoaltemporal[1] = miInteligencia.calculateGoalPos(posicion[1]);
-                    posgoals[2]=  miInteligencia.calculateGoalPos(posicion[2]);
-                    posgoaltemporal[2] = miInteligencia.calculateGoalPos(posicion[2]);
-                    posgoals[3]= miInteligencia.calculateGoalPos(posicion[3]);
-                    posgoaltemporal[3] = miInteligencia.calculateGoalPos(posicion[3]);*/
-                    
-                    //for(int cont=0; cont<)
                     arraypos = miInteligencia.calculateGoalPos(posicion);
+                    for(int cont=0; cont < 4; cont++){
+                        posgoals[cont].Set(arraypos[cont]);
+                        posgoaltemporal[cont].Set(arraypos[cont]);
+                    }
+                }
+                //Preferencia a los de mejor valor economico
+                boolean[] Para = miInteligencia.quienPara (posicion, posgoaltemporal, 5, AgentesRoles);
+                for(int cont=0;cont<Para.length; cont++){
+                    if(Para[cont]&&!enobjetivo){
+                        posgoaltemporal[cont].setX(posicion[cont].getX());
+                        posgoaltemporal[cont].setY(posicion[cont].getY());
+                    }else{
+                        posgoaltemporal[cont].setX(posgoals[cont].getX());
+                        posgoaltemporal[cont].setY(posgoals[cont].getY());
+                    }
+                }
+                sendMessege(miTraductor.CAsendPosicion(getAid(), NameAgentSend, -1, posgoaltemporal, posicion));
+            }
+            else{
+                if(!miInteligencia.isAsignadoATodos){
+                    //goal = miInteligencia.getPosicionGoal();
+                    arraypos = miInteligencia.calcularSitioParaGoal(posicion, conocimiento.getMapa());
                     for(int cont=0; cont < 4; cont++){
                         posgoals[cont].Set(arraypos[cont]);
                         posgoaltemporal[cont].Set(arraypos[cont]);
@@ -275,12 +312,11 @@ public class AgenteControlador extends SingleAgent{
                     }
                 }
                 sendMessege(miTraductor.CAsendPosicion(getAid(), NameAgentSend, -1, posgoaltemporal, posicion));
-            }
-            else{
-                goal = miInteligencia.getPosicionGoal();
+                
             }
             iteraciones++;
         }
+            
         //Buscar quien ha visto el objetivo y guardarlo en goal
         /*******************************************************************/
         /*                   Segunda parte bolsa                           */
