@@ -26,6 +26,7 @@ public class FlyAlgorithm extends Algorithm {
     public String process(float [][] scanner, int [][] radar){
         int indexi=0, indexj=0;
         float minim=Float.MAX_VALUE;
+        String move;
         
         for (int i=0; i<scanner.length;i++)
             for (int j=0; j<scanner[0].length;j++)
@@ -36,8 +37,11 @@ public class FlyAlgorithm extends Algorithm {
                 }
         
         if (scanner[indexi][indexj] < 2)
-            return "GOAL";
-        else
-            return directions[indexi][indexj];
+            move = "GOAL"; 
+        else 
+            move = directions[indexi][indexj];
+        
+        this.setLastMove(move);
+        return move;
     }
 }
