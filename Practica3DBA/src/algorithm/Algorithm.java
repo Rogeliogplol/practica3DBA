@@ -9,7 +9,6 @@ import ia.Posicion;
 
 public abstract class Algorithm {
     
-    Posicion objetivo;
     String lastMove;
     
     protected final String[][] directions = {{"NW","N","NE"},{"W","GOAL","E"},{"SW","S","SE"}};
@@ -19,17 +18,9 @@ public abstract class Algorithm {
     
     
     
-    public abstract String process();
+    public abstract String process(float [][] scanner, int [][] radar);
     
-    
-    public void setObjetivo (Posicion objetiv){
-        this.objetivo = objetiv;
-    }
-    
-    public Posicion getObjetivo(){
-        return this.objetivo;
-    }
-    
+   
     public void setLastMove(String last){
         this.lastMove = last;
     }

@@ -1,7 +1,8 @@
 package algorithm;
 
 /**
- *
+ * Algoritmo para el desplazamiento del drone tipo mosca.
+ * 
  * @author Fco Sueza Rodríguez
  */
 
@@ -11,14 +12,29 @@ public class FlyAlgorithm extends Algorithm {
         super();
     }
     
-    @Override
-    public String process(){
-        int indexi, indexj;
-        
-        return "move";
-    }
-    
-    /*
-     * Getter/Setter   
+    /**
+     * Metodo para procesar la percepción y elegir el movimiento adecuado, sin
+     * tener en cuenta los obstaculos.
+     * 
+     * @param scanner Matriz con la distancia al objetivo
+     * @param radar Matriz con el radar indicando los obstaculos
+     * 
+     * @return String con la dirección de movimiento 
      */
+    
+    @Override
+    public String process(float [][] scanner, int [][] radar){
+        int indexi=0, indexj=0;
+        float minim=Float.MAX_VALUE;
+        
+        for (int i=0; i<scanner.length;i++)
+            for (int j=0; j<scanner[0].length;j++)
+                if (scanner[i][j] < minim) {
+                    indexi=i;
+                    indexj=j;
+                    minim = scanner[i][j];
+                }
+                
+        return directions[indexi][indexj];
+    }
 }

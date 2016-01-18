@@ -32,7 +32,7 @@ public class StandardAlgorithm extends Algorithm {
      */
     
     @Override
-    public String process(){
+    public String process(float [][] scanner, int [][] radar){
         if (obstacle)
             return pared.process();
         
