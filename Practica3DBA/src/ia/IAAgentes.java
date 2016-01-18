@@ -131,7 +131,7 @@ public class IAAgentes {
                     dj=j;
                     minimo = -1;
                 }
-                else if(minimo>scanner[i][j] && acotado[i][j]!=4 && i!=1 && j!=1){ //Es el valor mas bajo y no puede que nadie lo pise
+                else if(minimo>scanner[i][j] && acotado[i][j]!=4 && acotado[i][j]!=1 && acotado[i][j]!=2 && !(i==1 && j==1)){ //Es el valor mas bajo y no puede que nadie lo pise
                     di=i;
                     dj=j;
                     minimo=scanner[i][j];

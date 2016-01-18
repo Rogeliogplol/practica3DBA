@@ -32,10 +32,11 @@ public class Agente extends SingleAgent {
     private Integer fuel;
     private Conocimiento conocimiento;
     private boolean parado;
-    
+    String Rol;
 
     public Agente(AgentID aid, String _nameAgentSend, String _nameMap, String _nameAgentControlador) throws Exception {
         super(aid);
+        Rol ="";
         ventanaSuper = VentanaSuper.getInstance();
         nameAgent = aid.name;
         nameAgentSend = _nameAgentSend;
@@ -112,6 +113,7 @@ public class Agente extends SingleAgent {
         try {
             //System.out.println("--------------------------------------");
             msg = miTraductor.autoSelectACLMessage(q1.Pop());
+            Rol = msg;
         } catch (InterruptedException ex) {
             System.err.println("\n["+this.getName()+"]Error al sacar mensaje");
         }
@@ -177,7 +179,9 @@ public class Agente extends SingleAgent {
         /*******************************************************************/
         /*                   Enviar informacion al controlador             */
         /*******************************************************************/
-        
+        if(state.contains("true")){
+            System.out.println(this.nameAgent+"    jkasñddfjañkdfkl");
+        }
         sendMessege(miTraductor.ACDatos(getAid(), nameAgentControlador, state));
         conocimiento.refreshData(pos, sensor);
         dibujarMapa = new DibujarMapa(this.getName(), conocimiento.getMapa(), nameAgent, bateria, conocimiento.getPosicion());
