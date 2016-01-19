@@ -21,6 +21,7 @@ public class Inteligencia {
     boolean izquierda;
     
     public Inteligencia(Conocimiento _miConocimiento, int _tipo) {
+        tipo = _tipo;
         pasos = 100;
         miConocimiento = _miConocimiento;
         izquierda = true;
@@ -33,7 +34,7 @@ public class Inteligencia {
         
             try {
                 if(tipo==0){
-                    return miAlgoritmo.process(miConocimiento.Conocido(scanner, radar));
+                    return miAlgoritmo.process(miConocimiento.ConocidoMosquitos(scanner, radar));
                 }
                 else{
                     return algo2.process(miConocimiento.Conocido(scanner, radar));

@@ -82,6 +82,9 @@ public class Conocimiento {
             for(int j=0; j<5; j++){
                 int x= pos.getX()+i-medio;
                 int y= pos.getY()+j-medio;
+                if(i==medio && j==medio){
+                    System.out.println("Paraaaaaa");
+                }
                 if(x>=0&&y>=0&&x<100&&y<100){
                     vista[i][j]=mapa[x][y];
                     if(i>=1&&j>=1&&i<4&&j<4){
@@ -101,4 +104,36 @@ public class Conocimiento {
         }
         return vista;
     }
+    
+    public Casilla[][] ConocidoMosquitos(float [][] scanner, int [][] sensor){
+        Casilla vista[][] = new Casilla[5][5];
+        int medio = (5-1)/2;
+        for(int i=0; i<5; i++){
+            for(int j=0; j<5; j++){
+                int x= pos.getX()+i-medio;
+                int y= pos.getY()+j-medio;
+                if(x>=0&&y>=0&&x<100&&y<100){
+                    vista[i][j]=mapa[x][y];
+                    if(i>=1&&j>=1&&i<4&&j<4){
+                            mapa[x][y].setRadar(sensor[i-1][j-1]);
+                            mapa[x][y].setScanner(scanner[i-1][j-1]);
+                    }
+                    if(mapa[x][y].getRadar()==4||mapa[x][y].getRadar()==2){
+                        mapa[x][y].setRadar(1);
+                    }
+                    else if (mapa[x][y].getRadar()==1){
+                        mapa[x][y].setRadar(0);
+                    }
+                    
+                }
+                else {
+                    vista[i][j]=new Casilla();
+                    vista[i][j].setRadar(1);
+                }
+            }
+        }
+        return vista;
+    }
+    
+    
 }
