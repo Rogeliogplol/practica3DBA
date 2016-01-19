@@ -26,7 +26,7 @@ public class Practica3DBA {
             
             AgentsConnection.connect("isg2.ugr.es",6000, "Elnath", "Toro", "Pitol", false);
             System.out.println("Conectando");
-            mapa = "map30";
+            mapa = "map40";
             String AgenteControlador = "ControladorB";
             String [] nombreAgentes = {"PrimerBotA","SegundoBotA","TercerBotA","CuartoBotA"};
             AgenteControlador agente007 = new AgenteControlador (new AgentID(AgenteControlador), "Elnath", nombreAgentes, mapa );

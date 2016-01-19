@@ -91,7 +91,7 @@ public class IAControlador {
                         ret[i]=new Posicion(0, original[i].getY());
                     }
                 } else if (!esquinaIzGoal2) {
-                    if (original[i].isEqual(new Posicion(0, 99-original[i].getY()))) {
+                    if (original[i].isEqual(currentGoal[i])) {
                         esquinaIzGoal2=true;
                         ret[i]=new Posicion((int) (Math.random()*100),(int) (Math.random()*100));
                     } else {
@@ -109,7 +109,7 @@ public class IAControlador {
                         ret[i]=new Posicion(99, original[i].getY());
                     }
                 } else if (!esquinaDerGoal2) {
-                    if (original[i].isEqual(new Posicion(99, 99-original[i].getY()))) {
+                    if (original[i].isEqual(currentGoal[i])) {
                         esquinaDerGoal2=true;
                         ret[i]=new Posicion((int) (Math.random()*100),(int) (Math.random()*100));
                     } else {
@@ -234,7 +234,7 @@ public class IAControlador {
         for(int i=0; i<mapa.length; i++){
             for(int j=0; j<mapa.length; j++){
                 if(mapa[i][j].getRadar()==3){
-                    goal = new Posicion(j,i);
+                    goal = new Posicion(i,j);
                     goalencontrado =true;
                     return true;
                 }
