@@ -76,6 +76,7 @@ public class Conocimiento {
     }
     
     public Casilla[][] Conocido(float [][] scanner, int [][] sensor){
+        /*
         Casilla vista[][] = new Casilla[5][5];
         int medio = (5-1)/2;
         for(int i=0; i<5; i++){
@@ -102,11 +103,46 @@ public class Conocimiento {
                 }
             }
         }
+        
         return vista;
+        */
+        int offset = (int)(scanner.length/2.0);
+        Casilla resultado [][] = new Casilla[5][5];
+        for(int i = 0; i<resultado.length;i++){
+            for(int j = 0; j<resultado.length;j++){
+                resultado[i][j] = new Casilla();
+            }
+        }
+        
+        for(int i=0;i< scanner.length;i++){
+            for(int j=0;j<scanner.length;j++){
+                if( (pos.getX() - offset + i) >= 0 &&
+                    (pos.getY() - offset + j) >= 0 &&
+                    (pos.getX() - offset + i) < 100 &&
+                    (pos.getY() - offset + j) < 100)
+                {
+                    mapa[pos.getX() - offset + i][pos.getY() - offset + j].setRadar(sensor[i][j]);
+                    mapa[pos.getX() - offset + i][pos.getY() - offset + j].setScanner(scanner[i][j]);
+                    if(mapa[pos.getX() - offset + i][pos.getY() - offset + j].getRadar()==4 ||
+                       mapa[pos.getX() - offset + i][pos.getY() - offset + j].getRadar()==1 ||
+                       mapa[pos.getX() - offset + i][pos.getY() - offset + j].getRadar()==2){
+                        mapa[pos.getX() - offset + i][pos.getY() - offset + j].setRadar(1);
+                        resultado[i][j].setRadar(1);
+                    }else{
+                        resultado[i][j]=mapa[pos.getX() - offset + i][pos.getY() - offset + j];
+                    }
+                        
+                }
+            }
+        }
+        
+        return resultado;
+        
     }
     
     public Casilla[][] ConocidoMosquitos(float [][] scanner, int [][] sensor){
-        Casilla vista[][] = new Casilla[5][5];
+        
+        /*Casilla vista[][] = new Casilla[5][5];
         int medio = (5-1)/2;
         for(int i=0; i<5; i++){
             for(int j=0; j<5; j++){
@@ -133,6 +169,40 @@ public class Conocimiento {
             }
         }
         return vista;
+                */
+        int offset = (int)(scanner.length/2.0);
+        Casilla resultado [][] = new Casilla[3][3];
+        for(int i = 0; i<resultado.length;i++){
+            for(int j = 0; j<resultado.length;j++){
+                resultado[i][j] = new Casilla();
+            }
+        }
+        
+        for(int i=0;i< scanner.length;i++){
+            for(int j=0;j<scanner.length;j++){
+                if( (pos.getX() - offset + i) >= 0 &&
+                    (pos.getY() - offset + j) >= 0 &&
+                    (pos.getX() - offset + i) < 100 &&
+                    (pos.getY() - offset + j) < 100)
+                {
+                    mapa[pos.getX() - offset + i][pos.getY() - offset + j].setRadar(sensor[i][j]);
+                    mapa[pos.getX() - offset + i][pos.getY() - offset + j].setScanner(scanner[i][j]);
+                    if(mapa[pos.getX() - offset + i][pos.getY() - offset + j].getRadar()==4 ||
+                       mapa[pos.getX() - offset + i][pos.getY() - offset + j].getRadar()==2){
+                        mapa[pos.getX() - offset + i][pos.getY() - offset + j].setRadar(1);
+                        resultado[i][j].setRadar(1);
+                    }else if (mapa[pos.getX() - offset + i][pos.getY() - offset + j].getRadar()==1){
+                        mapa[pos.getX() - offset + i][pos.getY() - offset + j].setRadar(0);
+                    }else{
+                        resultado[i][j]=mapa[pos.getX() - offset + i][pos.getY() - offset + j];
+                    }
+                    
+                        
+                }
+            }
+        }
+        
+        return resultado;
     }
     
     
