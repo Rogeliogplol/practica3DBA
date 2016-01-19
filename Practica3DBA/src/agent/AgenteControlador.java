@@ -248,14 +248,17 @@ public class AgenteControlador extends SingleAgent{
             try{
                 int bateriatemporal;
                 msg=miTraductor.autoSelectACLMessage(q1.Pop());
-                if(msg.contains("true")){
+                if(msg.contains("true")&&posicion[0].isEqual(posgoals[0])){
                     engoal[0] =true;
+                    AgentesRoles[0][2]=String.valueOf(0);
                 }
                 conocimiento.refreshData(miTraductor.getGPS(msg), miTraductor.getSensor(Integer.valueOf(AgentesRoles[0][1]), msg), 0);
                 posicion[0] = miTraductor.getGPS(msg);
                 baterias.get(0).add(miTraductor.GetBateria(msg));
-                if(posicion[0].isEqual(posgoals[0]))
+                if(posicion[0].isEqual(posgoals[0])){
                     enobjetivo[0]=true;
+                    
+                }
                 bateriatemporal = miTraductor.GetBateriaTotal(msg);
                 if (energy > bateriatemporal){
                     energy = bateriatemporal;
@@ -263,8 +266,9 @@ public class AgenteControlador extends SingleAgent{
                 
                 
                 msg=miTraductor.autoSelectACLMessage(q2.Pop());
-                if(msg.contains("true")){
+                if(msg.contains("true")&&posicion[1].isEqual(posgoals[1])){
                     engoal[1] =true;
+                    AgentesRoles[1][2]=String.valueOf(0);
                 }
                 conocimiento.refreshData(miTraductor.getGPS(msg), miTraductor.getSensor(Integer.valueOf(AgentesRoles[1][1]), msg), 1);
                 posicion[1] = miTraductor.getGPS(msg);
@@ -279,8 +283,9 @@ public class AgenteControlador extends SingleAgent{
                 
                 
                 msg=miTraductor.autoSelectACLMessage(q3.Pop());
-                if(msg.contains("true")){
+                if(msg.contains("true")&&posicion[2].isEqual(posgoals[2])){
                     engoal[2] =true;
+                    AgentesRoles[2][2]=String.valueOf(0);
                 }
                 conocimiento.refreshData(miTraductor.getGPS(msg), miTraductor.getSensor(Integer.valueOf(AgentesRoles[2][1]), msg), 2);
                 posicion[2] = miTraductor.getGPS(msg);
@@ -295,8 +300,9 @@ public class AgenteControlador extends SingleAgent{
                 
                 
                 msg=miTraductor.autoSelectACLMessage(q4.Pop());
-                if(msg.contains("true")){
+                if(msg.contains("true")&&posicion[2].isEqual(posgoals[2])){
                     engoal[3] =true;
+                    AgentesRoles[3][2]=String.valueOf(0);
                 }
                 conocimiento.refreshData(miTraductor.getGPS(msg), miTraductor.getSensor(Integer.valueOf(AgentesRoles[3][1]), msg), 3);
                 posicion[3] = miTraductor.getGPS(msg);
@@ -322,6 +328,9 @@ public class AgenteControlador extends SingleAgent{
                     //Se calcula una posicion a donde ir
                     arraypos = miInteligencia.calculateGoalPos(posicion);
                     for(int cont=0; cont < 4; cont++){
+                        if(arraypos[cont].isEqual(posicion[cont])){
+                            arraypos[cont].Set(miInteligencia.PosicionSeudoAleatoriaNoVisitado(posicion[cont]));
+                        }
                         posgoals[cont].Set(arraypos[cont]);
                         posgoaltemporal[cont].Set(arraypos[cont]);
                         enobjetivo[cont] = false;

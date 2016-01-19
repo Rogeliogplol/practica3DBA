@@ -16,7 +16,7 @@ public class Inteligencia {
     
     private int pasos;
     private Conocimiento miConocimiento;
-    private Algoritmo miAlgoritmo;
+    private AlgoritmoMosca miAlgoritmo;
     private AlgorithSeguirPared algo2;
     private int tipo;
     boolean izquierda;
@@ -26,7 +26,7 @@ public class Inteligencia {
         pasos = 100;
         miConocimiento = _miConocimiento;
         izquierda = true;
-        miAlgoritmo = new Algoritmo();
+        miAlgoritmo = new AlgoritmoMosca();
         algo2 = new AlgorithSeguirPared();
     }
     

@@ -17,6 +17,7 @@ public class IAControlador {
     boolean primerGoal, esquinaIzGoal1, esquinaIzGoal2, esquinaDerGoal1, esquinaDerGoal2;
     int maxIndex=-1, minIndex=-1;
     Posicion currentGoal[];
+    CasillaControlador [][] copiadelmapa;
     
     public IAControlador(){
         goal = new Posicion(-1,-1);
@@ -93,12 +94,12 @@ public class IAControlador {
                 } else if (!esquinaIzGoal2) {
                     if (original[i].isEqual(new Posicion(0, 99-original[i].getY()))) {
                         esquinaIzGoal2=true;
-                        ret[i]=new Posicion((int) (Math.random()*100),(int) (Math.random()*100));
+                        ret[i]=PosicionSeudoAleatoriaNoVisitado(original[i]);
                     } else {
                         ret[i]=currentGoal[i];
                     }
                 } else
-                    ret[i]=new Posicion((int) (Math.random()*100),(int) (Math.random()*100));
+                    ret[i]=PosicionSeudoAleatoriaNoVisitado(original[i]);
             } else if (i==maxIndex) {
                 if (!esquinaDerGoal1) {
                     if (original[i].isEqual(new Posicion(99, original[i].getY()))) {
@@ -111,14 +112,14 @@ public class IAControlador {
                 } else if (!esquinaDerGoal2) {
                     if (original[i].isEqual(new Posicion(99, 99-original[i].getY()))) {
                         esquinaDerGoal2=true;
-                        ret[i]=new Posicion((int) (Math.random()*100),(int) (Math.random()*100));
+                        ret[i]=PosicionSeudoAleatoriaNoVisitado(original[i]);
                     } else {
                         ret[i]=currentGoal[i];
                     }
                 } else
-                    ret[i]=new Posicion((int) (Math.random()*100),(int) (Math.random()*100));
+                    ret[i]=PosicionSeudoAleatoriaNoVisitado(original[i]);
             } else
-                ret[i]=new Posicion((int) (Math.random()*100),(int) (Math.random()*100));
+                ret[i]=PosicionSeudoAleatoriaNoVisitado(original[i]);
         }
         
         return ret;
@@ -184,9 +185,13 @@ public class IAControlador {
         return pos;
                 */
         asignadostodos = true;
-        for(int i=0;i<respuesta.length;i++)
-            if(respuesta[i].getX()==-1)
+        for(int i=0;i<respuesta.length;i++){
+            if(respuesta[i].getX()==-1){
                 asignadostodos = false;
+                respuesta[i].Set(goal);
+            }
+            
+        }
         
         return respuesta;
     }
@@ -229,12 +234,26 @@ public class IAControlador {
         return stop;
     }
     
+    public Posicion PosicionSeudoAleatoriaNoVisitado(Posicion pos){
+        boolean poscioncorrecta=false;
+        int intentos=0;
+        while(poscioncorrecta){
+            int x = (int) (Math.random()*100);
+            int y = (int) (Math.random()*100);
+            if(copiadelmapa[x][y].getRadar()==0&&(Distancia(pos, new Posicion(x,y))<50||intentos<100)){
+                return new Posicion(x,y);
+            }
+            intentos++;
+        }
+        return new Posicion((int) (Math.random()*100),(int) (Math.random()*100));
+    }
     
     public boolean vistoelobjetivo (CasillaControlador [][] mapa){
+        copiadelmapa = mapa;
         for(int i=0; i<mapa.length; i++){
             for(int j=0; j<mapa.length; j++){
                 if(mapa[i][j].getRadar()==3){
-                    goal = new Posicion(j,i);
+                    goal = new Posicion(i,j);
                     goalencontrado =true;
                     return true;
                 }

@@ -41,7 +41,7 @@ public class AlgorithSeguirPared {
         izq=false;
         for(int i=1; i<4; i++){
             for(int j=1; j<4; j++){
-                if(casillas[i][j].getRadar()==2){
+                if(casillas[i][j].getRadar()==2&&casillas[i][j].getScanner()==0.0){
                     mini=i-1; minj=j-1; i=4; j=4;
                 }
                 else if(cota>casillas[i][j].getScanner() && casillas[i][j].getPasos()<1 && casillas[i][j].getRadar()!=1){
