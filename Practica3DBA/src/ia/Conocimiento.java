@@ -78,6 +78,35 @@ public class Conocimiento {
     public Casilla[][] Conocido(float [][] scanner, int [][] sensor){
         Casilla vista[][] = new Casilla[5][5];
         int medio = (5-1)/2;
+        
+        //for(int i=0; i<5; i++){
+            //for(int j=0; j<5; j++){
+        for(int i=0; i<5; i++){
+            for(int j=0; j<5; j++){
+                int x = pos.getX()-medio;
+                int y = pos.getY()-medio;
+                vista[i][j] = new Casilla();
+                if(mapa[x][y]!=null){
+                    vista[i][j].setPasos(mapa[x][y].getPasos());
+                    vista[i][j].setRadar(mapa[x][y].getRadar());
+                    if(vista[i][j].getRadar()==1 || vista[i][j].getRadar()==2 ||vista[i][j].getRadar()==4){
+                        vista[i][j].setRadar(1);
+                    }
+                }
+            }
+        }
+        for (int i=1; i<4; i++){
+            for (int j=1; j<4; j++){
+                vista[i][j].setRadar(sensor[i-1][j-1]);
+                if(vista[i][j].getRadar()==1 || vista[i][j].getRadar()==2 ||vista[i][j].getRadar()==4){
+                        vista[i][j].setRadar(1);
+                }
+                vista[i][j].setScanner(scanner[i-1][j-1]);
+            }
+        }
+        
+        return vista;
+        /*
         for(int i=0; i<5; i++){
             for(int j=0; j<5; j++){
                 int x= pos.getX()+i-medio;
@@ -97,12 +126,12 @@ public class Conocimiento {
                     
                 }
                 else {
-                    vista[i][j]=new Casilla();
-                    vista[i][j].setRadar(1);
+                    vista[j][i]=new Casilla();
+                    vista[j][i].setRadar(1);
                 }
             }
-        }
-        return vista;
+        }*/
+        //return vista;
     }
     
     public Casilla[][] ConocidoMosquitos(float [][] scanner, int [][] sensor){
@@ -115,7 +144,7 @@ public class Conocimiento {
                 if(x>=0&&y>=0&&x<100&&y<100){
                     vista[i][j]=mapa[x][y];
                     if(i>=1&&j>=1&&i<4&&j<4){
-                            mapa[x][y].setRadar(sensor[i-1][j-1]);
+                            mapa[x][y].setRadar(sensor[j-1][j-1]);
                             mapa[x][y].setScanner(scanner[i-1][j-1]);
                     }
                     if(mapa[x][y].getRadar()==4||mapa[x][y].getRadar()==2){
