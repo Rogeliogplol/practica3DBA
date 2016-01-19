@@ -39,21 +39,22 @@ public class Inteligencia {
             try {
                         if(tipo==0){
                             for(int i=0; i<5; i++){
-                        for(int j=0; j<5; j++){
-                            copia[i][j]=new Casilla();
-                            if((i>=1&&i<4)&&(j>=1&&j<4)){
-                                int r = radar[i-1][j-1];
-                                if(r==-1||r==2||r==4)
-                                    r=1;
-                                else if (r==3)
-                                    r=2;
-                                else if (r==1)
-                                    r=0;
-                                copia[i][j].setRadar(r);
-                                copia[i][j].setScanner(scanner[i-1][j-1]);
+                                for(int j=0; j<5; j++){
+                                    copia[i][j]=new Casilla();
+                                        if((i>=1&&i<4)&&(j>=1&&j<4)){
+                                        int r = radar[i-1][j-1];
+                                        if(r==-1||r==2||r==4)
+                                        r=1;
+                                    else if (r==3)
+                                        r=2;
+                                    else if (r==1)
+                                        r=0;
+                                    copia[i][j].setRadar(r);
+                                    copia[i][j].setScanner(scanner[i-1][j-1]);
+                                }
                             }
                         }
-                    }
+                            
                     return miAlgoritmo.process(copia);
                 }
                 else{

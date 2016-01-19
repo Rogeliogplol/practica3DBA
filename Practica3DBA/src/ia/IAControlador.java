@@ -16,7 +16,7 @@ public class IAControlador {
     boolean[] esquinasasignadas;
     boolean primerGoal, esquinaIzGoal1, esquinaIzGoal2, esquinaDerGoal1, esquinaDerGoal2;
     int maxIndex=-1, minIndex=-1;
-    Posicion currentGoal;
+    Posicion currentGoal[];
     
     public IAControlador(){
         goal = new Posicion(-1,-1);
@@ -34,7 +34,11 @@ public class IAControlador {
         esquinaIzGoal2=false;
         esquinaDerGoal1=false;
         esquinaIzGoal2=false;
-        currentGoal=new Posicion (-1, -1);
+        currentGoal=new Posicion [4];
+        currentGoal[0]=new Posicion (-1, -1);
+        currentGoal[1]=new Posicion (-1, -1);
+        currentGoal[2]=new Posicion (-1, -1);
+        currentGoal[3]=new Posicion (-1, -1);
     };
     
     public Posicion calculateGoalPos(Posicion original) {
@@ -55,6 +59,7 @@ public class IAControlador {
     
     public  Posicion[] calculateGoalPos(Posicion[] original) {
         Posicion ret [] = new Posicion[original.length];
+        
         
         if (primerGoal) {
             primerGoal=false;
@@ -80,8 +85,8 @@ public class IAControlador {
                 if (!esquinaIzGoal1) {
                     if (original[i].isEqual(new Posicion(0, original[i].getY()))) {
                         esquinaIzGoal1=true;
-                        currentGoal=new Posicion(0, 99-original[i].getY());
-                        ret[i]=currentGoal;
+                        currentGoal[i]=new Posicion(0, 99-original[i].getY());
+                        ret[i]=currentGoal[i];
                     } else {
                         ret[i]=new Posicion(0, original[i].getY());
                     }
@@ -90,7 +95,7 @@ public class IAControlador {
                         esquinaIzGoal2=true;
                         ret[i]=new Posicion((int) (Math.random()*100),(int) (Math.random()*100));
                     } else {
-                        ret[i]=currentGoal;
+                        ret[i]=currentGoal[i];
                     }
                 } else
                     ret[i]=new Posicion((int) (Math.random()*100),(int) (Math.random()*100));
@@ -98,8 +103,8 @@ public class IAControlador {
                 if (!esquinaDerGoal1) {
                     if (original[i].isEqual(new Posicion(99, original[i].getY()))) {
                         esquinaDerGoal1=true;
-                        currentGoal=new Posicion(99, 99-original[i].getY());
-                        ret[i]=currentGoal;
+                        currentGoal[i]=new Posicion(99, 99-original[i].getY());
+                        ret[i]=currentGoal[i];
                     } else {
                         ret[i]=new Posicion(99, original[i].getY());
                     }
@@ -108,7 +113,7 @@ public class IAControlador {
                         esquinaDerGoal2=true;
                         ret[i]=new Posicion((int) (Math.random()*100),(int) (Math.random()*100));
                     } else {
-                        ret[i]=currentGoal;
+                        ret[i]=currentGoal[i];
                     }
                 } else
                     ret[i]=new Posicion((int) (Math.random()*100),(int) (Math.random()*100));
