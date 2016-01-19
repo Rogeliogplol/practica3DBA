@@ -4,10 +4,10 @@
  * and open the template in the editor.
  */
 package ia;
-
-import algorithm.Algorithm;
-import algorithm.FlyAlgorithm;
-import algorithm.StandardAlgorithm;
+import algorithm.*;
+//import algorithm.Algorithm;
+//import algorithm.FlyAlgorithm;
+//import algorithm.StandardAlgorithm;
 import static java.lang.Math.pow;
 
 /**
@@ -17,21 +17,25 @@ import static java.lang.Math.pow;
 public class IAAgentes {
     Posicion objetivo;
     Posicion[] demas;
-    Algorithm alg;
+    Inteligencia alg;
     int Rol;
+    Conocimiento conocimiento;
     
-    public IAAgentes(int rol){
+    public IAAgentes(int rol, Conocimiento _conocimiento){
         objetivo=new Posicion(-1,-1);
         demas = new Posicion[3];
         Rol = rol;
-        if(rol==0){
-            alg = new FlyAlgorithm();
+        
+        alg = new Inteligencia(_conocimiento, rol);
+        /*if(rol==0){
+            alg = new FlyAlgorithm(_conocimiento);
         }else{
-            alg = new StandardAlgorithm();
-        }
+            alg = new StandardAlgorithm(_conocimiento);
+        }*/
         for(int cont=0; cont < 3; cont++){
             demas[cont] = new Posicion();
         }
+        conocimiento = _conocimiento;
     }
     public void SetDemas(Posicion [] listaposiciones, Posicion miposicion){
         int i=0;
@@ -159,6 +163,7 @@ public class IAAgentes {
                 scanner[i][j] = GetScanner(gpsrelativo[i][j].getX(), gpsrelativo[i][j].getY());
             }
         }
-        return alg.process(scanner, acotado);
+        //return alg.process(scanner, acotado);
+        return alg.nextSteep(acotado, scanner);
     }
 }

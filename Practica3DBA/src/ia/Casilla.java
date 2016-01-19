@@ -11,6 +11,7 @@ package ia;
 public class Casilla {
     private int radar;
     private int pasos;
+    private float scaner;
     private boolean cambioSentido;
     
     //#######################################################
@@ -25,6 +26,7 @@ public class Casilla {
     public Casilla (){
         radar = -1;
         pasos = 0;
+        scaner = Float.MAX_VALUE;
         cambioSentido = false;
     }
 
@@ -108,6 +110,14 @@ public class Casilla {
         if (casilla){
             this.setPasos();
         }
+    }
+
+    public void setScanner(float _scanner) {
+        scaner = _scanner;
+    }
+    
+    public float getScanner(){
+        return scaner;
     }
     
 }

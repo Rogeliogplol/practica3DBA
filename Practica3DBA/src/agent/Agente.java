@@ -190,7 +190,7 @@ public class Agente extends SingleAgent {
         /*Capturar posicion, movmiento, guardar informacion y informar     */
         /*******************************************************************/
         boolean moverse = true;
-        IAAgentes miIA = new IAAgentes(Rol);
+        IAAgentes miIA = new IAAgentes(Rol, conocimiento);
         String movimiento = "";
         while(moverse){
             waitMess();
