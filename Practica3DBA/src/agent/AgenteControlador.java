@@ -103,7 +103,7 @@ public class AgenteControlador extends SingleAgent{
     
     String valorPaso(String tipo){
         int valor;
-        float valores[] = {2/9*100,1/25*100,4/121*100};
+        float valores[] = {(2/9)*1000,(1/25)*1000,(4/121)*1000};
         valor = Integer.parseUnsignedInt(tipo);
         return String.valueOf(valores[valor]);
         
