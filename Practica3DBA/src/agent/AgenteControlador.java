@@ -248,70 +248,78 @@ public class AgenteControlador extends SingleAgent{
             try{
                 int bateriatemporal;
                 msg=miTraductor.autoSelectACLMessage(q1.Pop());
-                if(msg.contains("true")&&posicion[0].isEqual(posgoals[0])){
-                    engoal[0] =true;
-                    AgentesRoles[0][2]=String.valueOf(0);
+                if(!msg.contains("BAD")||!msg.contains("NOT")){
+                    if(msg.contains("true")&&posicion[0].isEqual(posgoals[0])){
+                        engoal[0] =true;
+                        AgentesRoles[0][2]=String.valueOf(0);
+                    }
+                    conocimiento.refreshData(miTraductor.getGPS(msg), miTraductor.getSensor(Integer.valueOf(AgentesRoles[0][1]), msg), 0);
+                    posicion[0] = miTraductor.getGPS(msg);
+                    baterias.get(0).add(miTraductor.GetBateria(msg));
+                    if(posicion[0].isEqual(posgoals[0])){
+                        enobjetivo[0]=true;
+
+                    }
+                    bateriatemporal = miTraductor.GetBateriaTotal(msg);
+                    if (energy > bateriatemporal){
+                        energy = bateriatemporal;
+                    }
                 }
-                conocimiento.refreshData(miTraductor.getGPS(msg), miTraductor.getSensor(Integer.valueOf(AgentesRoles[0][1]), msg), 0);
-                posicion[0] = miTraductor.getGPS(msg);
-                baterias.get(0).add(miTraductor.GetBateria(msg));
-                if(posicion[0].isEqual(posgoals[0])){
-                    enobjetivo[0]=true;
-                    
-                }
-                bateriatemporal = miTraductor.GetBateriaTotal(msg);
-                if (energy > bateriatemporal){
-                    energy = bateriatemporal;
-                }
-                
                 
                 msg=miTraductor.autoSelectACLMessage(q2.Pop());
-                if(msg.contains("true")&&posicion[1].isEqual(posgoals[1])){
-                    engoal[1] =true;
-                    AgentesRoles[1][2]=String.valueOf(0);
+                if(!msg.contains("BAD")||!msg.contains("NOT")){
+                    if(msg.contains("true")&&posicion[1].isEqual(posgoals[1])){
+                        engoal[1] =true;
+                        AgentesRoles[1][2]=String.valueOf(0);
+                    }
+                    conocimiento.refreshData(miTraductor.getGPS(msg), miTraductor.getSensor(Integer.valueOf(AgentesRoles[1][1]), msg), 1);
+                    posicion[1] = miTraductor.getGPS(msg);
+                    baterias.get(1).add(miTraductor.GetBateria(msg));
+                    if(posicion[1].isEqual(posgoals[1]))
+                        enobjetivo[1]=true;
+                    bateriatemporal = miTraductor.GetBateriaTotal(msg);
+                    if (energy > bateriatemporal){
+                        energy = bateriatemporal;
+                    }
                 }
-                conocimiento.refreshData(miTraductor.getGPS(msg), miTraductor.getSensor(Integer.valueOf(AgentesRoles[1][1]), msg), 1);
-                posicion[1] = miTraductor.getGPS(msg);
-                baterias.get(1).add(miTraductor.GetBateria(msg));
-                if(posicion[1].isEqual(posgoals[1]))
-                    enobjetivo[1]=true;
-                bateriatemporal = miTraductor.GetBateriaTotal(msg);
-                if (energy > bateriatemporal){
-                    energy = bateriatemporal;
-                }
+                
                 
                 
                 
                 msg=miTraductor.autoSelectACLMessage(q3.Pop());
-                if(msg.contains("true")&&posicion[2].isEqual(posgoals[2])){
-                    engoal[2] =true;
-                    AgentesRoles[2][2]=String.valueOf(0);
-                }
-                conocimiento.refreshData(miTraductor.getGPS(msg), miTraductor.getSensor(Integer.valueOf(AgentesRoles[2][1]), msg), 2);
-                posicion[2] = miTraductor.getGPS(msg);
-                baterias.get(2).add(miTraductor.GetBateria(msg));
-                if(posicion[2].isEqual(posgoals[2]))
-                    enobjetivo[2]=true;
-                bateriatemporal = miTraductor.GetBateriaTotal(msg);
-                if (energy > bateriatemporal){
-                    energy = bateriatemporal;
+                if(!msg.contains("BAD")||!msg.contains("NOT")){
+                    if(msg.contains("true")&&posicion[2].isEqual(posgoals[2])){
+                        engoal[2] =true;
+                        AgentesRoles[2][2]=String.valueOf(0);
+                    }
+                    conocimiento.refreshData(miTraductor.getGPS(msg), miTraductor.getSensor(Integer.valueOf(AgentesRoles[2][1]), msg), 2);
+                    posicion[2] = miTraductor.getGPS(msg);
+                    baterias.get(2).add(miTraductor.GetBateria(msg));
+                    if(posicion[2].isEqual(posgoals[2]))
+                        enobjetivo[2]=true;
+                    bateriatemporal = miTraductor.GetBateriaTotal(msg);
+                    if (energy > bateriatemporal){
+                        energy = bateriatemporal;
+                    }
                 }
                 
                 
                 
                 msg=miTraductor.autoSelectACLMessage(q4.Pop());
-                if(msg.contains("true")&&posicion[2].isEqual(posgoals[2])){
-                    engoal[3] =true;
-                    AgentesRoles[3][2]=String.valueOf(0);
-                }
-                conocimiento.refreshData(miTraductor.getGPS(msg), miTraductor.getSensor(Integer.valueOf(AgentesRoles[3][1]), msg), 3);
-                posicion[3] = miTraductor.getGPS(msg);
-                baterias.get(3).add(miTraductor.GetBateria(msg));
-                if(posicion[3].isEqual(posgoals[3]))
-                    enobjetivo[3]=true;
-                bateriatemporal = miTraductor.GetBateriaTotal(msg);
-                if (energy > bateriatemporal){
-                    energy = bateriatemporal;
+                if(!msg.contains("BAD")||!msg.contains("NOT")){
+                    if(msg.contains("true")&&posicion[2].isEqual(posgoals[2])){
+                        engoal[3] =true;
+                        AgentesRoles[3][2]=String.valueOf(0);
+                    }
+                    conocimiento.refreshData(miTraductor.getGPS(msg), miTraductor.getSensor(Integer.valueOf(AgentesRoles[3][1]), msg), 3);
+                    posicion[3] = miTraductor.getGPS(msg);
+                    baterias.get(3).add(miTraductor.GetBateria(msg));
+                    if(posicion[3].isEqual(posgoals[3]))
+                        enobjetivo[3]=true;
+                    bateriatemporal = miTraductor.GetBateriaTotal(msg);
+                    if (energy > bateriatemporal){
+                        energy = bateriatemporal;
+                    }
                 }
                 
                 dibujarMapa.setBateria(energy);

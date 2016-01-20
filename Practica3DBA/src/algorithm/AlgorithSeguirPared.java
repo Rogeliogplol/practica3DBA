@@ -68,7 +68,7 @@ public class AlgorithSeguirPared {
      * Ayuda con Roger
     */
     public String moverpared(Casilla[][] casillas){
-        System.out.println("Drch");
+        //System.out.println("Drch");
         if(casillas[2][2].getRadar()==2){
             return "GOAL";
         }
@@ -81,99 +81,99 @@ public class AlgorithSeguirPared {
         }
         
         if(casillas[1][3].getRadar()==1 && casillas[2][3].getRadar()!=1){
-            System.out.println("1");
+            //System.out.println("1");
             return "E";
         }
         if(casillas[1][2].getRadar()==1 && casillas[1][3].getRadar()==1 &&  casillas[2][3].getRadar()!=1){
-            System.out.println("2");
+            //System.out.println("2");
             return "E";
         }
         if(casillas[1][2].getRadar()==1 &&casillas[1][1].getRadar()==1 &&casillas[1][3].getRadar()==1 && casillas[2][3].getRadar()!=1){
-            System.out.println("3");
+            //System.out.println("3");
             return "E";
         }
         if(casillas[1][2].getRadar()==1 && casillas[1][3].getRadar()!=1){
-            System.out.println("4");
+            //System.out.println("4");
             return "NE";
         }
         if(casillas[1][1].getRadar()==1 && casillas[1][2].getRadar()!=1){
-            System.out.println("5");
+            //System.out.println("5");
             return "N";
         }
         if(casillas[1][3].getRadar()==1 && casillas[2][3].getRadar()==1 && casillas[3][3].getRadar()==1 && casillas[3][2].getRadar()!=1){
-            System.out.println("6");
+            //System.out.println("6");
             return "S";
         }
         if(casillas[1][3].getRadar()==1 && casillas[2][3].getRadar()==1 && casillas[3][3].getRadar()!=1){
-            System.out.println("7");
+            //System.out.println("7");
             return "SE";
         }
         if(casillas[2][3].getRadar()==1 && casillas[3][3].getRadar()==1 && casillas[3][2].getRadar()!=1){
-            System.out.println("8");
+            //System.out.println("8");
             return "S";
         }
         if(casillas[3][3].getRadar()==1 && casillas[3][2].getRadar()!=1){
-            System.out.println("9");
+            //System.out.println("9");
             return "S";
         }
         if(casillas[3][2].getRadar()==1 && casillas[3][1].getRadar()!=1){
-            System.out.println("10");
+            //System.out.println("10");
             return "SW";
         }
         if(casillas[3][3].getRadar()==1 && casillas[3][2].getRadar()==1 && casillas[3][1].getRadar()==1 && casillas[2][1].getRadar()!=1){
-            System.out.println("11");
+            //System.out.println("11");
             return "W";
         }
         if(casillas[3][2].getRadar()==1 && casillas[3][1].getRadar()==1 && casillas[2][1].getRadar()!=1){
-            System.out.println("12");
+            //System.out.println("12");
             return "W";
         }
         if(casillas[3][1].getRadar()==1 && casillas[2][1].getRadar()!=1){
-            System.out.println("13");
+            //System.out.println("13");
             return "W";
         }
         if(casillas[2][1].getRadar()==1 && casillas[1][1].getRadar()!=1){
-            System.out.println("14");
+            //System.out.println("14");
             return "NW";
         }
         if(casillas[3][1].getRadar()==1 && casillas[2][1].getRadar()==1 && casillas[1][1].getRadar()==1 && casillas[1][2].getRadar()!=1){
-            System.out.println("15");
+            //System.out.println("15");
             return "N";
         }
         if(casillas[2][1].getRadar()==1 && casillas[1][2].getRadar()!=1){
-            System.out.println("16");
+            //System.out.println("16");
             return "N";
         }
         if(casillas[2][3].getRadar()==1 && casillas[3][3].getRadar()!=1){
-            System.out.println("17");
+            //System.out.println("17");
             return "SE";
         }
         if(casillas[3][2].getRadar()==1 && casillas[3][1].getRadar()!=1){
-            System.out.println("18");
+            //System.out.println("18");
             return "SW";
         }
         if(casillas[2][1].getRadar()==1 && casillas[1][1].getRadar()!=1){
-            System.out.println("19");
+            //System.out.println("19");
             return "NW";
         }
         if(casillas[1][2].getRadar()==1 && casillas[1][3].getRadar()!=1){
-            System.out.println("20");
+            //System.out.println("20");
             return "NE";
         }
         if(casillas[3][2].getRadar()==1 &&casillas[3][3].getRadar()==1 &&casillas[2][3].getRadar()==1 &&casillas[3][1].getRadar()!=1){
-           System.out.println(21);
+           //System.out.println(21);
            return "SW";
         }
         if(casillas[3][1].getRadar()==1 &&casillas[3][2].getRadar()==1 &&casillas[2][1].getRadar()==1 &&casillas[1][1].getRadar()!=1){
-           System.out.println(22);
+           //System.out.println(22);
            return "NW";
         }
         if(casillas[2][1].getRadar()==1 &&casillas[1][1].getRadar()==1 &&casillas[1][2].getRadar()==1 &&casillas[1][3].getRadar()!=1){
-           System.out.println(23);
+           //System.out.println(23);
            return "NE";
         }
         if(casillas[1][2].getRadar()==1 &&casillas[1][3].getRadar()==1 &&casillas[2][3].getRadar()==1 &&casillas[3][3].getRadar()!=1){
-           System.out.println(24);
+           //System.out.println(24);
            return "SE";
         }
         else{
@@ -184,7 +184,7 @@ public class AlgorithSeguirPared {
      * Ayuda con Roger
     */
     public String moverparedizq(Casilla[][] casillas){
-        System.out.println("Izq");
+        //System.out.println("Izq");
         if(casillas[2][2].getRadar()==2){
             return "GOAL";
         }
@@ -196,99 +196,99 @@ public class AlgorithSeguirPared {
             }
         }
         if(casillas[1][3].getRadar()==1 && casillas[1][2].getRadar()!=1){
-            System.out.println("1");
+            //System.out.println("1");
             return "N";
         }
         if(casillas[1][2].getRadar()==1 && casillas[1][1].getRadar()!=1){
-            System.out.println("2");
+            //System.out.println("2");
             return "NW";
         }
         if(casillas[1][2].getRadar()==1 &&casillas[1][1].getRadar()==1 &&casillas[1][3].getRadar()==1 && casillas[2][1].getRadar()!=1){
-            System.out.println("3");
+            //System.out.println("3");
             return "W";
         }
         if(casillas[1][2].getRadar()==1 &&casillas[1][1].getRadar()==1 && casillas[2][1].getRadar()!=1){
-            System.out.println("4");
+            //System.out.println("4");
             return "W";
         }
         if(casillas[1][1].getRadar()==1 && casillas[2][1].getRadar()!=1){
-            System.out.println("5");
+            //System.out.println("5");
             return "W";
         }
         if(casillas[1][3].getRadar()==1 && casillas[2][3].getRadar()==1 && casillas[3][3].getRadar()==1 && casillas[1][2].getRadar()!=1){
-            System.out.println("6");
+            //System.out.println("6");
             return "N";
         }
         if(casillas[1][3].getRadar()==1 && casillas[2][3].getRadar()==1 && casillas[1][2].getRadar()!=1){
-            System.out.println("7");
+            //System.out.println("7");
             return "N";
         }
         if(casillas[2][3].getRadar()==1 && casillas[1][3].getRadar()!=1){
-            System.out.println("8");
+            //System.out.println("8");
             return "NE";
         }
         if(casillas[3][3].getRadar()==1 && casillas[2][3].getRadar()!=1){
-            System.out.println("9");
+            //System.out.println("9");
             return "E";
         }
         if(casillas[3][3].getRadar()==1 && casillas[3][2].getRadar()==1 && casillas[2][3].getRadar()!=1){
-            System.out.println("10");
+            //System.out.println("10");
             return "E";
         }
         if(casillas[3][3].getRadar()==1 && casillas[3][2].getRadar()==1 && casillas[3][1].getRadar()==1 && casillas[2][3].getRadar()!=1){
-            System.out.println("11");
+            //System.out.println("11");
             return "E";
         }
         if(casillas[3][2].getRadar()==1 && casillas[3][3].getRadar()!=1){
-            System.out.println("12");
+            //System.out.println("12");
             return "SE";
         }
         if(casillas[3][1].getRadar()==1 && casillas[3][2].getRadar()!=1){
-            System.out.println("13");
+            //System.out.println("13");
             return "S";
         }
         if(casillas[3][1].getRadar()==1 && casillas[2][1].getRadar()==1 && casillas[3][2].getRadar()!=1){
-            System.out.println("14");
+            //System.out.println("14");
             return "S";
         }
         if(casillas[3][1].getRadar()==1 && casillas[2][1].getRadar()==1 && casillas[1][1].getRadar()==1 && casillas[3][2].getRadar()!=1){
-            System.out.println("15");
+            //System.out.println("15");
             return "S";
         }
         if(casillas[2][1].getRadar()==1 && casillas[3][1].getRadar()!=1){
-            System.out.println("16");
+            //System.out.println("16");
             return "SW";
         }
         if(casillas[2][3].getRadar()==1 && casillas[1][3].getRadar()!=1){
-            System.out.println("17");
+            //System.out.println("17");
             return "NE";
         }
         if(casillas[3][2].getRadar()==1 && casillas[3][3].getRadar()!=1){
-            System.out.println("18");
+            //System.out.println("18");
             return "SE";
         }
         if(casillas[2][1].getRadar()==1 && casillas[3][1].getRadar()!=1){
-            System.out.println("19");
+            //System.out.println("19");
             return "SW";
         }
         if(casillas[1][2].getRadar()==1 && casillas[1][1].getRadar()!=1){
-            System.out.println("20");
+            //System.out.println("20");
             return "NW";
         }
         if(casillas[3][2].getRadar()==1 &&casillas[3][3].getRadar()==1 &&casillas[2][3].getRadar()==1 &&casillas[1][3].getRadar()!=1){
-           System.out.println(21);
+           //System.out.println(21);
            return "NE";
         }
         if(casillas[3][1].getRadar()==1 &&casillas[3][2].getRadar()==1 &&casillas[2][1].getRadar()==1 &&casillas[3][3].getRadar()!=1){
-           System.out.println(22);
+           //System.out.println(22);
            return "SE";
         }
         if(casillas[2][1].getRadar()==1 &&casillas[1][1].getRadar()==1 &&casillas[1][2].getRadar()==1 &&casillas[3][1].getRadar()!=1){
-           System.out.println(23);
+           //System.out.println(23);
            return "SW";
         }
         if(casillas[1][2].getRadar()==1 &&casillas[1][3].getRadar()==1 &&casillas[2][3].getRadar()==1 &&casillas[1][1].getRadar()!=1){
-           System.out.println(24);
+           //System.out.println(24);
            return "NW";
         }
         else{
@@ -327,7 +327,7 @@ public class AlgorithSeguirPared {
             }
             else
                 movpar="ERROR";
-            System.out.println(movpar);
+            //System.out.println(movpar);
             return movpar;
         }
     }
