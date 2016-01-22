@@ -39,6 +39,11 @@ public class Traductor {
     
     private int[] tipoAgentes = {3,5,11};
     
+    /**
+    * Obtiene el radar a partir de la cadena JSON 
+    * 
+    * @author Rubén Orgaz Baena
+    */
     public int[][] getSensor (int _tipo, String msg){
         int tamanho = tipoAgentes[_tipo];
         int [][] sensor = new int[tamanho][tamanho];
@@ -70,6 +75,11 @@ public class Traductor {
         }
     }
     
+    /**
+    * Obtiene los valores del gps a partir de la candena JSON
+    * 
+    * @author Rubén Orgaz Baena
+    */
     public Posicion getGPS(String msg){
         try{
             JSONParser parser = new JSONParser();
@@ -86,6 +96,11 @@ public class Traductor {
         }
     } 
     
+    /**
+    * Obtiene la posicion de los drones a partir del mensaje JSON
+    * 
+    * @author Rubén Orgaz Baena
+    */
     public Posicion[] getGPSdemas(ACLMessage msg){
         Posicion [] posdemas = new Posicion[4];
         String a ="";
@@ -97,6 +112,11 @@ public class Traductor {
         return posdemas;
     }
     
+    /**
+    * Obtiene el valor de goal de la cadena JSON
+    * 
+    * @author Rubén Orgaz Baena
+    */
     public boolean GetGoal (String msg){
         try{
             JSONParser parser = new JSONParser();
@@ -112,6 +132,12 @@ public class Traductor {
         }
     }
     
+    
+    /**
+    * Obtiene la cantidad de bateria de la cadena JSON para cada dron
+    * 
+    * @author Rubén Orgaz Baena
+    */
     public int GetBateria (String msg){
         try{
             JSONParser parser = new JSONParser();
@@ -127,6 +153,11 @@ public class Traductor {
         }
     }
     
+    /**
+    * Obtiene la bateria restante del mundo de la cadena JSON
+    * 
+    * @author Rubén Orgaz Baena
+    */
     public int GetBateriaTotal (String msg){
         try{
             JSONParser parser = new JSONParser();
@@ -179,7 +210,11 @@ public class Traductor {
         return outbox;
     }
     
-    
+    /**
+    * Genera el paquete de susripcion al mundo
+    * 
+    * @author Rubén Orgaz Baena
+    */
     public ACLMessage Suscribirse(String _map, AgentID _sender, String _receiver) {
         ACLMessage outbox = new ACLMessage();
         String msg [][] = new String [1][2];
@@ -192,6 +227,11 @@ public class Traductor {
         return outbox;
     }
     
+    /**
+    * Genera el paquete para preguntar por el rol en el servidor
+    * 
+    * @author Rubén Orgaz Baena
+    */
     public ACLMessage PreguntarRol(AgentID _sender, String _receiver){
         ACLMessage outbox = new ACLMessage();
         String msg [][] = new String [2][2];
@@ -206,6 +246,11 @@ public class Traductor {
         return outbox;
     }
     
+    /**
+    * Genera el paquete para enviar una orden de movimiento al servidor
+    * 
+    * @author Rubén Orgaz Baena
+    */
     public ACLMessage Moverse(AgentID _sender, String _receiver,String _movimiento){
         ACLMessage outbox = new ACLMessage();
         String msg [][] = new String [2][2];
@@ -220,6 +265,11 @@ public class Traductor {
         return outbox;
     }
     
+    /**
+    * Genera un paquete para pedir una recarga de bateria al servidor
+    * 
+    * @author Rubén Orgaz Baena
+    */
     public ACLMessage Refuel(AgentID _sender, String _receiver){
         ACLMessage outbox = new ACLMessage();
         String msg [][] = new String [2][2];
@@ -234,6 +284,11 @@ public class Traductor {
         return outbox;
     }
     
+    /**
+    * Genera el ACLMessage con el que se pide la información al servidor.
+    * 
+    * @author Rubén Orgaz Baena
+    */
     public ACLMessage PedirInformacion(AgentID _sender, String _receiver){
         ACLMessage outbox = new ACLMessage();
         String msg [][] = new String [1][2];
@@ -246,6 +301,11 @@ public class Traductor {
         return outbox;
     }
     
+    /**
+    * Genera el ACLMessage para finalizar el mundo.
+    * 
+    * @author Rubén Orgaz Baena
+    */
     public ACLMessage Finalizar(AgentID _sender, String _receiver){
         ACLMessage outbox = new ACLMessage();
         String msg [][] = new String [1][2];
@@ -299,7 +359,11 @@ public class Traductor {
             return ("");
         }
     }
-    
+    /**
+    * Obtiene el resultado de la cadena JSON
+    * 
+    * @author Rubén Orgaz Baena
+    */
     public String getResult (String msg){
         if(!msg.contains("result"))
             return "";
@@ -321,11 +385,11 @@ public class Traductor {
         }
     }
     
-    
-    
-    
-    
-    
+    /**
+    * Extrae la Key del paquete JSON para el controlador
+    * 
+    * @author Rubén Orgaz Baena
+    */
     // Key cuando se recibe desde el controlador
     public String KeyToControlador (String msg){
         if(!msg.contains("key"))
@@ -349,7 +413,11 @@ public class Traductor {
     }
     
     
-    
+    /**
+    * Obtiene el rol del paquete JSON
+    * 
+    * @author Rubén Orgaz Baena
+    */
     public int getRol (String msg){
         if(!msg.contains("rol"))
             return -2;
@@ -368,6 +436,12 @@ public class Traductor {
         }
     }
     
+    
+    /**
+    * 
+    * 
+    * @author Rubén Orgaz Baena
+    */
     public String autoSelectACLMessage (ACLMessage msg){
         if (msg.getPerformativeInt() == ACLMessage.FAILURE){
             System.err.println("Fail: "+ getResult(msg.getContent()));
@@ -422,7 +496,11 @@ public class Traductor {
     
     
     
-    
+    /**
+    * 
+    * 
+    * @author Rubén Orgaz Baena
+    */
     public ACLMessage CAsendKey(String key, AgentID _sender, String[] _receiver){
         ACLMessage outbox = new ACLMessage();
         String msg [][] = new String [1][2];
@@ -437,6 +515,11 @@ public class Traductor {
         return outbox;             
     }
 
+    /**
+    * 
+    * 
+    * @author Rubén Orgaz Baena
+    */
     public ACLMessage ACSendRol(AgentID _sender, String _receiver, String _rol) {
         ACLMessage outbox = new ACLMessage();
         String msg [][] = new String [1][2];
@@ -449,6 +532,11 @@ public class Traductor {
         return outbox;
     }
     
+    /**
+    * 
+    * 
+    * @author Rubén Orgaz Baena
+    */
     public ACLMessage ACDatos(AgentID _sender, String _receiver, String _msg) {
         ACLMessage outbox = new ACLMessage();      
         outbox.setPerformative(ACLMessage.INFORM);
@@ -461,6 +549,11 @@ public class Traductor {
         return outbox;
     }
     
+    /**
+    * 
+    * 
+    * @author Rubén Orgaz Baena
+    */
     public ACLMessage CAsendOK(AgentID _sender, String[] _receiver){
         ACLMessage outbox = new ACLMessage();
         String msg [][] = new String [1][2];
@@ -475,6 +568,11 @@ public class Traductor {
         return outbox;             
     }
     
+    /**
+    * 
+    * 
+    * @author Rubén Orgaz Baena
+    */
     public ACLMessage CAsendPosicionGoal(AgentID _sender, String[] _receiver, int pasos, Posicion p){
         ACLMessage outbox = new ACLMessage();
         String msg [][] = new String [2][2];
@@ -496,6 +594,11 @@ public class Traductor {
         return outbox;             
     }
     
+    /**
+    * 
+    * 
+    * @author Rubén Orgaz Baena
+    */
     public ACLMessage[] CAsendPosicion(AgentID _sender, String[] _receiver, int pasos, Posicion[] p, Posicion[] posdemas){
         ACLMessage[] outbox = new ACLMessage[p.length];
         String msg [][] = new String [2+posdemas.length][2];
@@ -528,6 +631,11 @@ public class Traductor {
     }
     
     
+    /**
+    * 
+    * 
+    * @author Rubén Orgaz Baena
+    */
     public ACLMessage CAsendCANCEL(AgentID _sender, String[] _receiver){
         ACLMessage outbox = new ACLMessage();
         String msg [][] = new String [1][2];

@@ -160,6 +160,12 @@ public class AgenteControlador extends SingleAgent{
         }
     }
     
+    /**
+    * Bucle de ejecución del controlador
+    * 
+    * @author Juan Manuel Navarrete Carrascosa
+    * @coauthor Rubén Orgaz Baena
+    */
     @Override
     public void execute(){
         

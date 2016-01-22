@@ -127,6 +127,12 @@ public class IAControlador {
     public boolean isAsignadoATodos(){
         return asignadostodos;
     }
+    
+    /**
+    * Calcula la casilla para llegar al goal para cada agente
+    * 
+    * @author Rubén Orgaz Baena
+    */
     public Posicion[] calcularSitioParaGoal(Posicion posiciones[], CasillaControlador [][] mapa){
         
         Posicion casillasGoal[][] = new Posicion[11][11];

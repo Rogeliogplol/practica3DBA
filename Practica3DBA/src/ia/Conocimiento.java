@@ -75,6 +75,12 @@ public class Conocimiento {
         return mapa[x][y].getPasos();
     }
     
+    /**
+    * Muestra en el radar los objetivos cercanos
+    * 
+    * @author Juan Manuel Navarrete Carrascosa
+    * @coauthor Rubén Orgaz Baena
+    */
     public Casilla[][] Conocido(float [][] scanner, int [][] sensor){
         Casilla vista[][] = new Casilla[5][5];
         int medio = (5-1)/2;
@@ -134,6 +140,12 @@ public class Conocimiento {
         //return vista;
     }
     
+    /**
+    * Muestra en el radar los objetivos cercanos(Mosquito)
+    * 
+    * @author Juan Manuel Navarrete Carrascosa
+    * @coauthor Rubén Orgaz Baena
+    */
     public Casilla[][] ConocidoMosquitos(float [][] scanner, int [][] sensor){
         Casilla vista[][] = new Casilla[5][5];
         int medio = (5-1)/2;
