@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package agent;
 
 import es.upv.dsic.gti_ia.core.ACLMessage;
@@ -20,23 +15,51 @@ import gui.VentanaSuper;
 /**
  *
  * @author SRJota
+ * @author Ruben
+ * @author Rogelio
+ * @author Daniel
  */
+
 public class AgenteControlador extends SingleAgent{
-    private VentanaSuper ventanaSuper;
+    private final VentanaSuper ventanaSuper;
     private DibujarMapaControlador dibujarMapa;
-    String [][] AgentesRoles;
-    String [] NameAgentSend;
-    private String nameAgent;
-    private String nameServer;
-    private Traductor miTraductor;
-    private String nameMap;
-    MessageQueue q1, q2, q3, q4, qservidor;
-    private ConocimientoControlador conocimiento;
-    private IAControlador miInteligencia;
-    boolean [] enobjetivo;
-    boolean [] engoal;
+    private final String [][] AgentesRoles;
+    private final String [] NameAgentSend;
+    private final String nameServer;
+    private final Traductor miTraductor;
+    private final String nameMap;
+    private final MessageQueue q1, q2, q3, q4, qservidor;
+    private final ConocimientoControlador conocimiento;
+    private final IAControlador miInteligencia;
+    private final boolean [] enobjetivo;
+    private final  boolean [] engoal;
     private int energy;
     
+    public AgenteControlador(AgentID aid, String _nameServer, String[] _nameAgentSend, String _nameMap) throws Exception {
+        super(aid);
+        ventanaSuper=VentanaSuper.getInstance();
+        conocimiento = new ConocimientoControlador(100, 100);
+        AgentesRoles = new String [_nameAgentSend.length][3];
+        nameMap = _nameMap;
+        nameServer = _nameServer;
+        enobjetivo = new boolean [_nameAgentSend.length];
+        NameAgentSend = new String [_nameAgentSend.length];
+        engoal = new boolean [_nameAgentSend.length];
+        for (int cont=0; cont < _nameAgentSend.length; cont++){
+            enobjetivo[cont] = false;
+            engoal[cont] = false;
+            AgentesRoles[cont][0] = _nameAgentSend[cont];
+            NameAgentSend[cont] = _nameAgentSend[cont];
+        }
+        q1 = new MessageQueue(100);
+        q2 = new MessageQueue(100);
+        q3 = new MessageQueue(100);
+        q4 = new MessageQueue(100);
+        qservidor = new MessageQueue(100);
+        miTraductor = new Traductor();
+        miInteligencia = new IAControlador();
+        energy = Integer.MAX_VALUE;
+    }
     
     public boolean TodosEnGoal(){
         for(int cont=0;cont<4; cont++){
@@ -60,6 +83,14 @@ public class AgenteControlador extends SingleAgent{
         return algunoobjetivo;
     }
     
+    /**
+    * Al llegar al objetivo se les aumenta su valor de negociación
+    * 
+    * @param id Id del dron
+    * 
+    * @author SRJota Roger
+    */
+    
     public void AumentarValor(int id){
         float valor = Float.valueOf(AgentesRoles[id][2]);
         valor = (float) (valor * 1.25);
@@ -67,38 +98,19 @@ public class AgenteControlador extends SingleAgent{
         
     }
     
+    /**
+    * Por cada paso que da el dron, su valor es disminuido
+    * 
+    * @param id Id del dron
+    * 
+    * @author SRJota Daniel Roger
+    */
+    
     public void DisminuirValor(int id){
         float valor = Float.valueOf(AgentesRoles[id][2]);
         valor = (float) (valor * 0.01);
         AgentesRoles[id][2] = String.valueOf(valor);
         
-    }
-    
-    public AgenteControlador(AgentID aid, String _nameServer, String[] _nameAgentSend, String _nameMap) throws Exception {
-        super(aid);
-        ventanaSuper=VentanaSuper.getInstance();
-        conocimiento = new ConocimientoControlador(100, 100);
-        AgentesRoles = new String [_nameAgentSend.length][3];
-        nameMap = _nameMap;
-        nameServer = _nameServer;
-        nameAgent = aid.name;
-        enobjetivo = new boolean [_nameAgentSend.length];
-        NameAgentSend = new String [_nameAgentSend.length];
-        engoal = new boolean [_nameAgentSend.length];
-        for (int cont=0; cont < _nameAgentSend.length; cont++){
-            enobjetivo[cont] = false;
-            engoal[cont] = false;
-            AgentesRoles[cont][0] = _nameAgentSend[cont];
-            NameAgentSend[cont] = _nameAgentSend[cont];
-        }
-        q1 = new MessageQueue(100);
-        q2 = new MessageQueue(100);
-        q3 = new MessageQueue(100);
-        q4 = new MessageQueue(100);
-        qservidor = new MessageQueue(100);
-        miTraductor = new Traductor();
-        miInteligencia = new IAControlador();
-        energy = Integer.MAX_VALUE;
     }
     
     String valorPaso(String tipo){
@@ -112,7 +124,6 @@ public class AgenteControlador extends SingleAgent{
     @Override
     public void onMessage(ACLMessage msg)  {
         try {
-            String Receiver = msg.getReceiver().name;
             String Sender = msg.getSender().name;
             if(NameAgentSend[0].equals(Sender))
                 q1.Push(msg); // Cada mensaje nuevo que llega se encola en el orden de llegada
@@ -124,7 +135,6 @@ public class AgenteControlador extends SingleAgent{
                 q4.Push(msg);
             else
                 qservidor.Push(msg);
-            //System.out.println("\n["+this.getName()+"] Encolando: "+msg.getContent());
         } catch (InterruptedException ex) {
             ex.printStackTrace();
         }
@@ -135,12 +145,12 @@ public class AgenteControlador extends SingleAgent{
     }
     
     private void sendMessege(ACLMessage[] msg){
-        for(int cont=0; cont < msg.length; cont++)
-            this.send(msg[cont]);
+        for (ACLMessage msg1 : msg) {
+            this.send(msg1);
+        }
     }
     
-    
-    private void waitMess(){
+    private void waitMessServer(){
         while (qservidor.isEmpty()){
             try {
                 Thread.sleep(500);
@@ -150,7 +160,7 @@ public class AgenteControlador extends SingleAgent{
         }
     }
     
-    private void waitMess(int cantidad){
+    private void waitMessDrons(){
         while (q1.isEmpty()||q2.isEmpty()||q3.isEmpty()||q4.isEmpty()){
             try {
                 Thread.sleep(500);
@@ -164,8 +174,10 @@ public class AgenteControlador extends SingleAgent{
     * Bucle de ejecución del controlador
     * 
     * @author Juan Manuel Navarrete Carrascosa
-    * @coauthor Rubén Orgaz Baena
+    * @author Rubén Orgaz Baena
+    * @author Daniel
     */
+    
     @Override
     public void execute(){
         
@@ -176,18 +188,16 @@ public class AgenteControlador extends SingleAgent{
         /*******************************************************************/
         
         
-        sendMessege(miTraductor.Suscribirse(nameMap, getAid(), nameServer));
-        waitMess();
+        sendMessege(miTraductor.suscribirse(nameMap, getAid(), nameServer));
+        waitMessServer();
         try {
-            //System.out.println("--------------------------------------");
             msg=miTraductor.autoSelectACLMessage(qservidor.Pop());
             if(msg.contains("BAD")){
                 System.err.println("Error al suscribirse: "+ msg);
                 return;
             }
             else{
-                //System.out.println("Key: "+ msg);
-                miTraductor.SetKey(msg);
+                miTraductor.setKey(msg);
             }
         } catch (InterruptedException ex) {
             System.err.println("Error al sacar mensaje");
@@ -197,14 +207,13 @@ public class AgenteControlador extends SingleAgent{
         /*******************************************************************/
         /*                   Enviar Key a los drones                       */
         /*******************************************************************/
-        sendMessege(miTraductor.CAsendKey(miTraductor.GetKey(), getAid(), NameAgentSend));
+        sendMessege(miTraductor.CAsendKey(miTraductor.getKey(), getAid(), NameAgentSend));
         
         /*******************************************************************/
         /*                   Esperar a los roles                           */
         /*******************************************************************/
-        waitMess(NameAgentSend.length);
+        waitMessDrons();
         try {
-            //System.out.println("--------------------------------------");
             msg=miTraductor.autoSelectACLMessage(q1.Pop());
             AgentesRoles[0][1] = msg;
             AgentesRoles[0][2] = valorPaso(msg);
@@ -226,12 +235,10 @@ public class AgenteControlador extends SingleAgent{
         /*******************************************************************/
         /*                   Primera parte busqueda del objetivo           */
         /*******************************************************************/
-        boolean encontradogoal=false;
-        //boolean enobjetivo = false;
+        boolean encontradogoal;
         Posicion[] posicion= new Posicion[4];
         Posicion[] posgoals = new Posicion[4];
         Posicion[] posgoaltemporal = new Posicion[4];
-        Posicion goal;
         Posicion[] arraypos = new Posicion[4];
         for(int cont=0; cont<4; cont++){
             arraypos[cont] = new Posicion();
@@ -239,17 +246,16 @@ public class AgenteControlador extends SingleAgent{
             posgoaltemporal[cont] = new Posicion();
         }
         int iteraciones =0;
-        int [] pasos = new int[4];
-        ArrayList <ArrayList <Integer> > baterias = new ArrayList < ArrayList <Integer> > ();
+        ArrayList <ArrayList <Integer> > baterias = new ArrayList ();
+        
         for (int cont=0; cont < 4; cont++){
-            baterias.add(new ArrayList <Integer>());
+            baterias.add(new ArrayList ());
         }
-        for (int cont=0; cont < 4; cont++)
-            pasos[cont] = 20;
+
         dibujarMapa = new DibujarMapaControlador("Vista controlador", conocimiento.getMapa());
         ventanaSuper.addPanel(dibujarMapa);
         while(!TodosEnGoal()){
-            waitMess(NameAgentSend.length);
+            waitMessDrons();
             //Conseguir la posicion de los agentes
             try{
                 int bateriatemporal;
@@ -259,10 +265,10 @@ public class AgenteControlador extends SingleAgent{
                 }
                 conocimiento.refreshData(miTraductor.getGPS(msg), miTraductor.getSensor(Integer.valueOf(AgentesRoles[0][1]), msg), 0);
                 posicion[0] = miTraductor.getGPS(msg);
-                baterias.get(0).add(miTraductor.GetBateria(msg));
+                baterias.get(0).add(miTraductor.getBateria(msg));
                 if(posicion[0].isEqual(posgoals[0]))
                     enobjetivo[0]=true;
-                bateriatemporal = miTraductor.GetBateriaTotal(msg);
+                bateriatemporal = miTraductor.getBateriaTotal(msg);
                 if (energy > bateriatemporal){
                     energy = bateriatemporal;
                 }
@@ -274,65 +280,72 @@ public class AgenteControlador extends SingleAgent{
                 }
                 conocimiento.refreshData(miTraductor.getGPS(msg), miTraductor.getSensor(Integer.valueOf(AgentesRoles[1][1]), msg), 1);
                 posicion[1] = miTraductor.getGPS(msg);
-                baterias.get(1).add(miTraductor.GetBateria(msg));
+                baterias.get(1).add(miTraductor.getBateria(msg));
+                
                 if(posicion[1].isEqual(posgoals[1]))
                     enobjetivo[1]=true;
-                bateriatemporal = miTraductor.GetBateriaTotal(msg);
+                
+                bateriatemporal = miTraductor.getBateriaTotal(msg);
+                
                 if (energy > bateriatemporal){
                     energy = bateriatemporal;
                 }
                 
-                
-                
                 msg=miTraductor.autoSelectACLMessage(q3.Pop());
+                
                 if(msg.contains("true")){
                     engoal[2] =true;
                 }
+                
                 conocimiento.refreshData(miTraductor.getGPS(msg), miTraductor.getSensor(Integer.valueOf(AgentesRoles[2][1]), msg), 2);
                 posicion[2] = miTraductor.getGPS(msg);
-                baterias.get(2).add(miTraductor.GetBateria(msg));
+                baterias.get(2).add(miTraductor.getBateria(msg));
+                
                 if(posicion[2].isEqual(posgoals[2]))
                     enobjetivo[2]=true;
-                bateriatemporal = miTraductor.GetBateriaTotal(msg);
+                
+                bateriatemporal = miTraductor.getBateriaTotal(msg);
+                
                 if (energy > bateriatemporal){
                     energy = bateriatemporal;
                 }
                 
-                
-                
                 msg=miTraductor.autoSelectACLMessage(q4.Pop());
+                
                 if(msg.contains("true")){
                     engoal[3] =true;
                 }
                 conocimiento.refreshData(miTraductor.getGPS(msg), miTraductor.getSensor(Integer.valueOf(AgentesRoles[3][1]), msg), 3);
                 posicion[3] = miTraductor.getGPS(msg);
-                baterias.get(3).add(miTraductor.GetBateria(msg));
+                baterias.get(3).add(miTraductor.getBateria(msg));
+                
                 if(posicion[3].isEqual(posgoals[3]))
                     enobjetivo[3]=true;
-                bateriatemporal = miTraductor.GetBateriaTotal(msg);
+                
+                bateriatemporal = miTraductor.getBateriaTotal(msg);
+                
                 if (energy > bateriatemporal){
                     energy = bateriatemporal;
                 }
                 
                 dibujarMapa.setBateria(energy);
-                
-                
             }catch (InterruptedException ex){
                 System.err.println("Error al sacar mensaje");
             }
             
-            
             encontradogoal = miInteligencia.vistoelobjetivo (conocimiento.getMapa());
+            
             if (!encontradogoal){    
                 if((iteraciones%30==0) || AlgunoEnObjetivo()){
                     //Se calcula una posicion a donde ir
                     arraypos = miInteligencia.calculateGoalPos(posicion);
                     for(int cont=0; cont < 4; cont++){
-                        posgoals[cont].Set(arraypos[cont]);
-                        posgoaltemporal[cont].Set(arraypos[cont]);
+                        posgoals[cont].set(arraypos[cont]);
+                        posgoaltemporal[cont].set(arraypos[cont]);
                         enobjetivo[cont] = false;
                     }
                 }
+                
                 //Pelea de valores
                 boolean[] Para = miInteligencia.quienPara (posicion, posgoaltemporal, 5, AgentesRoles);
                 //Se da la direccion a donde ir, si se paran tienen el sitio donde estan
@@ -346,37 +359,27 @@ public class AgenteControlador extends SingleAgent{
                         posgoaltemporal[cont].setY(posgoals[cont].getY());
                     }
                 }
+                
                 //Envio a donde ir
                 sendMessege(miTraductor.CAsendPosicion(getAid(), NameAgentSend, -1, posgoaltemporal, posicion));
-            }
-            else{
+            } else{
                 if(!miInteligencia.isAsignadoATodos()){
-                    //goal = miInteligencia.getPosicionGoal();
                     arraypos = miInteligencia.calcularSitioParaGoal(posicion, conocimiento.getMapa());
                     for(int cont=0; cont < 4; cont++){
                         if(!arraypos[cont].isEqual(new Posicion(-1,-1))){
-                            posgoals[cont].Set(arraypos[cont]);
-                            posgoaltemporal[cont].Set(arraypos[cont]);
+                            posgoals[cont].set(arraypos[cont]);
+                            posgoaltemporal[cont].set(arraypos[cont]);
                         }
                     }
                 }
-                //boolean[] Para = miInteligencia.quienPara (posicion, posgoaltemporal, 5, AgentesRoles);
+
                 for(int cont=0;cont<posgoaltemporal.length; cont++){
-                    /*if(Para[cont]&&!enobjetivo){
-                        posgoaltemporal[cont].setX(posicion[cont].getX());
-                        posgoaltemporal[cont].setY(posicion[cont].getY());
-                    }else{
-                        posgoaltemporal[cont].setX(posgoals[cont].getX());
-                        posgoaltemporal[cont].setY(posgoals[cont].getY());
-                    }*/
-                    posgoaltemporal[cont].Set(posgoals[cont]);
+                    posgoaltemporal[cont].set(posgoals[cont]);
                 }
-                sendMessege(miTraductor.CAsendPosicion(getAid(), NameAgentSend, -1, posgoaltemporal, posicion));
                 
+                sendMessege(miTraductor.CAsendPosicion(getAid(), NameAgentSend, -1, posgoaltemporal, posicion));
             }
             iteraciones++;
-        }
-        
+        } 
     }
-    
 }

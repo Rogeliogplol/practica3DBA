@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ia;
 
 /**
@@ -12,8 +7,8 @@ package ia;
 
 public class Conocimiento {
     private final int ancho, alto;
-    private Casilla mapa[][];
-    private Posicion pos;
+    private final Casilla mapa[][];
+    private final Posicion pos;
 	
     public Conocimiento(int ancho, int alto) {
 	this.ancho=ancho;
@@ -25,18 +20,19 @@ public class Conocimiento {
             }
         }
         pos= new Posicion(Integer.MAX_VALUE, Integer.MAX_VALUE);
-        //posicion.setX(Integer.MAX_VALUE);
-        //posicion.setY(Integer.MAX_VALUE);
-	
     }
     
-    // Actualiza el mapa y la situación actual
+    /**
+    * Actualiza el mapa y la situación actual
+    * 
+    * @author José Luís
+    * @author Rubén
+    */
+
     public void refreshData(Posicion _pos, int [][]radar) {
         int medio = (radar.length-1)/2;
         
-        pos.Set(_pos.getX(),_pos.getY());
-        //Posicion pos = new Posicion();
-        
+        pos.set(_pos.getX(),_pos.getY());
         
 	for (int i=0; i<radar.length; i++) {
             for (int ii=0; ii<radar.length; ii++) {
@@ -56,37 +52,52 @@ public class Conocimiento {
         return mapa;
     }
     
-    public boolean HaSidoPisado(int i, int j){
+    /**
+    * @author Daniel
+    */
+    
+    public boolean haSidoPisado(int i, int j){
         int x= pos.getX()-1+i;
         int y= pos.getY()-1+j;
-        if(x<0 || y<0 || x >=100 || y>=100)
+        
+        if (x<0 || y<0 || x >=100 || y>=100)
             return true;
-        if(mapa[x][y].getPasos()>0){
-            return true;
-        }
-        return false;
+        
+        return mapa[x][y].getPasos()>0;
     }
     
-    public int VecesPisado(int i, int j){
+    /**
+    * @author Daniel
+    */
+    
+    public int vecesPisado(int i, int j){
         int x= pos.getX()-1+i;
         int y= pos.getY()-1+j;
+        
         if(x<0 || y<0 || x >=100 || y>=100)
             return Integer.MAX_VALUE;
+        
         return mapa[x][y].getPasos();
     }
     
     /**
     * Muestra en el radar los objetivos cercanos
     * 
+    * @param scanner El scanner
+    * @param sensor El sensor
+    * 
+    * @return Los objetivos cercanos
+    * 
     * @author Juan Manuel Navarrete Carrascosa
-    * @coauthor Rubén Orgaz Baena
+    * @author Rubén Orgaz Baena
+    * @author José Luís
+    * @author Daniel
     */
-    public Casilla[][] Conocido(float [][] scanner, int [][] sensor){
+    
+    public Casilla[][] conocido (float [][] scanner, int [][] sensor){
         Casilla vista[][] = new Casilla[5][5];
         int medio = (5-1)/2;
         
-        //for(int i=0; i<5; i++){
-            //for(int j=0; j<5; j++){
         for(int i=0; i<5; i++){
             for(int j=0; j<5; j++){
                 int x = pos.getX()-medio;
@@ -101,6 +112,7 @@ public class Conocimiento {
                 }
             }
         }
+        
         for (int i=1; i<4; i++){
             for (int j=1; j<4; j++){
                 vista[i][j].setRadar(sensor[i-1][j-1]);
@@ -112,69 +124,5 @@ public class Conocimiento {
         }
         
         return vista;
-        /*
-        for(int i=0; i<5; i++){
-            for(int j=0; j<5; j++){
-                int x= pos.getX()+i-medio;
-                int y= pos.getY()+j-medio;
-                if(i==medio && j==medio){
-                    System.out.println("Paraaaaaa");
-                }
-                if(x>=0&&y>=0&&x<100&&y<100){
-                    vista[i][j]=mapa[x][y];
-                    if(i>=1&&j>=1&&i<4&&j<4){
-                            mapa[x][y].setRadar(sensor[i-1][j-1]);
-                            mapa[x][y].setScanner(scanner[i-1][j-1]);
-                    }
-                    if(mapa[x][y].getRadar()==4||mapa[x][y].getRadar()==1||mapa[x][y].getRadar()==2){
-                        mapa[x][y].setRadar(1);
-                    }
-                    
-                }
-                else {
-                    vista[j][i]=new Casilla();
-                    vista[j][i].setRadar(1);
-                }
-            }
-        }*/
-        //return vista;
     }
-    
-    /**
-    * Muestra en el radar los objetivos cercanos(Mosquito)
-    * 
-    * @author Juan Manuel Navarrete Carrascosa
-    * @coauthor Rubén Orgaz Baena
-    */
-    public Casilla[][] ConocidoMosquitos(float [][] scanner, int [][] sensor){
-        Casilla vista[][] = new Casilla[5][5];
-        int medio = (5-1)/2;
-        for(int i=0; i<5; i++){
-            for(int j=0; j<5; j++){
-                int x= pos.getX()+i-medio;
-                int y= pos.getY()+j-medio;
-                if(x>=0&&y>=0&&x<100&&y<100){
-                    vista[i][j]=mapa[x][y];
-                    if(i>=1&&j>=1&&i<4&&j<4){
-                            mapa[x][y].setRadar(sensor[j-1][j-1]);
-                            mapa[x][y].setScanner(scanner[i-1][j-1]);
-                    }
-                    if(mapa[x][y].getRadar()==4||mapa[x][y].getRadar()==2){
-                        mapa[x][y].setRadar(1);
-                    }
-                    else if (mapa[x][y].getRadar()==1){
-                        mapa[x][y].setRadar(0);
-                    }
-                    
-                }
-                else {
-                    vista[i][j]=new Casilla();
-                    vista[i][j].setRadar(1);
-                }
-            }
-        }
-        return vista;
-    }
-    
-    
 }

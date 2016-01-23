@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ia;
 
 /**
@@ -11,6 +6,7 @@ package ia;
  *
  * @author Roger
  */
+
 public class Posicion {
     private int X;
     private int Y;
@@ -18,22 +14,25 @@ public class Posicion {
     //#######################################################
     //----------------- CONSTRUCTORES -----------------------
     //#######################################################
-	/**
-	* Constructor por defecto
-	* 
-	* @author Roger
-	*/
+    /**
+    * Constructor por defecto
+    * 
+    * @author Roger
+    */
+    
     public Posicion (){
         X = -1;
         Y = -1;
     }
-	/**
-	* Constructor que guarda las posiciones del Agente.
-	* @param x la coordenada x del agente.
-	* @param y la coordenada y del agente.
-	* 
-	* @author Roger
-	*/
+	
+    /**
+    * Constructor que guarda las posiciones del Agente.
+    * @param x la coordenada x del agente.
+    * @param y la coordenada y del agente.
+    * 
+    * @author Roger
+    */
+    
     public Posicion (int x, int y){
         X = x;
         Y = y;
@@ -43,29 +42,45 @@ public class Posicion {
     //--------------------- SET -----------------------------
     //#######################################################
     
-    public void Set(int x, int y){
+    /**
+    * @param x la información de la coordenada x a guardar.
+    * @param y la información de la coordenada y a guardar.
+    * 
+    * @author Roger
+    */
+    
+    public void set (int x, int y){
         X=x;
         Y=y;
     }
     
+    /**
+    * @param pos la posición a la que se igualará ésta
+    * 
+    * @author Roger
+    */
     
-    public void Set(Posicion pos){
+    public void set (Posicion pos){
         X=pos.getX();
         Y=pos.getY();
     }
-	/**
-	* @param x la información de la coordenada x a guardar.
-	* 
-	* @author Roger
-	*/
+    
+    /**
+    * @param x la información de la coordenada x a guardar.
+    * 
+    * @author Roger
+    */
+    
     public void setX (int x){
         X = x;
     }
-	/**
-	* @param y la información de la coordenada y a guardar.
-	* 
-	* @author Roger
-	*/
+    
+    /**
+    * @param y la información de la coordenada y a guardar.
+    * 
+    * @author Roger
+    */
+    
     public void setY (int y){
         Y = y;
     }
@@ -73,19 +88,21 @@ public class Posicion {
     //#######################################################
     //--------------------- GET -----------------------------
     //#######################################################
-	/**
-	* @return X devulve la coordenada x del agente.
-	* 
-	* @author Roger
-	*/
+    /**
+    * @return X devulve la coordenada x del agente.
+    * 
+    * @author Roger
+    */
+    
     public int getX (){
         return X;
     }
-	/**
-	* @return Y devulve la coordenada y del agente.
-	* 
-	* @author Roger
-	*/
+    /**
+    * @return Y devulve la coordenada y del agente.
+    * 
+    * @author Roger
+    */
+    
     public int getY (){
         return Y;
     }
@@ -93,16 +110,16 @@ public class Posicion {
     //#######################################################
     //--------------------- GET -----------------------------
     //#######################################################
-	/**
-     * @param _pos Posicion
-	* @return boolean. Devuelve el resultado de la comparación.
-	* 
-	* @author Rubén Orgaz Baena
-	*/
+    /**
+    * @param _pos Posicion
+    * @return boolean. Devuelve el resultado de la comparación.
+    * 
+    * @author Rubén Orgaz Baena
+    */
+    
     public boolean isEqual (Posicion _pos){
         return getX() == _pos.getX() && getY() == _pos.getY();
     }
-    
 }
     
     

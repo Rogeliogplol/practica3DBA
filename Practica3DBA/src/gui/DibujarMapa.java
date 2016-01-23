@@ -13,7 +13,8 @@ import java.awt.Dimension;
 import java.awt.Font;
 
 /**
- *
+ * Panel de información de un dron individual
+ * 
  * @author SRJota Daniel Roger
  */
 
@@ -26,20 +27,23 @@ public class DibujarMapa  extends JPanel{
     private BufferedImage image;
     private final String nombreDron;
     private int bateria;
-    private Posicion pos, objetivo=null;
+    private final Posicion pos;
+    private Posicion objetivo=null;
     private final String tipoDron;
     
     /**
     * Constructor de la clase DibujarMapa
-    * @param _nombreventana Nombre del agente
     * @param mapa Matriz de casillas a imprimir
+    * @param nombreDron El nombre del dron
+    * @param bateria La batería inicial del dron
+    * @param pos La referencia a la posición del dron
+    * @param tipoDron El tipo del dron (Mosca, Pájaro o Halcón)
     * 
-    * @author SRJota Daniel Roger
-    * 
+    * @author Daniel SRJota Roger
     */
     
-    public DibujarMapa (String _nombreventana, Casilla[][] mapa, 
-            String nombreDron, int bateria, Posicion pos, String tipoDron) {
+    public DibujarMapa (Casilla[][] mapa, String nombreDron, int bateria, 
+            Posicion pos, String tipoDron) {
         this.tipoDron=tipoDron;
         this.pos=pos;
         this.nombreDron=nombreDron;
@@ -63,9 +67,25 @@ public class DibujarMapa  extends JPanel{
         new Timer(delay, taskPerformer).start();
     }
     
+    /**
+    * Actualiza el objetivo del dron a mostrar
+    * 
+    * @param objetivo La nueva posición objetivo del dron a mostrar
+    * 
+    * @author Daniel
+    */
+    
     public void setObjetivo (Posicion objetivo) {
         this.objetivo=objetivo;
     }
+    
+    /**
+    * Actualiza la batería del dron a mostrar
+    * 
+    * @param bateria La nueva batería del dron a mostrar
+    * 
+    * @author Daniel
+    */
     
     public void setBateria (int bateria) {
         this.bateria=bateria;
@@ -80,6 +100,7 @@ public class DibujarMapa  extends JPanel{
     * @author SRJota Daniel Roger
     * 
     */
+    
     private Color ColorCelda (Casilla valorMapa){
         Color ret;
         
@@ -129,6 +150,7 @@ public class DibujarMapa  extends JPanel{
     * @author Daniel SRJota Roger
     * 
     */
+    
     @Override
     public void paint (Graphics g){
         super.paint(g);

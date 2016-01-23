@@ -8,6 +8,7 @@ package ia;
  * @author Roger
  * @author Daniel
  */
+
 public class CasillaControlador {
     private int radar;
     private final int dronVisitado[];
@@ -16,12 +17,14 @@ public class CasillaControlador {
     //#######################################################
     //----------------- CONSTRUCTOR -------------------------
     //#######################################################
-	/**
-	* Constructor por defecto
-	* 
-	* @author Roger
-        * @author Daniel
-	*/
+    
+    /**
+    * Constructor por defecto
+    * 
+    * @author Roger
+    * @author Daniel
+    */
+    
     public CasillaControlador (){
         idUltimoDron=-1;
         radar = -1;
@@ -31,53 +34,57 @@ public class CasillaControlador {
         }
     }
 
-        /**
-	* @return array del número de pasos dados en la casilla por cada dron
-	* 
-	* @author Roger
-        * @author Daniel
-	*/
+    /**
+    * @return array del número de pasos dados en la casilla por cada dron
+    * 
+    * @author Roger
+    * @author Daniel
+    */
+    
     public int[] getDronVisitado() {
         return dronVisitado;
     }
 
-        /**
-	* @param idDron el dron que ha visitado la casilla
-	* 
-	* @author Roger
-        * @author Daniel
-	*/
+    /**
+    * @param idDron el dron que ha visitado la casilla
+    * 
+    * @author Roger
+    * @author Daniel
+    */
+    
     public void setDronVisitado(int idDron) {
         dronVisitado[idDron]++;
         idUltimoDron=idDron;
     }
 
-	/**
-	* @param ra la información del radar a guardar.
-	* 
-	* @author Roger
-        * @author Daniel
-	*/
+    /**
+    * @param ra la información del radar a guardar.
+    * 
+    * @author Roger
+    * @author Daniel
+    */
+    
     public void setRadar (int ra){
         radar = ra;
     }
 
-	/**
-	* @return radar devuelve la información guardada en radar.
-	* 
-	* @author Roger
-        * @author Daniel
-	*/
+    /**
+    * @return radar devuelve la información guardada en radar.
+    * 
+    * @author Roger
+    * @author Daniel
+    */
+    
     public int getRadar (){
         return radar;
     }
     
-        /**
-	* @return radar devuelve la información guardada en radar.
-	* 
-	* @author Roger
-        * @author Daniel
-	*/
+    /**
+    * @return radar devuelve la información guardada en radar.
+    * 
+    * @author Roger
+    * @author Daniel
+    */
     
     public int getLastDrone () {
         return idUltimoDron;
@@ -86,13 +93,15 @@ public class CasillaControlador {
     //#######################################################
     //------------------ SET CASILLA ------------------------
     //#######################################################
-	/**
-	* @param ra información de radar a guardar
-        * @param id id del drone
-	*
-	* @author Roger
-        * @author Daniel
-	*/
+    /**
+    * @param ra información de radar a guardar
+    * @param id id del drone
+    * @param casilla ejecutar o no setDronVisitado
+    *
+    * @author Roger
+    * @author Daniel
+    */
+    
     public void setCasilla (int ra, int id, boolean casilla){
         this.setRadar(ra);
         if(casilla)

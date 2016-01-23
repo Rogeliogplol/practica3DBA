@@ -12,8 +12,9 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 
 /**
- *
- * @author SRJota Daniel Roger
+ * Panel de información del controlador
+ * 
+ * @author Daniel SRJota Roger
  */
 
 public class DibujarMapaControlador  extends JPanel{
@@ -27,12 +28,12 @@ public class DibujarMapaControlador  extends JPanel{
     private BufferedImage image;
     
     /**
-    * Constructor de la clase DibujarMapa
-    * @param _nombreventana Nombre del agente
+    * Constructor de la clase DibujarMapaControlador
+    * 
+    * @param nombreVentana Nombre de la ventana del controlador
     * @param mapa Matriz de casillas a imprimir
     * 
     * @author SRJota Daniel Roger
-    * 
     */
     
     public DibujarMapaControlador (String nombreVentana, CasillaControlador[][] mapa) {
@@ -58,6 +59,15 @@ public class DibujarMapaControlador  extends JPanel{
         new Timer(delay, taskPerformer).start();
     }
     
+    /**
+    * Determina el color del cuadrado según el índice del dron dado
+    * @param dron El índice del dron dado
+    * 
+    * @return Devuelve el color a pintar
+    * 
+    * @author Daniel
+    */
+    
     private Color getDronColor (int dron) {
         Color ret;
         
@@ -75,6 +85,14 @@ public class DibujarMapaControlador  extends JPanel{
         return ret;
     }
     
+    /**
+    * Actualiza la batería general a mostrar
+    * 
+    * @param bateria La nueva batería general a mostrar
+    * 
+    * @author Daniel
+    */
+    
     public void setBateria (int bateria) {
         this.bateria=bateria;
     }
@@ -85,8 +103,7 @@ public class DibujarMapaControlador  extends JPanel{
     * @param valormapa Casilla a analizar
     * @return Devuelve el color a pintar
     * 
-    * @author SRJota Daniel Roger
-    * 
+    * @author Daniel SRJota Roger
     */
     
     private Color ColorCelda (CasillaControlador valorMapa){
@@ -116,7 +133,6 @@ public class DibujarMapaControlador  extends JPanel{
     * Carga la imagen según el mapa actual
     * 
     * @author Daniel Roger
-    * 
     */
     private void loadMapImage () {
         int type = BufferedImage.TYPE_INT_RGB;
@@ -136,7 +152,6 @@ public class DibujarMapaControlador  extends JPanel{
     * 
     * @param g
     * @author Daniel SRJota Roger
-    * 
     */
     @Override
     public void paint (Graphics g){

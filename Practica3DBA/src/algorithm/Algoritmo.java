@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package algorithm;
 
 import ia.Casilla;
@@ -12,29 +7,23 @@ import java.util.ArrayList;
  *
  * @author SRJota
  */
+
 public class Algoritmo {
-     private final int xStartNode = 2;      // Coordenada X de la casilla de inicio
+    private final int xStartNode = 2;      // Coordenada X de la casilla de inicio
     private final int yStartNode = 2;      // Coordenada Y de la casilla de inicio
     private final int MatrixDetected  = 5; // Tamaño de matriz de percepcion
     private final int MatrixNeighbors = 3; // tamaño de matriz de vecinos
-    //private final int MaxSteps = 500*500;    // Numero de pasos para considerar el mapa sin solucion
     
     private final String[][] directions = {{"NW","N","NE"},{"W","GOAL","E"},{"SW","S","SE"}};   
     
     private Casilla startNode;          
-    private Casilla[][] detectedNodes;  
-    private Casilla[][] neighborsNodes;
-    
-    private int pasos;
-    
-    
-    
+    private final Casilla[][] detectedNodes;  
+    private final Casilla[][] neighborsNodes;
     
     public Algoritmo(){
         this.startNode = new Casilla();
         this.detectedNodes = new Casilla[MatrixDetected][MatrixDetected];
         this.neighborsNodes = new Casilla[MatrixNeighbors][MatrixNeighbors];
-        this.pasos = 0;
     }
     
     /**
@@ -130,22 +119,24 @@ public class Algoritmo {
         ArrayList<Casilla> visited = new ArrayList();
         ArrayList<Casilla> notVisited = new ArrayList();
         
-        Casilla tempBestNode = new Casilla();
+        Casilla tempBestNode;
         
-        // Separamos los nodos en visitados y no visitados. 
-        
-        for (int i = 0; i < this.neighborsNodes.length; i++)
-            for (int j = 0; j < this.neighborsNodes.length; j++)
-                if (this.neighborsNodes[i][j].getRadar() == 2)
+        // Separamos los nodos en visitados y no visitados.
+        for (Casilla[] neighborsNode : this.neighborsNodes) {
+            for (int j = 0; j < this.neighborsNodes.length; j++) {
+                if (neighborsNode[j].getRadar() == 2) {
                     return this.directions[xStartNode-1][yStartNode-1];
-                else {
-                    if((this.neighborsNodes[i][j].getRadar() == 0)
-                            && (this.neighborsNodes[i][j] != startNode)) 
-                        if (this.neighborsNodes[i][j].getPasos() != 0)
-                            visited.add(this.neighborsNodes[i][j]);
-                        else 
-                            notVisited.add(this.neighborsNodes[i][j]);
+                } else {
+                    if ((neighborsNode[j].getRadar() == 0) && (neighborsNode[j] != startNode)) {
+                        if (neighborsNode[j].getPasos() != 0) {
+                            visited.add(neighborsNode[j]);
+                        } else {
+                            notVisited.add(neighborsNode[j]);
+                        }
+                    }
                 }
+            }
+        }
         
         /*
          * Si hay nodos sin visitar, selecionamos la solucion de uno de estos.
@@ -164,16 +155,7 @@ public class Algoritmo {
                 if (tempBestNode.getScanner() > tmp.getScanner())
                     tempBestNode = tmp;            
         }
-        
-        /*
-         * Comprobamos que no se sobrepase el limite de pasos        
-         */
-        
-        //if (pasos == MaxSteps)
-            //return "ERROR";
-        //else {
-            pasos++;
-            return this.selectDirection(tempBestNode);        
-        //}
+
+        return this.selectDirection(tempBestNode);        
     }
 }
