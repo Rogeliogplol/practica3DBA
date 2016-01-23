@@ -35,21 +35,21 @@ public class AgenteControlador extends SingleAgent{
     private final  boolean [] engoal;
     private int energy;
     
-    public AgenteControlador(AgentID aid, String _nameServer, String[] _nameAgentSend, String _nameMap) throws Exception {
+    public AgenteControlador(AgentID aid, String nameServer, String[] nameAgentSend, String nameMap) throws Exception {
         super(aid);
         ventanaSuper=VentanaSuper.getInstance();
         conocimiento = new ConocimientoControlador(100, 100);
-        AgentesRoles = new String [_nameAgentSend.length][3];
-        nameMap = _nameMap;
-        nameServer = _nameServer;
-        enobjetivo = new boolean [_nameAgentSend.length];
-        NameAgentSend = new String [_nameAgentSend.length];
-        engoal = new boolean [_nameAgentSend.length];
-        for (int cont=0; cont < _nameAgentSend.length; cont++){
+        AgentesRoles = new String [nameAgentSend.length][3];
+        this.nameMap = nameMap;
+        this.nameServer = nameServer;
+        enobjetivo = new boolean [nameAgentSend.length];
+        NameAgentSend = new String [nameAgentSend.length];
+        engoal = new boolean [nameAgentSend.length];
+        for (int cont=0; cont < nameAgentSend.length; cont++){
             enobjetivo[cont] = false;
             engoal[cont] = false;
-            AgentesRoles[cont][0] = _nameAgentSend[cont];
-            NameAgentSend[cont] = _nameAgentSend[cont];
+            AgentesRoles[cont][0] = nameAgentSend[cont];
+            NameAgentSend[cont] = nameAgentSend[cont];
         }
         q1 = new MessageQueue(100);
         q2 = new MessageQueue(100);
