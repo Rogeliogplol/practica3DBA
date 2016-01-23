@@ -30,13 +30,13 @@ public class Agente extends SingleAgent {
     private final boolean parado;
     private int Rol;
 
-    public Agente(AgentID aid, String _nameAgentSend, String _nameMap, String _nameAgentControlador) throws Exception {
+    public Agente(AgentID aid, String nameAgentSend, String nameMap, String nameAgentControlador) throws Exception {
         super(aid);
         Rol =-1;
         ventanaSuper = VentanaSuper.getInstance();
         nameAgent = aid.name;
-        nameAgentSend = _nameAgentSend;
-        nameAgentControlador = _nameAgentControlador;
+        this.nameAgentSend = nameAgentSend;
+        this.nameAgentControlador = nameAgentControlador;
         q1 = new MessageQueue(100);
         miTraductor = new Traductor();
         conocimiento = new Conocimiento(100, 100);
